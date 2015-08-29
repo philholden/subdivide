@@ -1,0 +1,574 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"is",
+				"isGwtVisible"
+			],
+			[
+				"SE",
+				"SET_ROWS"
+			],
+			[
+				"me",
+				"messagePlanId"
+			],
+			[
+				"get",
+				"getCampaigns"
+			],
+			[
+				"fet",
+				"fetchData"
+			],
+			[
+				"com",
+				"componentWillReceiveProps"
+			],
+			[
+				"Mo",
+				"ModalLoading"
+			],
+			[
+				"Moda",
+				"ModalOverlay"
+			],
+			[
+				"Cam",
+				"CampaignTable"
+			],
+			[
+				"Ca",
+				"CampaignTableRowLink"
+			],
+			[
+				"pr",
+				"PrimaryPageHeading"
+			],
+			[
+				"S",
+				"SCHEDULED"
+			],
+			[
+				"P",
+				"PAST"
+			],
+			[
+				"A",
+				"ACTIVE"
+			],
+			[
+				"td",
+				"tdNoWrap"
+			],
+			[
+				"C",
+				"CampaignTableRow"
+			],
+			[
+				"pro",
+				"prototype"
+			],
+			[
+				"to",
+				"toUpperCase"
+			],
+			[
+				"on",
+				"onMouseUp"
+			],
+			[
+				"Si",
+				"SideMenuStore"
+			],
+			[
+				"side",
+				"SideMenuStore"
+			],
+			[
+				"item",
+				"itemObjs"
+			],
+			[
+				"Side",
+				"SideMenuActions"
+			],
+			[
+				"tabe",
+				"table-cell"
+			],
+			[
+				"fon",
+				"font-family"
+			],
+			[
+				"s",
+				"SideMenuItem"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/Users/ph185068/personal/chron-reduce/index.html",
+			"settings":
+			{
+				"buffer_size": 265,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/ph185068/personal/chron-reduce/src/chron-reduce.js",
+			"settings":
+			{
+				"buffer_size": 183,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/ph185068/personal/chron-reduce/package.json",
+			"settings":
+			{
+				"buffer_size": 1400,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "CampaignTableReducer.js",
+			"settings":
+			{
+				"buffer_size": 3303,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 127.0,
+		"last_filter": "install ",
+		"selected_items":
+		[
+			[
+				"install ",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 467.0
+	},
+	"console":
+	{
+		"height": 419.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/ph185068/personal/chron-reduce",
+		"/Users/ph185068/personal/chron-reduce/src",
+		"/Users/ph185068/personal/chron-reduce/src/reducers"
+	],
+	"file_history":
+	[
+		"/Users/ph185068/projects/di/table-spike/src/containers/CampaignTableLoader.js",
+		"/Users/ph185068/projects/di/table-spike/src/style/pallet.js",
+		"/Users/ph185068/projects/di/table-spike/src/StyleGuide.js",
+		"/Users/ph185068/projects/di/table-spike/package.json",
+		"/Users/ph185068/projects/codefest/VideoVoting/style/main.scss",
+		"/Users/ph185068/projects/di/table-spike/webpack.production.config.js",
+		"/Users/ph185068/projects/di/table-spike/webpack.config.js",
+		"/Users/ph185068/projects/di/table-spike/server.js",
+		"/Users/ph185068/projects/di/table-spike/src/constants/CampaignTableConstants.js",
+		"/Users/ph185068/projects/di/table-spike/src/components/CampaignTableMenu.js",
+		"/Users/ph185068/projects/di/table-spike/src/gwt/gwtBridge.js",
+		"/Users/ph185068/projects/di/table-spike/src/containers/App.js",
+		"/Users/ph185068/projects/di/table-spike/src/components/ConditionalDevTools.js",
+		"/Users/ph185068/projects/di/table-spike/src/components/CampaignTableLayout.js",
+		"/Users/ph185068/projects/di/table-spike/src/actions/CampaignTableActions.js",
+		"/Users/ph185068/projects/di/table-spike/src/reducers/index.js",
+		"/Users/ph185068/projects/di/table-spike/src/reducers/CampaignTableStore.js",
+		"/Users/ph185068/projects/di/table-spike/src/components/CampaignTable.js",
+		"/Users/ph185068/projects/di/table-spike/src/constants/CampaignTableActionTypes.js",
+		"/Users/ph185068/projects/di/table-spike/src/style/CampaignTableStyles.js",
+		"/Users/ph185068/projects/di/table-spike/src/index.js",
+		"/Users/ph185068/projects/di/table-spike/readme.md",
+		"/Users/ph185068/projects/di/table-spike/style/main.scss",
+		"/Users/ph185068/projects/di/table-spike/src/style/styleConst.js",
+		"/Users/ph185068/projects/di/table-spike/src/components/addPseudoSelectors.js",
+		"/Users/ph185068/projects/di/table-spike/src/components/SideMenuItem.js",
+		"/Users/ph185068/projects/di/table-spike/src/style/SideMenuStyles.js",
+		"/Users/ph185068/projects/di/table-spike/src/Observables/Mouse.js",
+		"/Users/ph185068/projects/di/table-spike/src/components/SideMenu.js",
+		"/Users/ph185068/projects/di/table-spike/src/title.js",
+		"/Users/ph185068/projects/di/table-spike/src/constants/HoverActiveConstants.js",
+		"/Users/ph185068/projects/di/table-spike/src/actions/HoverActiveActions.js",
+		"/Users/ph185068/projects/di/table-spike/src/stores/SideMenuStore.js",
+		"/Users/ph185068/projects/di/table-spike/src/stores/HoverActiveStore.js",
+		"/Users/ph185068/projects/di/table-spike/src/components/HoverActive.js",
+		"/Users/ph185068/projects/di/table-spike/src/constants/SideMenuConstants.js",
+		"/Users/ph185068/projects/di/table-spike/src/dispatchers/SideMenuDispatcher.js",
+		"/Users/ph185068/projects/di/table-spike/src/actions/SideMenuActions.js",
+		"/Users/ph185068/projects/di/table-spike/.babelrc",
+		"/Users/ph185068/projects/di/table-spike/.editorconfig",
+		"/Users/ph185068/projects/di/table-spike/src/App.js",
+		"/Users/ph185068/Library/Application Support/Karabiner/private.xml",
+		"/Users/ph185068/projects/webpack-intro/style/main.scss",
+		"/Users/ph185068/projects/di/table-spike/.gitignore",
+		"/Users/ph185068/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/Users/ph185068/projects/di/table-spike/.eslintrc",
+		"/Users/ph185068/projects/di/table-spike/node_modules/css-loader/lib/loader.js",
+		"/Users/ph185068/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/ph185068/Library/Application Support/Sublime Text 3/Packages/User/JavaScript (Babel).sublime-settings",
+		"/Users/ph185068/projects/eel-meta/app/js/meta.js",
+		"/Users/ph185068/projects/eel-meta/app/js/leech.js"
+	],
+	"find":
+	{
+		"height": 33.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Users/ph185068/projects/di/table-spike/src"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"LOADING_CAMPAIGNS",
+			"async",
+			"promotionsuite",
+			"fetchData",
+			"now",
+			"fontFamily",
+			"pallet",
+			"redux",
+			"rows",
+			"prevHover",
+			"stores",
+			"sortRows",
+			"feild",
+			"counter",
+			"isAlpha",
+			"date",
+			"'",
+			"fetch",
+			" → ",
+			"HoverActive",
+			"SideMenu",
+			"MenuConstants",
+			"ClickCounter",
+			";",
+			"=",
+			"const",
+			";",
+			"styleSheet",
+			"}\n"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"\""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/Users/ph185068/personal/chron-reduce/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 265,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								92,
+								92
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Users/ph185068/personal/chron-reduce/src/chron-reduce.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 183,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								123,
+								123
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"open_with_edit": true,
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/ph185068/personal/chron-reduce/package.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1400,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								134,
+								134
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 136.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "CampaignTableReducer.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3303,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								190,
+								1066
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1460.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"default_dir": "/Users/ph185068/personal/chron-reduce",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 33.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "consensus-optimist.sublime-project",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"a",
+				"table-spike/src/App.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/personal/chron-reduce/src/reducers/consensus-optimist.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 196.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
