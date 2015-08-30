@@ -3,6 +3,8 @@ export const SW = 'SW';
 export const ROW_SPLIT = 'ROW_SPLIT';
 export const COL_SPLIT = 'COL_SPLIT';
 
+export const ROW = 'ROW';
+export const COL = 'COL';
 
 export const CHILD_ABOVE = 'CHILD_ABOVE';
 export const CHILD_BELOW = 'CHILD_BELOW';

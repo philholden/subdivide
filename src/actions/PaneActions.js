@@ -9,28 +9,23 @@ import {
 export function setSplitRatio(id, splitRatio) {
   return {
     type: SET_SPLIT_RATIO,
-    splitRatio: splitRatio
+    splitRatio,
+    id
   };
 }
 
-export function addChild(id, splitType){
+export function split(id, splitType){
   return {
-    type: ADD_CHILD_PANE,
+    type: split,
     id,
     splitType
   };
 }
 
-export function removeChildPane(id){
+export function merge(expandedId, removedId){
   return {
     type: REMOVE_CHILD_PANE,
-    id
-  };
-}
-
-export function removeParentPane(id){
-  return {
-    type: REMOVE_PARENT_PANE,
-    id
+    expandedId,
+    removedId
   };
 }

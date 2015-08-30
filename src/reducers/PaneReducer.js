@@ -2,7 +2,13 @@ import {
   ADD_CHILD_PANE,
   REMOVE_PARENT_PANE,
   REMOVE_CHILD_PANE,
-  SET_SPLIT_RATIO
+  SET_SPLIT_RATIO,
+  CHILD_ABOVE,
+  CHILD_BELOW,
+  CHILD_LEFT,
+  CHILD_RIGHT,
+  ROW,
+  COL
 } from '../constants/CampaignTableConstants';
 
 import { Record, List, Map} from 'immutable';
@@ -14,85 +20,98 @@ const initialState = Map({
 
 const Pane = new Record({
   id: 0,
-  childId: undefined,
+  childIds: List(),
+  isGroup: false,
+  direction: undefined,
   parentId: 0,
-  splitType: undefined,
-  splitRatio: 1,
-  contents: undefined
+  splitRatio: 1
 });
 
 function getNextId(state) {
-  return state.get('panes').map( pane => pane.id ).max() + 1;
+  return (
+    state
+      .get('panes')
+      .map(pane => parseInt(pane.id))
+      .max() + 1
+  ) + '';
 }
 
-function addChild(state, action) {
-  const {splitType, id} = action;
-  const childId = getNextId(state);
-  const childPane = new Pane({
-    id: childId,
-    parentId: id
+function wrapPane(state, id) {
+  const pane = state.panes.get(id);
+  const groupId = getNextId(state)
+  const group = new Pane({
+    id: groupId,
+    isGroup: true,
+    childIds: List([id]),
+    parentId: pane.parentId
   });
-  state = state.mergeIn(
-    ['panes', action.id, 'childId'],
-    {childId, splitType}
-  );
-  state = state.setIn(['panes', childId], childPane);
-  return state;
+  pane = pane.set('parentId', groupId);
+  state = state.setIn(['panes', id], pane);
+  state = state.setIn(['panes', groupId], group);
+  return {state, group};
 }
 
-function removeChildPane(state, action) {
-  const {id} = action;
-  const currentPane = state.getIn(['panes', id]);
-  const {childId, splitRatio} = currentPane;
-  const childPane = state.getIn(['panes', childId]);
-  if (childPane === undefined) return state;
-  const panes = state.get('panes').delete(childId);
-  const hasGrandchild = (childPane.childId === undefined);
-  let grandchild;
-  splitRatio = hasGrandchild ? splitRatio : 1;
+function getDirection(splitType) {
+  if (CHILD_ABOVE || CHILD_BELOW) return COL;
+  if (CHILD_LEFT || CHILD_RIGHT) return ROW;
+}
 
-  currentPane = currentPane.merge({
-    childId: childPane.childId,
-    splitType: undefined,
-    splitRatio: splitRatio
-  });
+function getOffset(splitType) {
+  if (CHILD_ABOVE || CHILD_LEFT) return 0;
+  if (CHILD_BELOW || CHILD_RIGHT) return 1;
+}
 
-  panes = panes.set(id, currentPane);
-  state = state.set('panes', panes);
-
-  if (hasGrandchild) {
-    grandchild = state.getIn(['panes', childPane.childId]);
-    grandchild.set('parentId', id);
+function splitPane(state, {id, splitType}) {
+  let pane = state.panes.get(id);
+  let parent = state.panes.get(pane.parentId);
+  let direction = getDirection(splitType);
+  if (!parent || parent.direction !== direction) {
+    let out = wrapPane(state, id);
+    parent = out.group;
+    parent = parent.set('direction', direction);
+    state = out.state;
   }
-
-  return state;
+  let childIds = parent.childIds;
+  let index = childIds.indexOf(id);
+  let newPane = new Pane({
+    id: getNextId(state),
+    parentId: parent.get('id')
+  });
+  let offset = getOffset(splitType);
+  childIds = childIds.splice(index + offset, 0, newPane.id);
+  parent = parent.set('childIds', childIds);
+  state = state.setIn(['panes', parent.id], parent);
+  state = state.setIn(['panes', newPane.id], newPane);
 }
 
-function removeParentPane(state, action) {
-  const {id} = action;
-  const currentPane = state.getIn(['panes', id]);
-  const {parentId, splitRatio} = currentPane;
-  const parentPane = state.getIn(['panes', parentId]);
-  if (parentPane === undefined) return state;
-  const panes = state.get('panes').delete(parentId);
-  const hasGrandparent = (parentPane.parentId === undefined);
-  let grandparent;
-  splitRatio = hasGrandparent ? splitRatio : 1;
-
-  currentPane = currentPane.merge({
-    parentId: parentPane.parentId,
-    splitType: undefined,
-    splitRatio: splitRatio
-  });
-
-  panes = panes.set(id, currentPane);
-  state = state.set('panes', panes);
-
-  if (hasGrandparent) {
-    grandparent = state.getIn(['panes', parentPane.parentId]);
-    grandparent.set('parentId', id);
+function removePane(state, id) {
+  //splice out of parents childIds
+  let pane = state.panes.get(id);
+  let parent = state.panes.get(pane.parentId);
+  if (!parent) return state;
+  let childIds = parent.childIds;
+  let index = childIds.indexOf(id);
+  let panes = state.panes;
+  childIds = childIds.splice(index, 1);
+  parent = parent.set('childIds', childIds);
+  if (childIds.length !== 1) {
+    state = state.setIn(['panes', parent.id], parent);
+  } else {
+    //if only one child remains remove group wrapper
+    let remainingPane = panes.get(childIds.get(0));
+    let grandparentId = parent.parentId;
+    let grandparent = panes.get(grandparentId);
+    childIds = grandparent.childIds;
+    index = childIds.indexOf(parent.id);
+    childIds = childIds.set(index, remainingPane.id);
+    grandparent = grandparent.set('childIds', childIds);
+    remainingPane = remainingPane.set('parentId', grandparentId);
+    panes = panes
+      .delete(parent.id)
+      .set(grandparent.id, grandparent)
+      .set(remainingPane.id, remainingPane);
   }
-
+  state = state.set('panes', panes);
   return state;
 }
 
