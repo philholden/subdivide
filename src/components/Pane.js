@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Triangle from '../components/Triangle';
 import Divider from '../components/Divider';
-import {CHILD_LEFT, CHILD_RIGHT, CHILD_BELOW, CHILD_ABOVE, NE, SW} from '../constants/blenderLayoutConstants';
-
-
-
-
+import {
+  CHILD_LEFT,
+  CHILD_RIGHT,
+  CHILD_BELOW,
+  CHILD_ABOVE,
+  NE,
+  SW
+} from '../constants/BlenderLayoutConstants';
 
 export default class Pane extends Component {
   constructor(props, context) {

@@ -1,8 +1,7 @@
 import {
-  ADD_CHILD_PANE,
-  REMOVE_CHILD_PANE,
-  REMOVE_PARENT_PANE,
-  SET_SPLIT_RATIO
+  SET_SPLIT_RATIO,
+  SPLIT,
+  JOIN
 } from '../constants/RealTimeMeshConstants';
 
 
@@ -16,16 +15,16 @@ export function setSplitRatio(id, splitRatio) {
 
 export function split(id, splitType){
   return {
-    type: split,
+    type: SPLIT,
     id,
     splitType
   };
 }
 
-export function merge(expandedId, removedId){
+export function join(retainId, removeId){
   return {
-    type: REMOVE_CHILD_PANE,
-    expandedId,
-    removedId
+    type: JOIN,
+    retainId,
+    removeId
   };
 }

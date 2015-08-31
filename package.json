@@ -4,7 +4,7 @@
   "description": "Sharing of state between game instances on different clients",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test --compilers js:babel/register --recursive",
     "start": "node server.js",
     "build": "NODE_ENV=production node node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js",
     "lint": "eslint src"
@@ -18,8 +18,10 @@
     "css-loader": "^0.15.1",
     "eslint": "^0.23.0",
     "eslint-plugin-react": "^2.5.2",
+    "expect": "^1.9.0",
     "file-loader": "^0.8.4",
     "json-loader": "^0.5.2",
+    "mocha": "^2.3.0",
     "node-libs-browser": "^0.5.2",
     "node-sass": "^3.2.0",
     "react-hot-loader": "^1.2.7",

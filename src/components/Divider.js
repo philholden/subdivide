@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import {CHILD_LEFT, CHILD_RIGHT, CHILD_BELOW, CHILD_ABOVE, CHILD_NONE} from '../constants/blenderLayoutConstants';
+import {
+  CHILD_LEFT,
+  CHILD_RIGHT,
+  CHILD_BELOW,
+  CHILD_ABOVE,
+  CHILD_NONE
+} from '../constants/BlenderLayoutConstants';
 
 function dividerStyle({splitType, size = 5, color = '#444'}) {
 

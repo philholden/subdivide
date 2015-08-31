@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Radium from 'radium';
-import {NE, SW} from '../constants/blenderLayoutConstants';
+import {NE, SW} from '../constants/BlenderLayoutConstants';
 
 function triangleStyle({corner, color, size}) {
   var offset = size / 2;
