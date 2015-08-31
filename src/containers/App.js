@@ -1,27 +1,25 @@
 import React, { Component } from 'react';
-import Pane from '../components/Pane';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import reducer from '../reducers';
+import LayoutContainer from './LayoutContainer';
+
+let finalCreateStore = compose(
+  applyMiddleware(thunk),
+  createStore
+);
+
+const store = finalCreateStore(reducer);
 
 export default class App extends Component {
+
   render() {
     return (
       <div>
-        <div style={{
-          width: 55 / Math.sqrt(2) + 'px',
-          height: 55 / Math.sqrt(2) + 'px',
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          backgroundColor: 'blue'
-        }}></div>
-        <div style={{
-          width: 55 / Math.sqrt(2) + 'px',
-          height: 55 / Math.sqrt(2) + 'px',
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          backgroundColor: 'blue'
-        }}></div>
-        <Pane />
+        <Provider store={store}>
+          <LayoutContainer />
+        </Provider>
       </div>
     );
   }

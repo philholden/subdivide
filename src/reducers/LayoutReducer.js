@@ -108,9 +108,7 @@ function removePane(state, id) {
     if (parent.id === state.rootId) {
       state = state.set('rootId', remainingPane.id);
       remainingPane = remainingPane.set('parentId', undefined);
-      panes = panes.delete(parent.id);
     } else {
-
       let grandparentId = parent.parentId;
       let grandparent = panes.get(grandparentId);
       let grandchildIds = grandparent.childIds;
@@ -120,6 +118,7 @@ function removePane(state, id) {
       remainingPane = remainingPane.set('parentId', grandparentId);
       panes = panes.set(grandparent.id, grandparent);
     }
+    panes = panes.delete(parent.id);
     remainingPane = remainingPane.set('direction', undefined);
     panes = panes.set(remainingPane.id, remainingPane);
   }
@@ -160,7 +159,7 @@ function setSplitRatio(state, action) {
   );
 }
 
-export default function PaneReducer(state = initialState, action) {
+export default function LayoutReducer(state = initialState, action) {
 
   switch (action.type) {
   case SPLIT:

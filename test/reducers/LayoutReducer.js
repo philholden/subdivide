@@ -1,6 +1,6 @@
 import expect from 'expect';
-import PaneReducer from '../../src/reducers/PaneReducer';
-import {Pane, Layout} from '../../src/reducers/PaneReducer';
+import LayoutReducer from '../../src/reducers/LayoutReducer';
+import {Pane, Layout} from '../../src/reducers/LayoutReducer';
 import {
   SET_SPLIT_RATIO,
   CHILD_ABOVE,
@@ -36,7 +36,7 @@ describe('pane reducer', () => {
         splitType: CHILD_RIGHT
       };
 
-      endState = PaneReducer(startState, action);
+      endState = LayoutReducer(startState, action);
       original = endState.panes.get('0');
       parent = endState.panes.get(original.parentId);
       //console.log(original, parent);
@@ -76,7 +76,7 @@ describe('pane reducer', () => {
         splitType: CHILD_LEFT
       };
 
-      endState = PaneReducer(startState, action);
+      endState = LayoutReducer(startState, action);
       original = endState.panes.get('0');
       parent = endState.panes.get(original.parentId);
       added = endState.panes.get(parent.childIds.first());
@@ -102,7 +102,7 @@ describe('pane reducer', () => {
         splitType: CHILD_ABOVE
       };
 
-      endState = PaneReducer(startState, action);
+      endState = LayoutReducer(startState, action);
       original = endState.panes.get('0');
       parent = endState.panes.get(original.parentId);
       added = endState.panes.get(parent.childIds.first());
@@ -128,7 +128,7 @@ describe('pane reducer', () => {
         splitType: CHILD_BELOW
       };
 
-      endState = PaneReducer(startState, action);
+      endState = LayoutReducer(startState, action);
       original = endState.panes.get('0');
       parent = endState.panes.get(original.parentId);
       added = endState.panes.get(parent.childIds.last());
@@ -179,7 +179,7 @@ describe('pane reducer', () => {
         retainId: '2'
       };
 
-      endState = PaneReducer(startState, action);
+      endState = LayoutReducer(startState, action);
     });
 
     it('remaining pane should be root', () => {
@@ -252,7 +252,7 @@ describe('pane reducer', () => {
         retainId: '2'
       };
 
-      endState = PaneReducer(startState, action);
+      endState = LayoutReducer(startState, action);
       //console.log(endState.toJS());
     });
 
@@ -333,32 +333,33 @@ describe('pane reducer', () => {
         retainId: '3'
       };
 
-      endState = PaneReducer(startState, action);
-      console.log(endState);
+      endState = LayoutReducer(startState, action);
+      //console.log(endState.toJS());
     });
 
-    it('remaining pane should be root', () => {
-      expect(endState.rootId).toEqual('2');
+    it('parent should be deleted', () => {
+      expect(endState.panes.get('2')).toBe(undefined);
     });
 
-    it('parent pane should be deleted', () => {
-      expect(endState.panes.get('1')).toBe(undefined);
+    it('remaining should be added to grandparents children', () => {
+      expect(endState.panes.get('1').childIds.toJS()).toEqual(['0', '3']);
+    });
+
+    it('remaining parent should be previous grandparent', () => {
+      expect(endState.panes.get('3').parentId).toEqual('1');
     });
 
     it('removed pane should be deleted', () => {
-      expect(endState.panes.get('0')).toBe(undefined);
+      expect(endState.panes.get('4')).toBe(undefined);
     });
 
     it('remaining pane should exist', () => {
-      expect(endState.panes.get('2')).toExist();
+      expect(endState.panes.get('3')).toExist();
     });
 
     it('remaining pane should not have direction', () => {
-      expect(endState.panes.get('2').direction).toBe(undefined);
-    });
-
-    it('remaining pane should not have parent', () => {
-      expect(endState.panes.get('2').parent).toBe(undefined);
+      console.log(endState);
+      expect(endState.panes.get('3').direction).toBe(undefined);
     });
 
   });
