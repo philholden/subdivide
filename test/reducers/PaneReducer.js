@@ -143,7 +143,7 @@ describe('pane reducer', () => {
     });
   });
 
-  describe('join last two in row below rood', () => {
+  describe('join one of two in row below root', () => {
     let original, parent, added;
     beforeEach(() => {
       startState = (new Layout())
@@ -205,6 +205,81 @@ describe('pane reducer', () => {
 
     it('remaining pane should not have parent', () => {
       expect(endState.panes.get('2').parent).toBe(undefined);
+    });
+
+  });
+
+
+  describe('join one of three in row below root', () => {
+    let original, parent, added;
+    beforeEach(() => {
+      startState = (new Layout())
+        .set('rootId', '1')
+        .setIn(['panes', '0'], new Pane({
+          id: '0',
+          childIds: List(),
+          isGroup: false,
+          direction: undefined,
+          parentId: '1',
+          splitRatio: 0.33
+        }))
+        .setIn(['panes', '1'], new Pane({
+          id: '1',
+          childIds: List(['0', '2', '3']),
+          isGroup: true,
+          direction: 'ROW',
+          parentId: undefined,
+          splitRatio: 1
+        }))
+        .setIn(['panes', '2'], new Pane({
+          id: '2',
+          childIds: List(),
+          isGroup: false,
+          direction: undefined,
+          parentId: '1',
+          splitRatio: 0.33
+        }))
+        .setIn(['panes', '3'], new Pane({
+          id: '3',
+          childIds: List(),
+          isGroup: false,
+          direction: undefined,
+          parentId: '1',
+          splitRatio: 0.33
+        }));
+
+      action = {
+        type: JOIN,
+        removeId: '0',
+        retainId: '2'
+      };
+
+      endState = PaneReducer(startState, action);
+      console.log(endState.toJS());
+    });
+
+    it('root should be unchanged', () => {
+      expect(endState.rootId).toEqual('2');
+    });
+
+    it('parent pane should not be deleted', () => {
+      expect(endState.panes.get('1')).toExist();
+    });
+
+    it('parent pane should have 2 children', () => {
+      expect(endState.panes.get('1').childIds.toJS).toEqual([]);
+    });
+
+    it('removed pane should be deleted', () => {
+      expect(endState.panes.get('0')).toBe(undefined);
+    });
+
+    it('remaining pane should exist', () => {
+      expect(endState.panes.get('2')).toExist();
+    });
+
+    it('remaining pane should have parent', () => {
+      expect(endState.panes.get('2').parent).toBe('1');
     });
 
   });
