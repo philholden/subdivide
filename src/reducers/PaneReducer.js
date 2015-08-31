@@ -102,15 +102,15 @@ function removePane(state, id) {
   let panes = state.panes;
   childIds = childIds.splice(index, 1);
   parent = parent.set('childIds', childIds);
-  console.log(childIds);
-  if (childIds.size !== 1) {
-    state = state.setIn(['panes', parent.id], parent);
-  } else {
+  panes = panes.set(parent.id, parent);
+  if (childIds.size === 1) {
     let remainingPane = panes.get(childIds.get(0));
     if (parent.id === state.rootId) {
       state = state.set('rootId', remainingPane.id);
       remainingPane = remainingPane.set('parentId', undefined);
+      panes = panes.delete(parent.id);
     } else {
+
       let grandparentId = parent.parentId;
       let grandparent = panes.get(grandparentId);
       let grandchildIds = grandparent.childIds;
@@ -121,11 +121,9 @@ function removePane(state, id) {
       panes = panes.set(grandparent.id, grandparent);
     }
     remainingPane = remainingPane.set('direction', undefined);
-    panes = panes
-      .delete(parent.id)
-      .delete(id)
-      .set(remainingPane.id, remainingPane);
+    panes = panes.set(remainingPane.id, remainingPane);
   }
+  panes = panes.delete(id);
   state = state.set('panes', panes);
   return state;
 }

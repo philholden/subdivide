@@ -180,7 +180,6 @@ describe('pane reducer', () => {
       };
 
       endState = PaneReducer(startState, action);
-      console.log(endState.toJS());
     });
 
     it('remaining pane should be root', () => {
@@ -255,11 +254,11 @@ describe('pane reducer', () => {
       };
 
       endState = PaneReducer(startState, action);
-      console.log(endState.toJS());
+      //console.log(endState.toJS());
     });
 
     it('root should be unchanged', () => {
-      expect(endState.rootId).toEqual('2');
+      expect(endState.rootId).toEqual('1');
     });
 
     it('parent pane should not be deleted', () => {
@@ -267,7 +266,7 @@ describe('pane reducer', () => {
     });
 
     it('parent pane should have 2 children', () => {
-      expect(endState.panes.get('1').childIds.toJS).toEqual([]);
+      expect(endState.panes.get('1').childIds.toJS()).toEqual(['2', '3']);
     });
 
     it('removed pane should be deleted', () => {
@@ -279,7 +278,7 @@ describe('pane reducer', () => {
     });
 
     it('remaining pane should have parent', () => {
-      expect(endState.panes.get('2').parent).toBe('1');
+      expect(endState.panes.get('2').parentId).toBe('1');
     });
 
   });
