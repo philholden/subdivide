@@ -210,7 +210,6 @@ describe('pane reducer', () => {
 
 
   describe('join one of three in row below root', () => {
-    let original, parent, added;
     beforeEach(() => {
       startState = (new Layout())
         .set('rootId', '1')
@@ -282,4 +281,87 @@ describe('pane reducer', () => {
     });
 
   });
+
+  describe('join one of two in row below root', () => {
+    beforeEach(() => {
+      startState = (new Layout())
+        .set('rootId', '1')
+        .setIn(['panes', '0'], new Pane({
+          id: '0',
+          childIds: List(),
+          isGroup: false,
+          direction: undefined,
+          parentId: '1',
+          splitRatio: 0.25
+        }))
+        .setIn(['panes', '1'], new Pane({
+          id: '1',
+          childIds: List(['0', '2']),
+          isGroup: true,
+          direction: 'ROW',
+          parentId: undefined,
+          splitRatio: 1
+        }))
+        .setIn(['panes', '2'], new Pane({
+          id: '2',
+          childIds: List(['3', '4']),
+          isGroup: true,
+          direction: undefined,
+          parentId: '1',
+          splitRatio: 0.75
+        }))
+        .setIn(['panes', '3'], new Pane({
+          id: '3',
+          childIds: List(),
+          isGroup: false,
+          direction: undefined,
+          parentId: '2',
+          splitRatio: 0.75
+        }))
+        .setIn(['panes', '4'], new Pane({
+          id: '4',
+          childIds: List(),
+          isGroup: false,
+          direction: undefined,
+          parentId: '2',
+          splitRatio: 0.75
+        }));
+
+      action = {
+        type: JOIN,
+        removeId: '4',
+        retainId: '3'
+      };
+
+      endState = PaneReducer(startState, action);
+      console.log(endState);
+    });
+
+    it('remaining pane should be root', () => {
+      expect(endState.rootId).toEqual('2');
+    });
+
+    it('parent pane should be deleted', () => {
+      expect(endState.panes.get('1')).toBe(undefined);
+    });
+
+    it('removed pane should be deleted', () => {
+      expect(endState.panes.get('0')).toBe(undefined);
+    });
+
+    it('remaining pane should exist', () => {
+      expect(endState.panes.get('2')).toExist();
+    });
+
+    it('remaining pane should not have direction', () => {
+      expect(endState.panes.get('2').direction).toBe(undefined);
+    });
+
+    it('remaining pane should not have parent', () => {
+      expect(endState.panes.get('2').parent).toBe(undefined);
+    });
+
+  });
+
+
 });
