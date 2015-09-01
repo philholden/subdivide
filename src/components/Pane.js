@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Triangle from './Triangle';
+import {getSizes} from '../helpers/Metrics';
 
 import Cell from './Cell';
 import {
@@ -10,6 +11,8 @@ import {
   NE,
   SW
 } from '../constants/BlenderLayoutConstants';
+
+
 
 export default class Pane extends Component {
   constructor(props, context) {
@@ -47,27 +50,27 @@ export default class Pane extends Component {
 
   }
 
-  // width %
-  // height %
-  // split (NO_SPLIT | ROW_SPLIT | COL_SPLIT)
-  // child component
-  // parent
-
   renderGroup() {
-    const {pane, layout} = this.props;
+    const {pane, layout, sizes} = this.props;
     const children = pane.childIds.map(id => layout.panes.get(id));
+    const kids = child => {
+      const {contentWidth, contentHeight} = sizes;
+      let childSizes = getSizes({layout, pane: child}, contentWidth, contentHeight);
+      return <Pane layout={layout} pane={child} key={child.id} sizes={childSizes} />;
+    };
     return (
-      <Cell pane={pane} layout={layout} >
-        {children.map(child => <Pane layout={layout} pane={child} key={child.id} />)}
+      <Cell layout={layout} pane={pane} sizes={sizes}>
+        {children.map(kids)}
       </Cell>
     );
   }
 
 
   renderSingle() {
-    const {pane, layout} = this.props;
+    const {pane, layout, sizes} = this.props;
+
     return (
-      <Cell layout={layout} pane={pane}>
+      <Cell layout={layout} pane={pane} sizes={sizes}>
         <Triangle
           corner={SW}
           color='#ccc'
@@ -79,12 +82,15 @@ export default class Pane extends Component {
           size={55}
           onMouseDown={this.onMouseDownTop}
         />
+        {pane.id}
       </Cell>
     );
   }
 
+
   render() {
-    const {pane, layout} = this.props;
+    const {pane, sizes} = this.props;
+
     if (pane.childIds.size > 1) {
       return this.renderGroup();
     } else {

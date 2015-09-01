@@ -2,6 +2,7 @@ import {
   SPLIT,
   JOIN,
   SET_SPLIT_RATIO,
+  SET_SIZE,
   CHILD_ABOVE,
   CHILD_BELOW,
   CHILD_LEFT,
@@ -23,7 +24,9 @@ export const Pane = new Record({
 
 export const Layout = new Record({
   rootId: '0',
-  dividerWidth: 5,
+  dividerSize: 5,
+  width: 800,
+  height: 600,
   panes: Map({
     '0': new Pane()
   })
@@ -160,6 +163,10 @@ function setSplitRatio(state, action) {
   );
 }
 
+function setSize(state, {width, height}) {
+  return state.set('width', width).set('height', height);
+}
+
 export default function LayoutReducer(state = initialState, action) {
 
   switch (action.type) {
@@ -171,6 +178,9 @@ export default function LayoutReducer(state = initialState, action) {
 
   case SET_SPLIT_RATIO:
     return setSplitRatio(state, action);
+
+  case SET_SIZE:
+    return setSize(state, action);
 
   default:
     return state;

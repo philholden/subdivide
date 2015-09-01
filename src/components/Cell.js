@@ -7,78 +7,64 @@ import {
 import Divider from './Divider';
 
 
-function cellStyles({layout, pane}) {
-  const {direction, splitRatio, id} = pane;
-  const parent = layout.panes.get(pane.parentId);
-  const {rootId} = layout;
+function cellStyles({
+      width,
+      height,
+      contentWidth,
+      contentHeight
+    }) {
   let paneStyle = {
-    alignItems: 'stretch',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    position: 'relative',
-    overflow: 'hidden',
-    display: 'flex'
+    float: 'left',
+    width: width + 'px',
+    height: height + 'px',
+    position: 'relative'
     // ':hover': {
     //   backgroundColor: 'rgba(0,0,0,0.1)'
     // }
   };
 
-  let cellStyle = {
-      display: 'flex',
-      flex: 1,
-      backgroundColor: 'pink',
-      position: 'relative',
-      alignItems: 'stretch'
+  let contentStyle = {
+    float: 'left',
+    position: 'relative',
+    overflow: 'hidden',
+    backgroundColor: '#'+((Math.random() * 16777216)|0).toString(16),
+    width: contentWidth + 'px',
+    height: contentHeight + 'px'
   };
 
-  let contentsStyle = {
-      display: 'flex',
-      flex: 1,
-      position: 'relative',
-      alignItems: 'stretch',
-      overflow: 'hidden'
-  };
-
-  if (parent && parent.isGroup) {
-    if (parent.direction === ROW) {
-      paneStyle.width = splitRatio * 100 + '%';
-      paneStyle.height = '100%';
-    }
-    if (parent.direction === COL) {
-      paneStyle.width = '100%';
-      paneStyle.height = splitRatio * 100 + '%';
-      cellStyle.flexDirection = 'column';
-    }
-  }
-
-  if (!parent || parent.direction !== COL) {
-    paneStyle.height = '100%';
-    contentsStyle.height = '100%';
-  }
-  cellStyle.height = '100%';
-
-  if (id === rootId) {
-    paneStyle.width = '100%';
-  }
-
-  if (direction === COL) contentsStyle.flexDirection = 'column';
-  if (direction === ROW) contentsStyle.flexDirection = 'row';
-
-  return {paneStyle, cellStyle, contentsStyle};
+  return {paneStyle, contentStyle};
 }
+
+
 
 @Radium
 export default class Cell extends Component {
-  render() {
 
-    const {paneStyle, contentsStyle, cellStyle} = cellStyles(this.props);
+  shouldDisplayDivider() {
     const {pane, layout} = this.props;
+    if (layout.rootId === pane.id) return false;
+    const {id, parentId} = pane;
+    const parent = layout.panes.get(parentId);
+    const siblings = parent.childIds;
+    const isFirst = siblings.first() === id;
+    return !isFirst;
+  }
+
+  render() {
+    const {pane, layout, sizes} = this.props;
+    const {direction, dividerHeight, dividerWidth} = sizes;
+    const {paneStyle, contentStyle} = cellStyles(sizes);
     return (
       <div style={paneStyle} className="pane">
-        <div style={cellStyle} className="cell">
-          <Divider pane={pane} layout={layout} />
-          <div style={contentsStyle} className="contents">
-            {this.props.children}
-          </div>
+        <Divider
+          pane={pane}
+          layout={layout}
+          width={dividerWidth}
+          height={dividerHeight}
+          direction={direction}
+          />
+        <div style={contentStyle} className="contents">
+          {this.props.children}
         </div>
       </div>
     );

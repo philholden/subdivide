@@ -34,7 +34,7 @@ const startState = (new Layout())
     isGroup: false,
     direction: undefined,
     parentId: '2',
-    splitRatio: 0.75
+    splitRatio: 0.25
   }))
   .setIn(['panes', '4'], new Pane({
     id: '4',

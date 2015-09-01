@@ -18,3 +18,4 @@ export const ADD_CHILD_PANE = 'ADD_CHILD_PANE';
 export const REMOVE_CHILD_PANE = 'REMOVE_CHILD_PANE';
 export const REMOVE_PARENT_PANE = 'REMOVE_PARENT_PANE';
 export const SET_SPLIT_RATIO = 'SET_SPLIT_RATIO';
+export const SET_SIZE = 'SET_SIZE';

@@ -1,7 +1,8 @@
 import {
   SET_SPLIT_RATIO,
   SPLIT,
-  JOIN
+  JOIN,
+  SET_SIZE
 } from '../constants/RealTimeMeshConstants';
 
 
@@ -26,5 +27,13 @@ export function join(retainId, removeId){
     type: JOIN,
     retainId,
     removeId
+  };
+}
+
+export function setSize(width, height){
+  return {
+    type: SET_SIZE,
+    width,
+    height
   };
 }
