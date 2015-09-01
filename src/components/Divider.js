@@ -1,47 +1,37 @@
 import React, { Component } from 'react';
 import {
-  CHILD_LEFT,
-  CHILD_RIGHT,
-  CHILD_BELOW,
-  CHILD_ABOVE,
-  CHILD_NONE
+  ROW,
+  COL
 } from '../constants/BlenderLayoutConstants';
 
-function dividerStyle({splitType, size = 5, color = '#444'}) {
+function dividerStyle({layout, pane}) {
+  const {parentId} = pane;
+  const parent = layout.panes.get(parentId);
+  const {direction} = parent;
+  const {dividerWidth} = layout;
 
   var style = {
-    position: 'absolute',
-    backgroundColor: color,
-    ':hover': {
-      backgroundColor: 'red'
-    }
+    backgroundColor: '#a0f'
   };
 
-  if (splitType === CHILD_LEFT ||
-      splitType === CHILD_RIGHT) {
-    return {
-      ...style,
-      top: 0,
-      bottom: 0,
-      width: size + 'px',
-      left: splitType === CHILD_LEFT ? 'auto' : 0,
-      right: splitType === CHILD_LEFT ? 0 : 'auto'
-    };
+  if (direction === ROW) {
+    style.width = dividerWidth + 'px';
+  }
+  if (direction === COL) {
+    style.height = dividerWidth + 'px';
   }
 
-  if (splitType === CHILD_ABOVE ||
-    splitType === CHILD_BELOW) {
-    return {
-      ...style,
-      left: 0,
-      right: 0,
-      height: size + 'px',
-      top: splitType === CHILD_BELOW ? 'auto' : 0,
-      bottom: splitType === CHILD_BELOW ? 0 : 'auto'
-    };
-  }
+  return style;
 }
 
+function shouldDisplay({layout, pane}) {
+  if (layout.rootId === pane.id) return false;
+  const {id, parentId} = pane;
+  const parent = layout.panes.get(parentId);
+  const siblings = parent.childIds;
+  const isFirst = siblings.first() === id;
+  return !isFirst;
+}
 
 export default class Divider extends Component {
   constructor(props, context) {
@@ -49,7 +39,8 @@ export default class Divider extends Component {
   }
 
   render() {
-    if (this.props.splitType === undefined) return null;
+    if (!shouldDisplay(this.props)) return null;
+
     return (
       <div style={dividerStyle(this.props)} />
     );

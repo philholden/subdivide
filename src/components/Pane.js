@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Triangle from '../components/Triangle';
-import Divider from '../components/Divider';
+import Triangle from './Triangle';
+
+import Cell from './Cell';
 import {
   CHILD_LEFT,
   CHILD_RIGHT,
@@ -52,10 +53,21 @@ export default class Pane extends Component {
   // child component
   // parent
 
+  group() {
+    const {pane, layout} = this.props;
+    const children = pane.childIds.map(id => layout.panes.get(id));
+    return (
+      <Cell pane={pane} layout={layout} >
+        {children.map(child => <Pane layout={layout} pane={child} />)}
+      </Cell>
+    );
+  }
+
 
   render() {
+    const {pane, layout} = this.props;
     return (
-      <div>
+      <Cell layout={layout} pane={pane}>
         <Triangle
           corner={SW}
           color='#ccc'
@@ -67,21 +79,7 @@ export default class Pane extends Component {
           size={55}
           onMouseDown={this.onMouseDownTop}
         />
-        <Divider
-          splitType={CHILD_ABOVE}
-        />
-        <Divider
-          splitType={CHILD_BELOW}
-          color='#777'
-        />
-        <Divider
-          splitType={CHILD_LEFT}
-        />
-        <Divider
-          splitType={CHILD_RIGHT}
-        />
-
-      </div>
+      </Cell>
     );
   }
 }

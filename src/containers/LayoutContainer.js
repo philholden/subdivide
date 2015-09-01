@@ -3,16 +3,15 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Layout from '../components/Layout';
 @connect(state => ({
-  layout: state.layout
+  store: state.layout
 }))
 export default class App extends Component {
   render() {
-    console.log(this.props.layout);
+    const {store} = this.props;
+    const {layout} = store;
+    console.log(layout.toJS());
     return (
-      <div>
-        <div>{JSON.stringify(this.props.layout.toJS())}</div>
-        <Layout layout={this.props.layout} />
-      </div>
+      <Layout layout={layout} />
     );
   }
 }

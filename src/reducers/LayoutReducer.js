@@ -23,6 +23,7 @@ export const Pane = new Record({
 
 export const Layout = new Record({
   rootId: '0',
+  dividerWidth: 5,
   panes: Map({
     '0': new Pane()
   })
