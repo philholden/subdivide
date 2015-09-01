@@ -7,48 +7,67 @@ import {
 import Divider from './Divider';
 
 
-function cellStyle({layout, pane}) {
-  const {isGroup, direction, splitRatio, id} = pane;
+function cellStyles({layout, pane}) {
+  const {direction, splitRatio, id} = pane;
   const parent = layout.panes.get(pane.parentId);
-  const {dividerWidth, rootId} = layout;
-  var style = {
+  const {rootId} = layout;
+  let paneStyle = {
     alignItems: 'stretch',
-    backgroundColor: 'blue',
-    ':hover': {
-      backgroundColor: 'rgba(0,0,0,0.1)'
-    }
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    position: 'relative',
+    overflow: 'hidden',
+    display: 'flex'
+    // ':hover': {
+    //   backgroundColor: 'rgba(0,0,0,0.1)'
+    // }
+  };
+
+  let cellStyle = {
+      display: 'flex',
+      flex: 1,
+      backgroundColor: 'pink',
+      position: 'relative',
+      alignItems: 'stretch'
+  };
+
+  let contentsStyle = {
+      display: 'flex',
+      flex: 1,
+      border: '1px solid #c12',
+      position: 'relative',
+      alignItems: 'stretch',
+      overflow: 'hidden'
   };
 
   if (parent && parent.isGroup) {
-    const isLast = parent.childIds.last() === pane.id;
     if (parent.direction === ROW) {
-      style.width = splitRatio * 100 + '%';
+      paneStyle.width = splitRatio * 100 + '%';
     }
     if (parent.direction === COL) {
-      style.height = splitRatio * 100 + '%';
+      paneStyle.height = splitRatio * 100 + '%';
     }
   }
   if (id === rootId) {
-    style.width = '100%';
+    paneStyle.width = '100%';
   }
 
-  if (isGroup) style.display = 'flex';
-  if (direction === 'COL') style.flexDirection = 'column';
+  if (direction === COL) pane.flexDirection = 'column';
+  if (direction === ROW) pane.flexDirection = 'row';
 
-  return style;
+  return {paneStyle, cellStyle, contentsStyle};
 }
 
 @Radium
 export default class Cell extends Component {
   render() {
-    const fill = {display: 'flex', flex: 1};
-    const styles = cellStyle(this.props);
+
+    const {paneStyle, contentsStyle, cellStyle} = cellStyles(this.props);
     const {pane, layout} = this.props;
     return (
-      <div style={styles}>
-        <div style={fill}>
+      <div style={paneStyle} className="pane">
+        <div style={cellStyle} className="cell">
           <Divider pane={pane} layout={layout} />
-          <div style={fill}>
+          <div style={contentsStyle} className="contents">
             {this.props.children}
           </div>
         </div>

@@ -42,7 +42,7 @@ export default class Divider extends Component {
     if (!shouldDisplay(this.props)) return null;
 
     return (
-      <div style={dividerStyle(this.props)} />
+      <div style={dividerStyle(this.props)} className="divider" />
     );
   }
 }

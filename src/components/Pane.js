@@ -53,18 +53,18 @@ export default class Pane extends Component {
   // child component
   // parent
 
-  group() {
+  renderGroup() {
     const {pane, layout} = this.props;
     const children = pane.childIds.map(id => layout.panes.get(id));
     return (
       <Cell pane={pane} layout={layout} >
-        {children.map(child => <Pane layout={layout} pane={child} />)}
+        {children.map(child => <Pane layout={layout} pane={child} key={child.id} />)}
       </Cell>
     );
   }
 
 
-  render() {
+  renderSingle() {
     const {pane, layout} = this.props;
     return (
       <Cell layout={layout} pane={pane}>
@@ -75,11 +75,20 @@ export default class Pane extends Component {
         />
         <Triangle
           corner={NE}
-          color='#ccc'
+          color='#333'
           size={55}
           onMouseDown={this.onMouseDownTop}
         />
       </Cell>
     );
+  }
+
+  render() {
+    const {pane, layout} = this.props;
+    if (pane.childIds.size > 1) {
+      return this.renderGroup();
+    } else {
+      return this.renderSingle();
+    }
   }
 }
