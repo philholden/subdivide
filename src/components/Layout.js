@@ -3,13 +3,17 @@ import Pane from './Pane';
 import {getSizes} from '../helpers/Metrics';
 
 export default class Layout extends Component {
+  constructor(props, context) {
+    super(props, context);
+    window.addEventListener('resize', () => {
+      props.setSize(window.innerWidth, window.innerHeight);
+    });
+  }
   render() {
-    const {layout} = this.props;
+    const {layout, setSize} = this.props;
     const {width, height} = layout;
-    console.log(layout.toJS());
     const pane = layout.panes.get(layout.rootId);
     const sizes = getSizes({layout, pane}, width, height);
-    console.log(sizes);
     return (
       <Pane
         layout={layout}

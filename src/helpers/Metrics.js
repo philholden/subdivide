@@ -13,7 +13,6 @@ export function shouldDisplayDivider({pane, layout}) {
 }
 
 export function getSizes({pane, layout}, parentWidth, parentHeight) {
-  console.log(pane.toJS());
   const {splitRatio} = pane;
   const parent = layout.panes.get(pane.parentId);
   let {dividerSize} = layout;

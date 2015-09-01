@@ -10,7 +10,8 @@ function dividerStyle({width, height, direction}) {
     width: width + 'px',
     height: height + 'px',
     backgroundColor: '#a0f',
-    float: 'left'
+    float: 'left',
+    cursor: direction === COL ? 'ns-resize' : 'ew-resize'
   };
 
   // if (direction === ROW) {

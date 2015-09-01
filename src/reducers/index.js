@@ -34,7 +34,7 @@ const startState = (new Layout())
     isGroup: false,
     direction: undefined,
     parentId: '2',
-    splitRatio: 0.25
+    splitRatio: 1 / 3
   }))
   .setIn(['panes', '4'], new Pane({
     id: '4',
@@ -42,7 +42,7 @@ const startState = (new Layout())
     isGroup: false,
     direction: undefined,
     parentId: '2',
-    splitRatio: 0.75
+    splitRatio: 2 / 3
   }));
 
 const Reducer = Record({
@@ -53,5 +53,5 @@ const initialState = Reducer();
 
 export default function (state = initialState, action) {
   return state
-    .set('layout', LayoutReducer(state, action));
+    .set('layout', LayoutReducer(state.layout, action));
 }

@@ -27,7 +27,7 @@ function cellStyles({
     float: 'left',
     position: 'relative',
     overflow: 'hidden',
-    backgroundColor: '#'+((Math.random() * 16777216)|0).toString(16),
+    backgroundColor: '#xxx'.replace(/x/g, () => ((Math.random() * 16) | 0).toString(16)),
     width: contentWidth + 'px',
     height: contentHeight + 'px'
   };

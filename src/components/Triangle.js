@@ -20,6 +20,8 @@ function triangleStyle({corner, color, size}) {
         ...style,
         top: 0,
         right: 0,
+//        cursor: 'sw-resize',
+        cursor: 'grab',
         transform: 'translate3d(' + (offset) + 'px,' + (-offset) + 'px, 0) rotate(45deg)',
       };
     case SW:
@@ -27,6 +29,8 @@ function triangleStyle({corner, color, size}) {
         ...style,
         bottom: 0,
         left: 0,
+    //    cursor: 'ne-resize',
+        cursor: 'grab',
         transform: 'translate3d(' + (-offset) + 'px,' + (offset) + 'px, 0) rotate(45deg)',
       };
   }
