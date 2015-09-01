@@ -24,7 +24,7 @@ export const Pane = new Record({
 
 export const Layout = new Record({
   rootId: '0',
-  dividerSize: 5,
+  dividerSize: 3,
   width: 800,
   height: 600,
   panes: Map({

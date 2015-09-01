@@ -4,22 +4,17 @@ import {
   COL
 } from '../constants/BlenderLayoutConstants';
 
-function dividerStyle({width, height, direction}) {
+import {getAdjacent} from '../constants/BlenderLayoutConstants';
+
+function dividerStyle({dividerWidth, dividerHeight, direction}) {
 
   var style = {
-    width: width + 'px',
-    height: height + 'px',
+    width: dividerWidth + 'px',
+    height: dividerHeight + 'px',
     backgroundColor: '#a0f',
     float: 'left',
     cursor: direction === COL ? 'ns-resize' : 'ew-resize'
   };
-
-  // if (direction === ROW) {
-  //   float: 'left'
-  // }
-  // if (direction === COL) {
-  //   style.height = dividerWidth + 'px';
-  // }
 
   return style;
 }
@@ -36,13 +31,44 @@ function shouldDisplay({layout, pane}) {
 export default class Divider extends Component {
   constructor(props, context) {
     super(props, context);
+
+    this.onMouseMove = ({clientX, clientY}) => {
+      let {x, y} = this.start;
+      let delta = {x: clientX - x, y: clientY - y};
+      //
+
+    };
+
+    this.removeListeners = () => {
+      document.removeEventListener('mousemove', this.onMouseMove);
+      document.removeEventListener('mouseup', this.onMouseUp);
+    };
+
+    this.onMouseUp = () => {
+      this.removeListeners();
+    };
+
+    this.onMouseDown = ({clientX, clientY}) => {
+      this.start = {x: clientX, y: clientY};
+      document.addEventListener('mousemove', this.onMouseMove);
+      document.addEventListener('mouseup', this.onMouseUp);
+    };
+  }
+
+
+
+  componentWillUnmount() {
+    this.removeListeners();
   }
 
   render() {
     if (!shouldDisplay(this.props)) return null;
 
     return (
-      <div style={dividerStyle(this.props)} className="divider" />
+      <div
+        style={dividerStyle(this.props.sizes)}
+        onMouseDown={this.onMouseDown}
+        className="divider" />
     );
   }
 }

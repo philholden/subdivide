@@ -8,6 +8,7 @@ export default class Layout extends Component {
     window.addEventListener('resize', () => {
       props.setSize(window.innerWidth, window.innerHeight);
     });
+    props.setSize(window.innerWidth, window.innerHeight);
   }
   render() {
     const {layout, setSize} = this.props;

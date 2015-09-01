@@ -74,12 +74,12 @@ export default class Pane extends Component {
         <Triangle
           corner={SW}
           color='#ccc'
-          size={55}
+          size={40}
         />
         <Triangle
           corner={NE}
           color='#333'
-          size={55}
+          size={40}
           onMouseDown={this.onMouseDownTop}
         />
         {pane.id}

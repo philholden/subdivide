@@ -59,9 +59,7 @@ export default class Cell extends Component {
         <Divider
           pane={pane}
           layout={layout}
-          width={dividerWidth}
-          height={dividerHeight}
-          direction={direction}
+          sizes={sizes}
           />
         <div style={contentStyle} className="contents">
           {this.props.children}
