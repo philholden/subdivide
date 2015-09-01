@@ -33,7 +33,6 @@ function cellStyles({layout, pane}) {
   let contentsStyle = {
       display: 'flex',
       flex: 1,
-      border: '1px solid #c12',
       position: 'relative',
       alignItems: 'stretch',
       overflow: 'hidden'
@@ -42,17 +41,27 @@ function cellStyles({layout, pane}) {
   if (parent && parent.isGroup) {
     if (parent.direction === ROW) {
       paneStyle.width = splitRatio * 100 + '%';
+      paneStyle.height = '100%';
     }
     if (parent.direction === COL) {
+      paneStyle.width = '100%';
       paneStyle.height = splitRatio * 100 + '%';
+      cellStyle.flexDirection = 'column';
     }
   }
+
+  if (!parent || parent.direction !== COL) {
+    paneStyle.height = '100%';
+    contentsStyle.height = '100%';
+  }
+  cellStyle.height = '100%';
+
   if (id === rootId) {
     paneStyle.width = '100%';
   }
 
-  if (direction === COL) pane.flexDirection = 'column';
-  if (direction === ROW) pane.flexDirection = 'row';
+  if (direction === COL) contentsStyle.flexDirection = 'column';
+  if (direction === ROW) contentsStyle.flexDirection = 'row';
 
   return {paneStyle, cellStyle, contentsStyle};
 }

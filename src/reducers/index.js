@@ -22,28 +22,28 @@ const startState = (new Layout())
   }))
   .setIn(['panes', '2'], new Pane({
     id: '2',
-    childIds: List(),
+    childIds: List(['3', '4']),
     isGroup: true,
-    direction: undefined,
+    direction: 'COL',
     parentId: '1',
     splitRatio: 0.75
+  }))
+  .setIn(['panes', '3'], new Pane({
+    id: '3',
+    childIds: List(),
+    isGroup: false,
+    direction: undefined,
+    parentId: '2',
+    splitRatio: 0.75
+  }))
+  .setIn(['panes', '4'], new Pane({
+    id: '4',
+    childIds: List(),
+    isGroup: false,
+    direction: undefined,
+    parentId: '2',
+    splitRatio: 0.75
   }));
-  // .setIn(['panes', '3'], new Pane({
-  //   id: '3',
-  //   childIds: List(),
-  //   isGroup: false,
-  //   direction: undefined,
-  //   parentId: '2',
-  //   splitRatio: 0.75
-  // }))
-  // .setIn(['panes', '4'], new Pane({
-  //   id: '4',
-  //   childIds: List(),
-  //   isGroup: false,
-  //   direction: undefined,
-  //   parentId: '2',
-  //   splitRatio: 0.75
-  // }));
 
 const Reducer = Record({
   layout: LayoutReducer(startState, {})
