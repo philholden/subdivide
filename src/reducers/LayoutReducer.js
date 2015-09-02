@@ -180,6 +180,7 @@ export default function LayoutReducer(state = initialState, action) {
     return join(state, action);
 
   case SET_SPLIT_RATIO:
+    //console.log(action);
     return setSplitRatio(state, action);
 
   case SET_SIZE:

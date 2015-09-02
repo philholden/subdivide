@@ -33,14 +33,16 @@ export default class Divider extends Component {
     super(props, context);
 
     this.onMouseMove = ({clientX, clientY}) => {
-      const {sizes, actions, pane} = props;
-      const adjacent = getAdjacent(props);
+      const {sizes, actions, pane} = this.props;
+      const adjacent = getAdjacent(this.props);
       const {direction, adjacentSize} = sizes;
-      let {x, y, totalRatio} = this.start;
+      let {x, y} = this.start;
       let delta = direction === ROW ? clientX - x : clientY - y;
-      let ratioDelta = delta * totalRatio / adjacentSize;
-      let adjacentRatio = this.start.adjacentRatio + ratioDelta;
-      let paneRatio = this.start.paneRatio - ratioDelta;
+      let {parentSize} = sizes;
+      let deltaRatio = delta / parentSize;
+      let paneRatio = this.start.paneRatio - deltaRatio;
+      let adjacentRatio = this.start.adjacentRatio + deltaRatio;
+      //console.log(pane);
       actions.setSplitRatio(pane.id, paneRatio);
       actions.setSplitRatio(adjacent.id, adjacentRatio);
     };
@@ -55,15 +57,15 @@ export default class Divider extends Component {
     };
 
     this.onMouseDown = ({clientX, clientY}) => {
-      const {pane} = props;
-      const adjacent = getAdjacent(props);
+      const {pane} = this.props;
+      const adjacent = getAdjacent(this.props);
       this.start = {
         x: clientX,
         y: clientY,
         paneRatio: pane.splitRatio,
-        adjacentRatio: adjacent.splitRatio,
-        totalRatio: pane.splitRatio + adjacent.splitRatio
+        adjacentRatio: adjacent.splitRatio
       };
+      console.log(this.start);
 
       document.addEventListener('mousemove', this.onMouseMove);
       document.addEventListener('mouseup', this.onMouseUp);
