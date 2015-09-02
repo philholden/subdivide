@@ -60,15 +60,15 @@ export function getSizes({pane, layout}, parentWidth, parentHeight) {
       width = splitRatio * parentWidth;
       dividerWidth = dividerSize;
       contentWidth = width - dividerSize;
-      adjacentSize = contentWidth + adjacent.splitRatio * parentWidth;
+      adjacentSize = width + adjacent.splitRatio * parentWidth;
     }
     if (parent.direction === COL) {
       height = splitRatio * parentHeight;
       dividerHeight = dividerSize;
       contentHeight = height - dividerSize;
-      adjacentSize = contentHeight + adjacent.splitRatio * parentHeight;
+      adjacentSize = height + adjacent.splitRatio * parentHeight;
     }
-    if (adjacent.hasDivider) adjacentSize -= dividerSize;
+  //  if (adjacent.hasDivider) adjacentSize -= dividerSize;
   }
 
   return {
@@ -78,7 +78,7 @@ export function getSizes({pane, layout}, parentWidth, parentHeight) {
     dividerHeight,
     contentWidth,
     contentHeight,
-  //  adjacentSize,
+    adjacentSize,
     direction: parent && parent.direction
   };
 }

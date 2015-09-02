@@ -4,7 +4,7 @@ import {
   COL
 } from '../constants/BlenderLayoutConstants';
 
-import {getAdjacent} from '../constants/BlenderLayoutConstants';
+import {getAdjacent} from '../helpers/Metrics';
 
 function dividerStyle({dividerWidth, dividerHeight, direction}) {
 
@@ -33,10 +33,16 @@ export default class Divider extends Component {
     super(props, context);
 
     this.onMouseMove = ({clientX, clientY}) => {
-      let {x, y} = this.start;
-      let delta = {x: clientX - x, y: clientY - y};
-      //
-
+      const {sizes, actions, pane} = props;
+      const adjacent = getAdjacent(props);
+      const {direction, adjacentSize} = sizes;
+      let {x, y, totalRatio} = this.start;
+      let delta = direction === ROW ? clientX - x : clientY - y;
+      let ratioDelta = delta * totalRatio / adjacentSize;
+      let adjacentRatio = this.start.adjacentRatio + ratioDelta;
+      let paneRatio = this.start.paneRatio - ratioDelta;
+      actions.setSplitRatio(pane.id, paneRatio);
+      actions.setSplitRatio(adjacent.id, adjacentRatio);
     };
 
     this.removeListeners = () => {
@@ -49,7 +55,16 @@ export default class Divider extends Component {
     };
 
     this.onMouseDown = ({clientX, clientY}) => {
-      this.start = {x: clientX, y: clientY};
+      const {pane} = props;
+      const adjacent = getAdjacent(props);
+      this.start = {
+        x: clientX,
+        y: clientY,
+        paneRatio: pane.splitRatio,
+        adjacentRatio: adjacent.splitRatio,
+        totalRatio: pane.splitRatio + adjacent.splitRatio
+      };
+
       document.addEventListener('mousemove', this.onMouseMove);
       document.addEventListener('mouseup', this.onMouseUp);
     };

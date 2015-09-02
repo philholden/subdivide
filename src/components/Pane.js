@@ -51,15 +51,15 @@ export default class Pane extends Component {
   }
 
   renderGroup() {
-    const {pane, layout, sizes} = this.props;
+    const {pane, layout, sizes, actions} = this.props;
     const children = pane.childIds.map(id => layout.panes.get(id));
     const kids = child => {
       const {contentWidth, contentHeight} = sizes;
       let childSizes = getSizes({layout, pane: child}, contentWidth, contentHeight);
-      return <Pane layout={layout} pane={child} key={child.id} sizes={childSizes} />;
+      return <Pane layout={layout} pane={child} key={child.id} sizes={childSizes} actions={actions} />;
     };
     return (
-      <Cell layout={layout} pane={pane} sizes={sizes}>
+      <Cell layout={layout} pane={pane} sizes={sizes} actions={actions}>
         {children.map(kids)}
       </Cell>
     );
@@ -67,10 +67,10 @@ export default class Pane extends Component {
 
 
   renderSingle() {
-    const {pane, layout, sizes} = this.props;
+    const {pane, layout, sizes, actions} = this.props;
 
     return (
-      <Cell layout={layout} pane={pane} sizes={sizes}>
+      <Cell layout={layout} pane={pane} sizes={sizes} actions={actions}>
         <Triangle
           corner={SW}
           color='#ccc'

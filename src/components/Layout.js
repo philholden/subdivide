@@ -5,13 +5,14 @@ import {getSizes} from '../helpers/Metrics';
 export default class Layout extends Component {
   constructor(props, context) {
     super(props, context);
+    const {setSize} = props.actions;
     window.addEventListener('resize', () => {
-      props.setSize(window.innerWidth, window.innerHeight);
+      setSize(window.innerWidth, window.innerHeight);
     });
-    props.setSize(window.innerWidth, window.innerHeight);
+    setSize(window.innerWidth, window.innerHeight);
   }
   render() {
-    const {layout, setSize} = this.props;
+    const {layout, setSize, actions} = this.props;
     const {width, height} = layout;
     const pane = layout.panes.get(layout.rootId);
     const sizes = getSizes({layout, pane}, width, height);
@@ -20,6 +21,7 @@ export default class Layout extends Component {
         layout={layout}
         pane={pane}
         sizes={sizes}
+        actions={actions}
       />
     );
   }

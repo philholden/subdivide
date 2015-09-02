@@ -12,6 +12,7 @@ import {
 } from '../constants/BlenderLayoutConstants';
 
 import { Record, List, Map} from 'immutable';
+import {getAdjacent} from '../helpers/Metrics';
 
 export const Pane = new Record({
   id: '0',
@@ -156,11 +157,13 @@ function join(state, {retainId, removeId}) {
 }
 
 function setSplitRatio(state, action) {
-  const {id, splitRatio} = action;
-  return state.setIn(
+  const {splitRatio, id} = action;
+
+  state = state.setIn(
     ['panes', id, 'splitRatio'],
     splitRatio
   );
+  return state;
 }
 
 function setSize(state, {width, height}) {

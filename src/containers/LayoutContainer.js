@@ -18,7 +18,7 @@ export default class App extends Component {
     const {layout} = this.props;
     const {actions} = this;
     return (
-      <Layout layout={layout} {...actions} />
+      <Layout layout={layout} actions={actions} />
     );
   }
 }

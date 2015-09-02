@@ -35,8 +35,6 @@ function cellStyles({
   return {paneStyle, contentStyle};
 }
 
-
-
 @Radium
 export default class Cell extends Component {
 
@@ -51,8 +49,7 @@ export default class Cell extends Component {
   }
 
   render() {
-    const {pane, layout, sizes} = this.props;
-    const {direction, dividerHeight, dividerWidth} = sizes;
+    const {pane, layout, sizes, actions} = this.props;
     const {paneStyle, contentStyle} = cellStyles(sizes);
     return (
       <div style={paneStyle} className="pane">
@@ -60,6 +57,7 @@ export default class Cell extends Component {
           pane={pane}
           layout={layout}
           sizes={sizes}
+          actions={actions}
           />
         <div style={contentStyle} className="contents">
           {this.props.children}
