@@ -10,6 +10,7 @@ import {
   SPLIT_JOIN_MODE
 } from '../../src/constants/BlenderLayoutConstants';
 import Divider from './Divider';
+import {canJoin} from '../helpers/Metrics';
 
 
 
@@ -32,7 +33,7 @@ function cellStyles({
   let contentStyle = {
     float: 'left',
     position: 'relative',
-  //  overflow: 'hidden',
+    overflow: 'hidden',
     backgroundColor: '#xxx'.replace(/x/g, () => ((Math.random() * 16) | 0).toString(16)),
     width: contentWidth + 'px',
     height: contentHeight + 'px'
@@ -74,7 +75,23 @@ export default class Cell extends Component {
         e.stopPropagation();
       }
     };
+
+    this.onMouseUp = (e) => {
+      console.log('mouseup');
+      const {clientX, clientY} = e;
+      const {layout, pane, actions} = this.props;
+      const {mode, splitJoinId, splitStartX, splitStartY} = layout;
+      const {setMode, split} = actions;
+      if (mode === SPLIT_JOIN_MODE) {
+        console.log('can join', canJoin(this.props, splitJoinId));
+        setMode(undefined, undefined, undefined, undefined);
+        e.stopPropagation();
+      //  actions.join(splitJoinId, pane.id);
+      }
+    }
   }
+
+
 
   shouldDisplayDivider() {
     const {pane, layout} = this.props;
@@ -90,7 +107,7 @@ export default class Cell extends Component {
     const {pane, layout, sizes, actions} = this.props;
     const {paneStyle, contentStyle} = cellStyles(sizes);
     return (
-      <div style={paneStyle} className="pane" onMouseMove={this.onMouseMove}>
+      <div style={paneStyle} className="pane" onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>
         <Divider
           pane={pane}
           layout={layout}

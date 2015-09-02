@@ -21,6 +21,19 @@ export function getSiblingIds({pane, layout}) {
   return parent.childIds;
 }
 
+export function canJoin({pane, layout}, retainId) {
+  const retain = layout.panes.get(retainId);
+  const remove = layout.panes.get(pane.id);
+
+  if (remove.childIds.size === 0 && retain.childIds.size === 0) {
+    const siblings = getSiblingIds({pane, layout});
+    const index1 = siblings.indexOf(pane.id);
+    const index2 = siblings.indexOf(retainId);
+    return (index2 !== -1 && Math.abs(index1 - index2) === 1);
+  }
+  return false;
+}
+
 export function getAdjacent({pane, layout}) {
   const siblings = getSiblingIds({pane, layout});
   const index = siblings.indexOf(pane.id);
