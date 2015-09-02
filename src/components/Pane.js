@@ -17,37 +17,6 @@ import {
 export default class Pane extends Component {
   constructor(props, context) {
     super(props, context);
-
-    this.onMouseMove = (e) => {
-      console.log(e);
-    };
-
-    this.onMouseDownTop = () => {
-//      document.addEventListener('mouseup', ()=)
-    };
-
-    this.removeChildPane = () => {
-      var childOfChild;
-      if (this.state.childPane) {
-        childOfChild = this.state.childPane.state.childPane;
-        childOfChild.setState({
-          parentPane: this
-        });
-        this.setState({
-          childPane: childOfChild
-        });
-      } else {
-        this.setState({
-          childPane: null,
-          splitType: CHILD_NONE
-        });
-      }
-    };
-
-    this.addChildPane = () => {
-
-    };
-
   }
 
   renderGroup() {
@@ -75,12 +44,19 @@ export default class Pane extends Component {
           corner={SW}
           color='#ccc'
           size={40}
+          sizes={sizes}
+          layout={layout}
+          pane={pane}
+          actions={actions}
         />
         <Triangle
           corner={NE}
           color='#333'
           size={40}
-          onMouseDown={this.onMouseDownTop}
+          sizes={sizes}
+          layout={layout}
+          pane={pane}
+          actions={actions}
         />
         {pane.id}
       </Cell>

@@ -2,7 +2,8 @@ import {
   SET_SPLIT_RATIO,
   SPLIT,
   JOIN,
-  SET_SIZE
+  SET_SIZE,
+  SET_MODE
 } from '../constants/BlenderLayoutConstants';
 
 export function setSplitRatio(id, splitRatio) {
@@ -34,5 +35,15 @@ export function setSize(width, height){
     type: SET_SIZE,
     width,
     height
+  };
+}
+
+export function setMode(id, mode, splitStartX, splitStartY){
+  return {
+    type: SET_MODE,
+    mode,
+    id,
+    splitStartX,
+    splitStartY
   };
 }

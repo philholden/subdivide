@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import Radium from 'radium';
 import {
   ROW,
-  COL
+  COL,
+  CHILD_ABOVE,
+  CHILD_BELOW,
+  CHILD_LEFT,
+  CHILD_RIGHT,
+  SPLIT_JOIN_MODE
 } from '../../src/constants/BlenderLayoutConstants';
 import Divider from './Divider';
+
 
 
 function cellStyles({
@@ -26,7 +32,7 @@ function cellStyles({
   let contentStyle = {
     float: 'left',
     position: 'relative',
-    overflow: 'hidden',
+  //  overflow: 'hidden',
     backgroundColor: '#xxx'.replace(/x/g, () => ((Math.random() * 16) | 0).toString(16)),
     width: contentWidth + 'px',
     height: contentHeight + 'px'
@@ -37,6 +43,38 @@ function cellStyles({
 
 @Radium
 export default class Cell extends Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.onMouseMove = (e) => {
+      const {clientX, clientY} = e;
+      const {layout, pane, actions} = this.props;
+      const {mode, splitJoinId, splitStartX, splitStartY} = layout;
+      const {setMode, split} = actions;
+      if (mode === SPLIT_JOIN_MODE) {
+        if (splitJoinId === pane.id) {
+          let deltaX = clientX - splitStartX;
+          let deltaY = clientY - splitStartY;
+          console.log('split', splitJoinId, deltaX, deltaY);
+          if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            if (deltaX > 0) {
+              split(pane.id, CHILD_LEFT);
+            } else {
+              split(pane.id, CHILD_RIGHT);
+            }
+          } else {
+            if (deltaY > 0) {
+              split(pane.id, CHILD_ABOVE);
+            } else {
+              split(pane.id, CHILD_BELOW);
+            }
+          }
+          setMode(undefined, undefined, undefined, undefined);
+        }
+        e.stopPropagation();
+      }
+    };
+  }
 
   shouldDisplayDivider() {
     const {pane, layout} = this.props;
@@ -52,7 +90,7 @@ export default class Cell extends Component {
     const {pane, layout, sizes, actions} = this.props;
     const {paneStyle, contentStyle} = cellStyles(sizes);
     return (
-      <div style={paneStyle} className="pane">
+      <div style={paneStyle} className="pane" onMouseMove={this.onMouseMove}>
         <Divider
           pane={pane}
           layout={layout}

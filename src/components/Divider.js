@@ -65,14 +65,11 @@ export default class Divider extends Component {
         paneRatio: pane.splitRatio,
         adjacentRatio: adjacent.splitRatio
       };
-      console.log(this.start);
 
       document.addEventListener('mousemove', this.onMouseMove);
       document.addEventListener('mouseup', this.onMouseUp);
     };
   }
-
-
 
   componentWillUnmount() {
     this.removeListeners();

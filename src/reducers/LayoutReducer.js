@@ -8,7 +8,8 @@ import {
   CHILD_LEFT,
   CHILD_RIGHT,
   ROW,
-  COL
+  COL,
+  SET_MODE
 } from '../constants/BlenderLayoutConstants';
 
 import { Record, List, Map} from 'immutable';
@@ -26,6 +27,10 @@ export const Pane = new Record({
 export const Layout = new Record({
   rootId: '0',
   dividerSize: 3,
+  mode: undefined,
+  splitJoinId: undefined,
+  splitStartX: undefined,
+  splitStartY: undefined,
   width: 800,
   height: 600,
   panes: Map({
@@ -74,6 +79,7 @@ function split(state, {id, splitType}) {
   let parent = state.panes.get(pane.parentId);
   let direction = getDirection(splitType);
   let isRoot = id === state.rootId;
+
   if (!parent || (parent.direction !== direction)) {
     let out = wrapPane(state, id);
     parent = out.group;
@@ -87,13 +93,21 @@ function split(state, {id, splitType}) {
   let index = childIds.indexOf(id);
   let newPane = new Pane({
     id: getNextId(state),
-    parentId: parent.get('id')
+    parentId: parent.get('id'),
+    splitRatio: 0.2
   });
   let offset = getOffset(splitType);
+  let shrinkPane = pane;
+  if (offset === 0) {
+    shrinkPane = state.panes.get(childIds.get(index - 2));
+  }
   childIds = childIds.splice(index + offset, 0, newPane.id);
   parent = parent.set('childIds', childIds);
   state = state.setIn(['panes', parent.id], parent);
   state = state.setIn(['panes', newPane.id], newPane);
+  state = state.setIn(['panes', shrinkPane.id, 'splitRatio'], shrinkPane.splitRatio * 0.75);
+  state = state.setIn(['panes', newPane.id, 'splitRatio'], shrinkPane.splitRatio * 0.25);
+  console.log(state.toJS());
   return state;
 }
 
@@ -170,21 +184,33 @@ function setSize(state, {width, height}) {
   return state.set('width', width).set('height', height);
 }
 
+function setMode(state, action) {
+  const {mode, id, splitStartX, splitStartY} = action;
+  return state
+    .set('mode', mode)
+    .set('splitJoinId', id)
+    .set('splitStartX', splitStartX)
+    .set('splitStartY', splitStartY);
+}
+
 export default function LayoutReducer(state = initialState, action) {
 
   switch (action.type) {
   case SPLIT:
+    console.log(action);
     return split(state, action);
 
   case JOIN:
     return join(state, action);
 
   case SET_SPLIT_RATIO:
-    //console.log(action);
     return setSplitRatio(state, action);
 
   case SET_SIZE:
     return setSize(state, action);
+
+  case SET_MODE:
+    return setMode(state, action);
 
   default:
     return state;
