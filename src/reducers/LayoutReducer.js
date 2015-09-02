@@ -51,16 +51,26 @@ function getNextId(state) {
 
 function wrapPane(state, id) {
   let pane = state.panes.get(id);
+  let parent = state.panes.get(pane.parentId);
+  let parentId = pane.parentId;
   let groupId = getNextId(state);
   let group = new Pane({
     id: groupId,
     isGroup: true,
     childIds: List([id]),
-    parentId: pane.parentId
+    parentId: pane.parentId,
+    splitRatio: pane.splitRatio
   });
   pane = pane.set('parentId', groupId);
   state = state.setIn(['panes', id], pane);
   state = state.setIn(['panes', groupId], group);
+  if (parent) {
+    let childIds = parent.childIds;
+    childIds = childIds.set(childIds.indexOf(id), groupId);
+    console.log('childIds', childIds.toJS());
+    state = state.setIn(['panes', parentId, 'childIds'], childIds);
+  }
+  console.log('mo', state.toJS());
   return {state, group};
 }
 
@@ -84,10 +94,12 @@ function split(state, {id, splitType}) {
     let out = wrapPane(state, id);
     parent = out.group;
     parent = parent.set('direction', direction);
+    console.log(id + '', isRoot);
+    state = out.state;
     if (isRoot) {
       state = state.set('rootId', parent.id);
     }
-    state = out.state;
+    pane = pane.set('splitRatio', 1);
   }
   let childIds = parent.childIds;
   let index = childIds.indexOf(id);
@@ -97,16 +109,17 @@ function split(state, {id, splitType}) {
     splitRatio: 0.2
   });
   let offset = getOffset(splitType);
-  let shrinkPane = pane;
-  if (offset === 0) {
-    shrinkPane = state.panes.get(childIds.get(index - 2));
-  }
+  console.log('parent', parent.toJS());
   childIds = childIds.splice(index + offset, 0, newPane.id);
+  // let shrinkPane = pane;
+  // if (offset === 0) {
+  // //  shrinkPane = state.panes.get(childIds.get(index - 2));
+  // }
   parent = parent.set('childIds', childIds);
   state = state.setIn(['panes', parent.id], parent);
   state = state.setIn(['panes', newPane.id], newPane);
-  state = state.setIn(['panes', shrinkPane.id, 'splitRatio'], shrinkPane.splitRatio * 0.75);
-  state = state.setIn(['panes', newPane.id, 'splitRatio'], shrinkPane.splitRatio * 0.25);
+  state = state.setIn(['panes', pane.id, 'splitRatio'], pane.splitRatio * 0.75);
+  state = state.setIn(['panes', newPane.id, 'splitRatio'], pane.splitRatio * 0.25);
   console.log(state.toJS());
   return state;
 }

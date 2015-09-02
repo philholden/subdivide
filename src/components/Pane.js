@@ -58,7 +58,7 @@ export default class Pane extends Component {
           pane={pane}
           actions={actions}
         />
-        {pane.id}
+        {JSON.stringify(pane)}
       </Cell>
     );
   }
