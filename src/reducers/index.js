@@ -46,7 +46,7 @@ const startState = (new Layout())
   }));
 
 const Reducer = Record({
-  layout: LayoutReducer(startState, {})
+  layout: LayoutReducer(undefined, {})
 });
 
 const initialState = Reducer();

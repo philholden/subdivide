@@ -178,14 +178,18 @@ export function setBlock(state, action) {
 
 export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
   let rootPane = state.panes.get(rootId).toJS();
-  let paneMap = {};
   let dividerMap = {};
+  let paneMap = {};
   const dividerSize = state.dividerSize;
 
   rootPane.width = width;
   rootPane.height = height;
   rootPane.left = left;
   rootPane.top = top;
+
+  if (!rootPane.isGroup) {
+    paneMap[rootId] = rootPane;
+  }
 
   let flattenChildren = (parent) => {
     let x = parent.left;
