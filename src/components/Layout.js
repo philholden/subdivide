@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Pane from './Pane';
 import {getSizes} from '../helpers/Metrics';
+import {flatten} from '../helpers/LayoutHelper';
 
 export default class Layout extends Component {
   constructor(props, context) {
@@ -16,6 +17,7 @@ export default class Layout extends Component {
     const {width, height} = layout;
     const pane = layout.panes.get(layout.rootId);
     const sizes = getSizes({layout, pane}, width, height);
+    console.log(flatten(layout, layout.rootId, {width, height}));
     return (
       <Pane
         layout={layout}

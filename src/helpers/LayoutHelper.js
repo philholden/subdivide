@@ -177,3 +177,78 @@ export function setBlock(state, action) {
   return state
     .set('displayBlock', displayBlock);
 }
+
+export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
+  let rootPane = state.panes.get(rootId).toJS();
+  let paneMap = {};
+  let dividerMap = {};
+  const dividerSize = state.dividerSize;
+
+  rootPane.width = width;
+  rootPane.height = height;
+  rootPane.left = left;
+  rootPane.top = top;
+
+  let flattenChildren = (parent) => {
+    let x = parent.left;
+    let y = parent.top;
+    let child;
+    let dividerOffset;
+    let hasDivider = false;
+    let beforePaneId;
+    let divider;
+
+
+    parent.childIds.forEach((childId, i)=> {
+      child = state.panes.get(childId).toJS();
+      hasDivider = i !== 0;
+      dividerOffset = 0;
+      if (hasDivider) {
+        dividerOffset = dividerSize;
+        divider = {
+          left: x,
+          top: y,
+          beforePaneId: beforePaneId,
+          afterPaneId: child.id
+        };
+      }
+
+      if (parent.direction === ROW) {
+        if (hasDivider) {
+          divider.width = dividerSize;
+          divider.height = parent.height;
+          x += dividerSize;
+          dividerMap[beforePaneId + 'n' + child.id] = divider;
+        }
+        child.width = parent.width * child.splitRatio - dividerOffset;
+        child.height = parent.height;
+        child.left = x;
+        child.top = y;
+        x += child.width;
+      } else if (parent.direction === COL) {
+        if (hasDivider) {
+          divider.width = parent.width;
+          divider.height = dividerSize;
+          y += dividerSize;
+          dividerMap[beforePaneId + 'n' + child.id] = divider;
+        }
+        child.width = parent.width;
+        child.height = parent.height * child.splitRatio - dividerOffset;
+        child.left = x;
+        child.top = y;
+        y += child.height;
+      }
+      beforePaneId = child.id;
+      if (child.isGroup) {
+        flattenChildren(child);
+      } else {
+        paneMap[childId] = child;
+      }
+    });
+  };
+
+  flattenChildren(rootPane);
+
+  return {dividerMap, paneMap};
+}
+

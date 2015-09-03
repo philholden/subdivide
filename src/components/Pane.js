@@ -66,13 +66,13 @@ export default class Pane extends Component {
           pane={pane}
           actions={actions}
         />
-        <iframe src="index2.html" frameBorder={'0'} style={{
-          width: '100%',
-          height: '100%'
-        }}>
-        </iframe>
+        {`id:${pane.id} pos: (${sizes.width}, ${sizes.height})`}
       </Cell>
     );
+        // <iframe src="index2.html" frameBorder={'0'} style={{
+        //   width: '100%',
+        //   height: '100%'
+        // }}></iframe>
     //{pane.id} {pane.splitRatio} {sizes.contentWidth} {sizes.width}
   }
 
