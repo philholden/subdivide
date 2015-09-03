@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Pane from './Pane';
-import {getSizes} from '../helpers/Metrics';
+import Divider from './Divider';
 import {flatten} from '../helpers/LayoutHelper';
 import {Map, fromJS} from 'immutable';
 
@@ -46,13 +46,17 @@ export default class Layout extends Component {
     });
   }
 
+
   render() {
     const {layout, actions} = this.props;
-    const children = this.state.panes.map(pane => {
+    const panes = this.state.panes.map(pane => {
       return <Pane layout={layout} pane={pane} actions={actions} key={pane.id} />;
     });
+    const dividers = this.state.dividers.map(divider => {
+      return <Divider layout={layout} divider={divider} actions={actions} key={divider.id} />;
+    });
     return (
-      <div>{children}</div>
+      <div>{panes}{dividers}</div>
     );
   }
 }

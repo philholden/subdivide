@@ -14,7 +14,7 @@ function dividerStyle({width, height, top, left, direction}) {
     top: top,
     left: left,
     backgroundColor: '#333',
-    postion: 'absolute',
+    position: 'absolute',
     cursor: direction === COL ? 'ns-resize' : 'ew-resize'
   };
 
@@ -26,18 +26,15 @@ export default class Divider extends Component {
     super(props, context);
 
     this.onMouseMove = ({clientX, clientY}) => {
-      const {sizes, actions, pane} = this.props;
-      const adjacent = getAdjacent(this.props);
-      const {direction, adjacentSize} = sizes;
+      const {actions, divider} = this.props;
+      const {beforePaneId, afterPaneId, direction, parentSize} = divider;
       let {x, y} = this.start;
       let delta = direction === ROW ? clientX - x : clientY - y;
-      let {parentSize} = sizes;
       let deltaRatio = delta / parentSize;
-      let paneRatio = this.start.paneRatio - deltaRatio;
-      let adjacentRatio = this.start.adjacentRatio + deltaRatio;
-      //console.log(pane);
-      actions.setSplitRatio(pane.id, paneRatio);
-      actions.setSplitRatio(adjacent.id, adjacentRatio);
+      let afterRatio = this.start.afterRatio - deltaRatio;
+      let beforeRatio = this.start.beforeRatio + deltaRatio;
+      actions.setSplitRatio(beforePaneId, beforeRatio);
+      actions.setSplitRatio(afterPaneId, afterRatio);
     };
 
     this.removeListeners = () => {
@@ -51,13 +48,13 @@ export default class Divider extends Component {
     };
 
     this.onMouseDown = ({clientX, clientY}) => {
-      const {pane, actions} = this.props;
-      const adjacent = getAdjacent(this.props);
+      const {actions, divider} = this.props;
+      const {beforeRatio, afterRatio} = divider;
       this.start = {
         x: clientX,
         y: clientY,
-        paneRatio: pane.splitRatio,
-        adjacentRatio: adjacent.splitRatio
+        beforeRatio: beforeRatio,
+        afterRatio: afterRatio
       };
 
       actions.setBlock(true);

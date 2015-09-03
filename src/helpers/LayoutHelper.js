@@ -197,6 +197,7 @@ export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
     let hasDivider = false;
     let beforePaneId;
     let divider;
+    let beforeRatio;
 
 
     parent.childIds.forEach((childId, i)=> {
@@ -209,7 +210,12 @@ export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
           left: x,
           top: y,
           beforePaneId: beforePaneId,
-          afterPaneId: child.id
+          afterPaneId: child.id,
+          beforeRatio: beforeRatio,
+          afterRatio: child.splitRatio,
+          direction: parent.direction,
+          parentSize: parent.direction === ROW ? parent.width : parent.height,
+          id: beforePaneId + 'n' + child.id
         };
       }
 
@@ -239,6 +245,7 @@ export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
         y += child.height;
       }
       beforePaneId = child.id;
+      beforeRatio = child.splitRatio;
       if (child.isGroup) {
         flattenChildren(child);
       } else {
