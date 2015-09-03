@@ -4,8 +4,6 @@ import {
   COL
 } from '../constants/BlenderLayoutConstants';
 
-import {getAdjacent} from '../helpers/Metrics';
-
 function dividerStyle({width, height, top, left, direction}) {
 
   var style = {

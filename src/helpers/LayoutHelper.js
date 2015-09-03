@@ -139,7 +139,7 @@ export function join(state, {retainId, removeId}) {
     return state;
   }
   state = removePane(state, removeId);
-  let nextParentId = state.getIn(['panes'], retainId).parentId;
+  let nextParentId = state.getIn(['panes', retainId]).parentId;
   let splitRatio = parent.id === nextParentId ?
     remove.splitRatio + retain.splitRatio :
     parent.splitRatio;

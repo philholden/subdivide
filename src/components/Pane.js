@@ -46,7 +46,6 @@ export default class Pane extends Component {
         if (splitJoinId === pane.id) {
           let deltaX = clientX - splitStartX;
           let deltaY = clientY - splitStartY;
-          console.log('split', splitJoinId, deltaX, deltaY);
           if (Math.abs(deltaX) > Math.abs(deltaY)) {
             if (deltaX > 0) {
               split(pane.id, CHILD_LEFT);
