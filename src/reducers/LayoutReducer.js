@@ -9,7 +9,8 @@ import {
   CHILD_RIGHT,
   ROW,
   COL,
-  SET_MODE
+  SET_MODE,
+  SET_BLOCK
 } from '../constants/BlenderLayoutConstants';
 
 import { Record, List, Map} from 'immutable';
@@ -31,6 +32,7 @@ export const Layout = new Record({
   splitJoinId: undefined,
   splitStartX: undefined,
   splitStartY: undefined,
+  displayBlock: false,
   width: 800,
   height: 600,
   panes: Map({
@@ -206,11 +208,16 @@ function setMode(state, action) {
     .set('splitStartY', splitStartY);
 }
 
+function setBlock(state, action) {
+  const {displayBlock} = action;
+  return state
+    .set('displayBlock', displayBlock);
+}
+
 export default function LayoutReducer(state = initialState, action) {
 
   switch (action.type) {
   case SPLIT:
-    console.log(action);
     return split(state, action);
 
   case JOIN:
@@ -224,6 +231,10 @@ export default function LayoutReducer(state = initialState, action) {
 
   case SET_MODE:
     return setMode(state, action);
+
+  case SET_BLOCK:
+    console.log(action, state.toJS());
+    return setBlock(state, action);
 
   default:
     return state;

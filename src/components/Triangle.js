@@ -81,17 +81,20 @@ export default class Triangle extends Component {
       // }
       const {actions, pane} = this.props;
       actions.setMode(undefined, undefined);
+      actions.setBlock(false);
       console.log('split mode off');
       this.removeListeners();
     };
 
     this.onMouseDown = ({clientX, clientY}) => {
+      const {actions} = this.props;
       //const {pane} = this.props;
       //const adjacent = getAdjacent(this.props);
       this.start = {
         x: clientX,
         y: clientY
       };
+      actions.setBlock(true);
 
       document.addEventListener('mousemove', this.onMouseMove);
       document.addEventListener('mouseup', this.onMouseUp);

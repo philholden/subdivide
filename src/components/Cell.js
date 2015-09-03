@@ -51,7 +51,7 @@ export default class Cell extends Component {
       const {clientX, clientY} = e;
       const {layout, pane, actions} = this.props;
       const {mode, splitJoinId, splitStartX, splitStartY} = layout;
-      const {setMode, split} = actions;
+      const {setMode, split, setBlock} = actions;
       if (mode === SPLIT_JOIN_MODE) {
         if (splitJoinId === pane.id) {
           let deltaX = clientX - splitStartX;
@@ -71,22 +71,22 @@ export default class Cell extends Component {
             }
           }
           setMode(undefined, undefined, undefined, undefined);
+          setBlock(false);
         }
         e.stopPropagation();
       }
     };
 
     this.onMouseUp = (e) => {
-      console.log('mouseup');
       const {clientX, clientY} = e;
       const {layout, pane, actions} = this.props;
       const {mode, splitJoinId, splitStartX, splitStartY} = layout;
-      const {setMode, split} = actions;
+      const {setMode, split, setBlock} = actions;
       if (mode === SPLIT_JOIN_MODE) {
-        console.log('can join', canJoin(this.props, splitJoinId));
         setMode(undefined, undefined, undefined, undefined);
+        setBlock(false);
         e.stopPropagation();
-      //  actions.join(splitJoinId, pane.id);
+        actions.join(splitJoinId, pane.id);
       }
     }
   }

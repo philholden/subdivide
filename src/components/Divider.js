@@ -11,7 +11,7 @@ function dividerStyle({dividerWidth, dividerHeight, direction}) {
   var style = {
     width: dividerWidth + 'px',
     height: dividerHeight + 'px',
-    backgroundColor: '#a0f',
+    backgroundColor: '#333',
     float: 'left',
     cursor: direction === COL ? 'ns-resize' : 'ew-resize'
   };
@@ -53,11 +53,12 @@ export default class Divider extends Component {
     };
 
     this.onMouseUp = () => {
+      this.props.actions.setBlock(false);
       this.removeListeners();
     };
 
     this.onMouseDown = ({clientX, clientY}) => {
-      const {pane} = this.props;
+      const {pane, actions} = this.props;
       const adjacent = getAdjacent(this.props);
       this.start = {
         x: clientX,
@@ -65,6 +66,8 @@ export default class Divider extends Component {
         paneRatio: pane.splitRatio,
         adjacentRatio: adjacent.splitRatio
       };
+
+      actions.setBlock(true);
 
       document.addEventListener('mousemove', this.onMouseMove);
       document.addEventListener('mouseup', this.onMouseUp);

@@ -40,9 +40,17 @@ export default class Pane extends Component {
 
     return (
       <Cell layout={layout} pane={pane} sizes={sizes} actions={actions}>
+        <div style={{
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(0,200,0,0)',
+          position: 'absolute',
+          top: 0,
+          display: layout.displayBlock ? 'block' : 'none'
+        }}></div>
         <Triangle
           corner={SW}
-          color='#ccc'
+          color='#444'
           size={40}
           sizes={sizes}
           layout={layout}
@@ -51,16 +59,21 @@ export default class Pane extends Component {
         />
         <Triangle
           corner={NE}
-          color='#333'
+          color='#444'
           size={40}
           sizes={sizes}
           layout={layout}
           pane={pane}
           actions={actions}
         />
-        {JSON.stringify(pane)}
+        <iframe src="index2.html" frameBorder={'0'} style={{
+          width: '100%',
+          height: '100%'
+        }}>
+        </iframe>
       </Cell>
     );
+    //{pane.id} {pane.splitRatio} {sizes.contentWidth} {sizes.width}
   }
 
 

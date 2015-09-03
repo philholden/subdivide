@@ -21,3 +21,4 @@ export const SET_SPLIT_RATIO = 'SET_SPLIT_RATIO';
 export const SET_SIZE = 'SET_SIZE';
 export const SPLIT_JOIN_MODE = 'SPLIT_JOIN_MODE';
 export const SET_MODE = 'SET_MODE';
+export const SET_BLOCK = 'SET_BLOCK';
