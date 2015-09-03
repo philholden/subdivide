@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Pane from './Pane';
 import {getSizes} from '../helpers/Metrics';
 import {flatten} from '../helpers/LayoutHelper';
+import {Map, fromJS} from 'immutable';
 
 export default class Layout extends Component {
   constructor(props, context) {
@@ -10,21 +11,48 @@ export default class Layout extends Component {
     window.addEventListener('resize', () => {
       setSize(window.innerWidth, window.innerHeight);
     });
+
+    let {dividerMap, paneMap} = flatten(
+      props.layout,
+      props.layout.rootId, {
+        width: props.layout.width,
+        height: props.layout.height
+      }
+    );
+
+    this.state = {
+      dividers: Object.values(dividerMap),
+      panes: Object.values(paneMap)
+    };
+
+    console.log(paneMap);
+
     setSize(window.innerWidth, window.innerHeight);
   }
+
+  componentWillReceiveProps(nextProps) {
+    const {layout} = nextProps;
+    const {dividers, panes} = this.state;
+    let {dividerMap, paneMap} = flatten(
+      layout,
+      layout.rootId, {
+        width: layout.width,
+        height: layout.height
+      }
+    );
+    this.setState({
+      dividers: Object.values(dividerMap),
+      panes: Object.values(paneMap)
+    });
+  }
+
   render() {
-    const {layout, setSize, actions} = this.props;
-    const {width, height} = layout;
-    const pane = layout.panes.get(layout.rootId);
-    const sizes = getSizes({layout, pane}, width, height);
-    console.log(flatten(layout, layout.rootId, {width, height}));
+    const {layout, actions} = this.props;
+    const children = this.state.panes.map(pane => {
+      return <Pane layout={layout} pane={pane} actions={actions} key={pane.id} />;
+    });
     return (
-      <Pane
-        layout={layout}
-        pane={pane}
-        sizes={sizes}
-        actions={actions}
-      />
+      <div>{children}</div>
     );
   }
 }

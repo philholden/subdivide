@@ -1,45 +1,100 @@
 import React, { Component } from 'react';
 import Triangle from './Triangle';
-import {getSizes} from '../helpers/Metrics';
 
-import Cell from './Cell';
 import {
+  NE,
+  SW,
+  CHILD_ABOVE,
+  CHILD_BELOW,
   CHILD_LEFT,
   CHILD_RIGHT,
-  CHILD_BELOW,
-  CHILD_ABOVE,
-  NE,
-  SW
+  SPLIT_JOIN_MODE
 } from '../constants/BlenderLayoutConstants';
 
+function getStyles({
+      width,
+      height,
+      top,
+      left
+    }) {
+  let pane = {
+    position: 'absolute',
+    width: width + 'px',
+    height: height + 'px',
+    top: top + 'px',
+    left: left + 'px',
+    overflow: 'hidden',
+    backgroundColor: '#xxx'.replace(/x/g, () => ((Math.random() * 16) | 0).toString(16)),
+    // ':hover': {
+    //   backgroundColor: 'rgba(0,0,0,0.1)'
+    // }
+  };
 
+  return {pane};
+}
 
 export default class Pane extends Component {
   constructor(props, context) {
     super(props, context);
-  }
 
-  renderGroup() {
-    const {pane, layout, sizes, actions} = this.props;
-    const children = pane.childIds.map(id => layout.panes.get(id));
-    const kids = child => {
-      const {contentWidth, contentHeight} = sizes;
-      let childSizes = getSizes({layout, pane: child}, contentWidth, contentHeight);
-      return <Pane layout={layout} pane={child} key={child.id} sizes={childSizes} actions={actions} />;
+    this.onMouseMove = (e) => {
+      const {clientX, clientY} = e;
+      const {layout, pane, actions} = this.props;
+      const {mode, splitJoinId, splitStartX, splitStartY} = layout;
+      const {setMode, split, setBlock} = actions;
+      if (mode === SPLIT_JOIN_MODE) {
+        if (splitJoinId === pane.id) {
+          let deltaX = clientX - splitStartX;
+          let deltaY = clientY - splitStartY;
+          console.log('split', splitJoinId, deltaX, deltaY);
+          if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            if (deltaX > 0) {
+              split(pane.id, CHILD_LEFT);
+            } else {
+              split(pane.id, CHILD_RIGHT);
+            }
+          } else {
+            if (deltaY > 0) {
+              split(pane.id, CHILD_ABOVE);
+            } else {
+              split(pane.id, CHILD_BELOW);
+            }
+          }
+          setMode(undefined, undefined, undefined, undefined);
+          setBlock(false);
+        }
+        e.stopPropagation();
+      }
     };
-    return (
-      <Cell layout={layout} pane={pane} sizes={sizes} actions={actions}>
-        {children.map(kids)}
-      </Cell>
-    );
+
+    this.onMouseUp = (e) => {
+      const {layout, pane, actions} = this.props;
+      const {mode, splitJoinId} = layout;
+      const {setMode, setBlock} = actions;
+      if (mode === SPLIT_JOIN_MODE) {
+        setMode(undefined, undefined, undefined, undefined);
+        setBlock(false);
+        e.stopPropagation();
+        actions.join(splitJoinId, pane.id);
+      }
+    };
   }
 
 
-  renderSingle() {
-    const {pane, layout, sizes, actions} = this.props;
+        // <iframe src="index2.html" frameBorder={'0'} style={{
+        //   width: '100%',
+        //   height: '100%'
+        // }}></iframe>
+    //{pane.id} {pane.splitRatio} {sizes.contentWidth} {sizes.width}
+
+
+
+  render() {
+    const {pane, layout, actions} = this.props;
+    const styles = getStyles(pane);
 
     return (
-      <Cell layout={layout} pane={pane} sizes={sizes} actions={actions}>
+      <div style={styles.pane} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>
         <div style={{
           width: '100%',
           height: '100%',
@@ -52,7 +107,6 @@ export default class Pane extends Component {
           corner={SW}
           color='#444'
           size={40}
-          sizes={sizes}
           layout={layout}
           pane={pane}
           actions={actions}
@@ -61,29 +115,12 @@ export default class Pane extends Component {
           corner={NE}
           color='#444'
           size={40}
-          sizes={sizes}
           layout={layout}
           pane={pane}
           actions={actions}
         />
-        {`id:${pane.id} pos: (${sizes.width}, ${sizes.height})`}
-      </Cell>
+        {`id:${pane.id} pos: (${pane.width}, ${pane.height})`}
+      </div>
     );
-        // <iframe src="index2.html" frameBorder={'0'} style={{
-        //   width: '100%',
-        //   height: '100%'
-        // }}></iframe>
-    //{pane.id} {pane.splitRatio} {sizes.contentWidth} {sizes.width}
-  }
-
-
-  render() {
-    const {pane, sizes} = this.props;
-
-    if (pane.childIds.size > 1) {
-      return this.renderGroup();
-    } else {
-      return this.renderSingle();
-    }
   }
 }

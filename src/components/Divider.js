@@ -6,26 +6,19 @@ import {
 
 import {getAdjacent} from '../helpers/Metrics';
 
-function dividerStyle({dividerWidth, dividerHeight, direction}) {
+function dividerStyle({width, height, top, left, direction}) {
 
   var style = {
-    width: dividerWidth + 'px',
-    height: dividerHeight + 'px',
+    width: width + 'px',
+    height: height + 'px',
+    top: top,
+    left: left,
     backgroundColor: '#333',
-    float: 'left',
+    postion: 'absolute',
     cursor: direction === COL ? 'ns-resize' : 'ew-resize'
   };
 
   return style;
-}
-
-function shouldDisplay({layout, pane}) {
-  if (layout.rootId === pane.id) return false;
-  const {id, parentId} = pane;
-  const parent = layout.panes.get(parentId);
-  const siblings = parent.childIds;
-  const isFirst = siblings.first() === id;
-  return !isFirst;
 }
 
 export default class Divider extends Component {
@@ -79,11 +72,10 @@ export default class Divider extends Component {
   }
 
   render() {
-    if (!shouldDisplay(this.props)) return null;
 
     return (
       <div
-        style={dividerStyle(this.props.sizes)}
+        style={dividerStyle(this.props.divider)}
         onMouseDown={this.onMouseDown}
         className="divider" />
     );
