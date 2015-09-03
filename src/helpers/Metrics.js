@@ -7,14 +7,6 @@ export function getParent({pane, layout}) {
   return layout.panes.get(pane.parentId);
 }
 
-// export function getSiblings({pane, layout}) {
-//   const parent = getParent({pane, layout});
-//   if (!parent) return [pane];
-//   return parent.childIds.map(
-//     id => layout.panes.get(id)
-//   ).toJS();
-// }
-
 export function getSiblingIds({pane, layout}) {
   const parent = getParent({pane, layout});
   if (!parent) return [pane];
