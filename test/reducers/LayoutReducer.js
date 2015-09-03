@@ -358,7 +358,6 @@ describe('pane reducer', () => {
     });
 
     it('remaining pane should not have direction', () => {
-      console.log(endState);
       expect(endState.panes.get('3').direction).toBe(undefined);
     });
 

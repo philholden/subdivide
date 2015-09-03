@@ -6,14 +6,17 @@ import {
 } from '../../src/constants/BlenderLayoutConstants';
 
 function triangleStyle({corner, color, size}) {
-  var offset = size / 2;
+  var offset = (size + 3) / 2;
   var style = {
     width: size + 'px',
     height: size + 'px',
     position: 'absolute',
     backgroundColor: color,
+    opacity: 0,
+    transition: 'opacity 0.2s',
+    border: '1px solid rgba(0,0,0,0.5)',
     ':hover': {
-      backgroundColor: 'red'
+      opacity: 1
     }
   };
 
@@ -23,7 +26,6 @@ function triangleStyle({corner, color, size}) {
         ...style,
         top: 0,
         right: 0,
-//        cursor: 'sw-resize',
         cursor: 'grab',
         transform: 'translate3d(' + (offset) + 'px,' + (-offset) + 'px, 0) rotate(45deg)'
       };
@@ -32,7 +34,6 @@ function triangleStyle({corner, color, size}) {
         ...style,
         bottom: 0,
         left: 0,
-    //    cursor: 'ne-resize',
         cursor: 'grab',
         transform: 'translate3d(' + (-offset) + 'px,' + (offset) + 'px, 0) rotate(45deg)'
       };

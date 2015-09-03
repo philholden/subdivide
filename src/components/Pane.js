@@ -24,7 +24,7 @@ function getStyles({
     top: top + 'px',
     left: left + 'px',
     overflow: 'hidden',
-    backgroundColor: '#xxx'.replace(/x/g, () => ((Math.random() * 16) | 0).toString(16)),
+//    backgroundColor: '#xxx'.replace(/x/g, () => (((Math.random() * 6) + 10) | 0).toString(16)),
     // ':hover': {
     //   backgroundColor: 'rgba(0,0,0,0.1)'
     // }
@@ -104,7 +104,7 @@ export default class Pane extends Component {
         }}></div>
         <Triangle
           corner={SW}
-          color='#444'
+          color='rgba(127,127,127,0.5)'
           size={40}
           layout={layout}
           pane={pane}
@@ -112,7 +112,7 @@ export default class Pane extends Component {
         />
         <Triangle
           corner={NE}
-          color='#444'
+          color='rgba(127,127,127,0.5)'
           size={40}
           layout={layout}
           pane={pane}
