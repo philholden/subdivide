@@ -65,7 +65,6 @@ export default function LayoutReducer(state = initialState, action) {
     return setMode(state, action);
 
   case SET_BLOCK:
-    console.log(action, state.toJS());
     return setBlock(state, action);
 
   default:

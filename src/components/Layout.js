@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Pane from './Pane';
 import Divider from './Divider';
 import {flatten} from '../helpers/LayoutHelper';
-import {Map, fromJS} from 'immutable';
 
 export default class Layout extends Component {
   constructor(props, context) {
@@ -25,14 +24,11 @@ export default class Layout extends Component {
       panes: Object.values(paneMap)
     };
 
-    console.log(paneMap);
-
     setSize(window.innerWidth, window.innerHeight);
   }
 
   componentWillReceiveProps(nextProps) {
     const {layout} = nextProps;
-    const {dividers, panes} = this.state;
     let {dividerMap, paneMap} = flatten(
       layout,
       layout.rootId, {

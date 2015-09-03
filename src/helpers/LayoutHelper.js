@@ -37,10 +37,8 @@ function wrapPane(state, id) {
   if (parent) {
     let childIds = parent.childIds;
     childIds = childIds.set(childIds.indexOf(id), groupId);
-    console.log('childIds', childIds.toJS());
     state = state.setIn(['panes', parentId, 'childIds'], childIds);
   }
-  console.log('mo', state.toJS());
   return {state, group};
 }
 
@@ -64,7 +62,6 @@ export function split(state, {id, splitType}) {
     let out = wrapPane(state, id);
     parent = out.group;
     parent = parent.set('direction', direction);
-    console.log(id + '', isRoot);
     state = out.state;
     if (isRoot) {
       state = state.set('rootId', parent.id);
@@ -79,14 +76,12 @@ export function split(state, {id, splitType}) {
     splitRatio: 0.2
   });
   let offset = getOffset(splitType);
-  console.log('parent', parent.toJS());
   childIds = childIds.splice(index + offset, 0, newPane.id);
   parent = parent.set('childIds', childIds);
   state = state.setIn(['panes', parent.id], parent);
   state = state.setIn(['panes', newPane.id], newPane);
   state = state.setIn(['panes', pane.id, 'splitRatio'], pane.splitRatio * 0.75);
   state = state.setIn(['panes', newPane.id, 'splitRatio'], pane.splitRatio * 0.25);
-  console.log(state.toJS());
   return state;
 }
 
@@ -144,7 +139,10 @@ export function join(state, {retainId, removeId}) {
     return state;
   }
   state = removePane(state, removeId);
-  let splitRatio = remove.splitRatio + retain.splitRatio;
+  let nextParentId = state.getIn(['panes'], retainId).parentId;
+  let splitRatio = parent.id === nextParentId ?
+    remove.splitRatio + retain.splitRatio :
+    parent.splitRatio;
   state = state.setIn(['panes', retain.id, 'splitRatio'], splitRatio);
   return state;
 }
