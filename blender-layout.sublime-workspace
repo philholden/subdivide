@@ -4,8 +4,84 @@
 		"selected_items":
 		[
 			[
+				"consensu",
+				"consensusHead"
+			],
+			[
+				"e",
+				"endState"
+			],
+			[
+				"F",
+				"FAST_FORWARD"
+			],
+			[
+				"sub",
+				"subscribers"
+			],
+			[
+				"s",
+				"subscriber"
+			],
+			[
 				"is",
-				"isGwtVisible"
+				"isSubscribing"
+			],
+			[
+				"st",
+				"startState"
+			],
+			[
+				"set",
+				"setFrameState"
+			],
+			[
+				"d",
+				"dirtyHead"
+			],
+			[
+				"cons",
+				"console"
+			],
+			[
+				"com",
+				"compactHistory"
+			],
+			[
+				"fr",
+				"frameIndex"
+			],
+			[
+				"con",
+				"consensusHead"
+			],
+			[
+				"state",
+				"stateHistory"
+			],
+			[
+				"for",
+				"forEach"
+			],
+			[
+				"su",
+				"subscribers"
+			],
+			[
+				"to",
+				"toFrameIndex"
+			],
+			[
+				"str",
+				"strokeWidth"
+			],
+			[
+				"render",
+				"renderSpinner"
+			],
+			[
+				"re",
+				"requestAnimationFrame"
 			],
 			[
 				"SE",
@@ -22,10 +98,6 @@
 			[
 				"fet",
 				"fetchData"
-			],
-			[
-				"com",
-				"componentWillReceiveProps"
 			],
 			[
 				"Mo",
@@ -72,10 +144,6 @@
 				"prototype"
 			],
 			[
-				"to",
-				"toUpperCase"
-			],
-			[
 				"on",
 				"onMouseUp"
 			],
@@ -102,38 +170,24 @@
 			[
 				"fon",
 				"font-family"
-			],
-			[
-				"s",
-				"SideMenuItem"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
+			"file": "src/reducers/index.js",
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 1253,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "var path = require('path');\nvar webpack = require('webpack');\n\nmodule.exports = {\n  devtool: 'eval',\n  context: __dirname,\n  entry: [\n    'webpack-dev-server/client?http://localhost:3000',\n    'webpack/hot/only-dev-server',\n    './src/index.js'\n  ],\n  output: {\n    path: path.join(__dirname, 'dist'),\n    filename: 'bundle.js',\n    publicPath: '/static/'\n  },\n  plugins: [\n    new webpack.HotModuleReplacementPlugin(),\n    new webpack.NoErrorsPlugin(),\n    new webpack.DefinePlugin({\n      __TESTTOOLS__: false,\n      __DEVTOOLS__: false // <-------- DISABLE redux-devtools HERE\n    })\n\n  ],\n  resolve: {\n    extensions: ['', '.js', '.jsx']\n  },\n  module: {\n    loaders: [\n      { test: /\\.png$/, loader: 'url-loader?limit=100000' },\n      { test: /\\.json$/, loader: 'json-loader' },\n      {\n        test: /\\.jsx?$/,\n        loaders: ['react-hot', 'babel'],\n        include: path.join(__dirname, 'src')\n      },\n      {\n        test: /\\.scss$/,\n        loader: 'style!css!sass?outputStyle=expanded&' +\n          'includePaths[]=' +\n            (path.join(__dirname, './style'))\n             + '&' +\n          'includePaths[]=' +\n            (path.join(__dirname, './node_modules'))\n      }\n    ]\n  }\n};\n",
-			"file": "webpack.config.js",
-			"file_size": 1214,
-			"file_write_time": 130826723530000000,
+			"file": "src/reducers/LayoutReducer.js",
 			"settings":
 			{
-				"buffer_size": 1204,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "package.json",
-			"settings":
-			{
-				"buffer_size": 1400,
+				"buffer_size": 1188,
 				"line_ending": "Unix"
 			}
 		}
@@ -181,37 +235,52 @@
 	[
 		"/Users/ph185068/personal/blender-layout",
 		"/Users/ph185068/personal/blender-layout/src",
+		"/Users/ph185068/personal/blender-layout/src/helpers",
 		"/Users/ph185068/personal/blender-layout/src/reducers"
 	],
 	"file_history":
 	[
-		"/Users/ph185068/personal/chron-reduce/src/reducers/CampaignTableReducer.js",
-		"/Users/ph185068/personal/chron-reduce/package.json",
-		"/Users/ph185068/personal/chron-reduce/src/chron-reduce.js",
-		"/Users/ph185068/personal/chron-reduce/index.html",
+		"/Users/ph185068/personal/back-to-the-present/src/immutables/Frame.js",
+		"/Users/ph185068/personal/back-to-the-present/src/immutables/StateHistory.js",
+		"/Users/ph185068/personal/back-to-the-present/src/reducers/BackToThePresent.js",
+		"/Users/ph185068/projects/di/table-spike/index.html",
+		"/Users/ph185068/projects/di/table-spike/src/containers/CampaignTableApp.js",
+		"/Users/ph185068/projects/di/table-spike/indexProduction.html",
+		"/Users/ph185068/projects/di/table-spike/src/data.js",
+		"/Users/ph185068/projects/di/table-spike/src/reducers/index.js",
+		"/Users/ph185068/projects/di/table-spike/src/containers/App.js",
+		"/Users/ph185068/projects/di/table-spike/src/style/ModalStyles.js",
+		"/Users/ph185068/projects/di/table-spike/src/style/CampaignTableStyles.js",
+		"/Users/ph185068/projects/di/table-spike/src/style/CampaignTableMenuStyles.js",
+		"/Users/ph185068/projects/di/table-spike/src/styleGuide/CampaignTableStyleGuide.js",
+		"/Users/ph185068/projects/di/table-spike/data/promotionData.json",
+		"/Users/ph185068/projects/di/table-spike/.eslintrc",
+		"/Users/ph185068/projects/di/table-spike/src/styleGuideIndex.js",
+		"/Users/ph185068/projects/di/table-spike/src/index.js",
+		"/Users/ph185068/projects/di/table-spike/src/components/CampaignTableMenu.js",
+		"/Users/ph185068/projects/di/table-spike/src/components/CampaignTable.js",
+		"/Users/ph185068/projects/di/table-spike/style/main.scss",
+		"/Users/ph185068/projects/di/table-spike/src/style/StyleConstants.js",
+		"/Users/ph185068/projects/di/table-spike/src/components/ModalLoading.js",
+		"/Users/ph185068/projects/di/table-spike/src/components/Spinner.js",
+		"/Users/ph185068/projects/di/table-spike/src/components/ModalOverlay.js",
+		"/Users/ph185068/projects/di/table-spike/src/constants/CampaignTableConstants.js",
+		"/Users/ph185068/projects/di/table-spike/src/api/PromotionsApi.js",
+		"/Users/ph185068/projects/di/table-spike/package.json",
+		"/Users/ph185068/projects/di/table-spike/src/gwt/gwtBridge.js",
 		"/Users/ph185068/projects/di/table-spike/src/containers/CampaignTableLoader.js",
 		"/Users/ph185068/projects/di/table-spike/src/style/pallet.js",
 		"/Users/ph185068/projects/di/table-spike/src/StyleGuide.js",
-		"/Users/ph185068/projects/di/table-spike/package.json",
 		"/Users/ph185068/projects/codefest/VideoVoting/style/main.scss",
 		"/Users/ph185068/projects/di/table-spike/webpack.production.config.js",
 		"/Users/ph185068/projects/di/table-spike/webpack.config.js",
 		"/Users/ph185068/projects/di/table-spike/server.js",
-		"/Users/ph185068/projects/di/table-spike/src/constants/CampaignTableConstants.js",
-		"/Users/ph185068/projects/di/table-spike/src/components/CampaignTableMenu.js",
-		"/Users/ph185068/projects/di/table-spike/src/gwt/gwtBridge.js",
-		"/Users/ph185068/projects/di/table-spike/src/containers/App.js",
 		"/Users/ph185068/projects/di/table-spike/src/components/ConditionalDevTools.js",
 		"/Users/ph185068/projects/di/table-spike/src/components/CampaignTableLayout.js",
 		"/Users/ph185068/projects/di/table-spike/src/actions/CampaignTableActions.js",
-		"/Users/ph185068/projects/di/table-spike/src/reducers/index.js",
 		"/Users/ph185068/projects/di/table-spike/src/reducers/CampaignTableStore.js",
-		"/Users/ph185068/projects/di/table-spike/src/components/CampaignTable.js",
 		"/Users/ph185068/projects/di/table-spike/src/constants/CampaignTableActionTypes.js",
-		"/Users/ph185068/projects/di/table-spike/src/style/CampaignTableStyles.js",
-		"/Users/ph185068/projects/di/table-spike/src/index.js",
 		"/Users/ph185068/projects/di/table-spike/readme.md",
-		"/Users/ph185068/projects/di/table-spike/style/main.scss",
 		"/Users/ph185068/projects/di/table-spike/src/style/styleConst.js",
 		"/Users/ph185068/projects/di/table-spike/src/components/addPseudoSelectors.js",
 		"/Users/ph185068/projects/di/table-spike/src/components/SideMenuItem.js",
@@ -234,7 +303,6 @@
 		"/Users/ph185068/projects/webpack-intro/style/main.scss",
 		"/Users/ph185068/projects/di/table-spike/.gitignore",
 		"/Users/ph185068/Library/Application Support/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
-		"/Users/ph185068/projects/di/table-spike/.eslintrc",
 		"/Users/ph185068/projects/di/table-spike/node_modules/css-loader/lib/loader.js",
 		"/Users/ph185068/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/Users/ph185068/Library/Application Support/Sublime Text 3/Packages/User/JavaScript (Babel).sublime-settings",
@@ -243,13 +311,14 @@
 	],
 	"find":
 	{
-		"height": 25.0
+		"height": 26.0
 	},
 	"find_in_files":
 	{
 		"height": 93.0,
 		"where_history":
 		[
+			"/Users/ph185068/projects/di/table-spike/node_modules/redux-devtools",
 			"/Users/ph185068/projects/di/table-spike/src"
 		]
 	},
@@ -258,6 +327,30 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"console",
+			"hello",
+			"isSub",
+			"console.log",
+			"consen",
+			"consensus",
+			"horz",
+			"conso",
+			"updateConsensusHead",
+			"assign",
+			"Object",
+			"setDirtyHead",
+			"state",
+			"history",
+			"state",
+			"State",
+			"state",
+			"history",
+			"findDOMNode",
+			"find",
+			"findDOM",
+			"find",
+			"getDOM",
+			"bind",
 			"LOADING_CAMPAIGNS",
 			"async",
 			"promotionsuite",
@@ -305,15 +398,55 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
+					"file": "src/reducers/index.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 1253,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								258,
+								258
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 1,
+					"file": "src/reducers/LayoutReducer.js",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 1188,
 						"regions":
 						{
 						},
@@ -322,34 +455,6 @@
 							[
 								0,
 								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "webpack.config.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1204,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								240,
-								240
 							]
 						],
 						"settings":
@@ -367,46 +472,13 @@
 					},
 					"stack_index": 1,
 					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "package.json",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 1400,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								918,
-								918
-							]
-						],
-						"settings":
-						{
-							"editorconfig": true,
-							"ensure_newline_at_eof_on_save": true,
-							"syntax": "Packages/JavaScript/JSON.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true,
-							"trim_trailing_white_space_on_save": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 25.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
 				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 25.0
+		"height": 26.0
 	},
 	"input":
 	{
@@ -421,11 +493,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -443,7 +522,7 @@
 	"project": "blender-layout.sublime-project",
 	"replace":
 	{
-		"height": 46.0
+		"height": 48.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -467,7 +546,7 @@
 		[
 			[
 				"",
-				"~/personal/chron-reduce/src/reducers/consensus-optimist.sublime-project"
+				"~/projects/di/table-spike/table-spike.sublime-project"
 			]
 		],
 		"width": 380.0
@@ -489,7 +568,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 196.0,
+	"side_bar_width": 225.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

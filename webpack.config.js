@@ -5,8 +5,7 @@ module.exports = {
   devtool: 'eval',
   context: __dirname,
   entry: [
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
+    'webpack-hot-middleware/client',
     './src/index.js'
   ],
   output: {
@@ -32,7 +31,7 @@ module.exports = {
       { test: /\.json$/, loader: 'json-loader' },
       {
         test: /\.jsx?$/,
-        loaders: ['react-hot', 'babel'],
+        loaders: ['babel'],
         include: path.join(__dirname, 'src')
       },
       {
