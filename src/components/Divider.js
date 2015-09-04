@@ -6,17 +6,33 @@ import {
 
 function dividerStyle({width, height, top, left, direction}) {
 
-  var style = {
+  var outer = {
     width: width + 'px',
     height: height + 'px',
-    top: top,
-    left: left,
-    backgroundColor: '#333',
-    position: 'absolute',
-    cursor: direction === COL ? 'ns-resize' : 'ew-resize'
+    top: (top - 1) + 'px',
+    left: (left - 1) + 'px',
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    position: 'absolute'
   };
 
-  return style;
+  var inner = {
+    backgroundColor: '#000'
+  };
+
+  let borderStyle = '1px solid #ccc';
+
+  if (direction === COL) {
+    outer.cursor = 'ns-resize';
+    outer.paddingTop = '1px';
+    outer.paddingBottom = '1px';
+  } else {
+    outer.cursor = 'ew-resize';
+    outer.paddingLeft = '1px';
+    outer.paddingRight = '1px';
+  }
+
+
+  return {inner, outer};
 }
 
 export default class Divider extends Component {
@@ -68,11 +84,15 @@ export default class Divider extends Component {
 
   render() {
 
+    const styles = dividerStyle(this.props.divider)
+
     return (
       <div
-        style={dividerStyle(this.props.divider)}
+        style={styles.outer}
         onMouseDown={this.onMouseDown}
-        className="divider" />
+        className="divider">
+         <div style={styles.inner}></div>
+        </div>
     );
   }
 }

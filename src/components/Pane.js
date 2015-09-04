@@ -24,7 +24,7 @@ function getStyles({
     top: top + 'px',
     left: left + 'px',
     overflow: 'hidden',
-//    backgroundColor: '#xxx'.replace(/x/g, () => (((Math.random() * 6) + 10) | 0).toString(16)),
+    backgroundColor: '#xxx'.replace(/x/g, () => (((Math.random() * 6) + 10) | 0).toString(16)),
     // ':hover': {
     //   backgroundColor: 'rgba(0,0,0,0.1)'
     // }
@@ -84,6 +84,10 @@ export default class Pane extends Component {
     //{pane.id} {pane.splitRatio} {sizes.contentWidth} {sizes.width}
 
 
+        // <iframe src="index2.html" frameBorder={'0'} style={{
+        //   width: '100%',
+        //   height: '100%'
+        // }}></iframe>
 
   render() {
     const {pane, layout, actions} = this.props;
@@ -99,10 +103,6 @@ export default class Pane extends Component {
           top: 0,
           display: layout.displayBlock ? 'block' : 'none'
         }}></div>
-        <iframe src="index2.html" frameBorder={'0'} style={{
-          width: '100%',
-          height: '100%'
-        }}></iframe>
         <Triangle
           corner={SW}
           color='rgba(127,127,127,0.5)'

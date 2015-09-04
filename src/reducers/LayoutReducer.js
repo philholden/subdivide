@@ -29,7 +29,7 @@ export const Pane = new Record({
 
 export const Layout = new Record({
   rootId: '0',
-  dividerSize: 3,
+  dividerSize: 1,
   mode: undefined,
   splitJoinId: undefined,
   splitStartX: undefined,
