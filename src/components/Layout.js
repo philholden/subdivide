@@ -2,14 +2,23 @@ import React, { Component } from 'react';
 import Pane from './Pane';
 import Divider from './Divider';
 import {flatten} from '../helpers/LayoutHelper';
+import AnimationFrame from '../helpers/AnimationFrame';
 
 export default class Layout extends Component {
   constructor(props, context) {
     super(props, context);
+    this.animationFrame = new AnimationFrame();
     const {setSize} = props.actions;
+
+    this.onMouseMove = this.animationFrame.throttle((e) => {
+      // if mode is resize then resize
+    });
+
     window.addEventListener('resize', () => {
       setSize(window.innerWidth, window.innerHeight);
     });
+
+    document.addEventListener('mousemove', this.onMouseMove);
 
     let {dividerMap, paneMap} = flatten(
       props.layout,
@@ -25,6 +34,10 @@ export default class Layout extends Component {
     };
 
     setSize(window.innerWidth, window.innerHeight);
+  }
+
+  componentWillUnmount() {
+    this.animationFrame.stop();
   }
 
   componentWillReceiveProps(nextProps) {
