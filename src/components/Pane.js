@@ -10,6 +10,9 @@ import {
   CHILD_RIGHT,
   SPLIT_JOIN_MODE
 } from '../constants/BlenderLayoutConstants';
+import {
+  isJoinPossible
+} from '../helpers/LayoutHelper';
 
 function getStyles({
       width,
@@ -41,7 +44,7 @@ export default class Pane extends Component {
       const {clientX, clientY} = e;
       const {layout, pane, actions} = this.props;
       const {mode, splitJoinId, splitStartX, splitStartY} = layout;
-      const {setMode, split, setBlock} = actions;
+      const {setMode, split, setBlock, setCornerDown} = actions;
       if (mode === SPLIT_JOIN_MODE) {
         if (splitJoinId === pane.id) {
           let deltaX = clientX - splitStartX;
@@ -61,20 +64,22 @@ export default class Pane extends Component {
           }
           setMode(undefined, undefined, undefined, undefined);
           setBlock(false);
+          setCornerDown(undefined, undefined);
         }
         e.stopPropagation();
       }
     };
 
     this.onMouseUp = (e) => {
-      const {layout, pane, actions} = this.props;
-      const {mode, splitJoinId} = layout;
-      const {setMode, setBlock} = actions;
-      if (mode === SPLIT_JOIN_MODE) {
+      const {actions, layout, pane} = this.props;
+      const {setMode, join, setBlock, setCornerDown} = actions;
+      const {cornerDownId} = layout;
+      if(isJoinPossible(this.props)) {
         setMode(undefined, undefined, undefined, undefined);
         setBlock(false);
         e.stopPropagation();
-        actions.join(splitJoinId, pane.id);
+        join(cornerDownId, pane.id);
+        setCornerDown(undefined, undefined);
       }
     };
   }
@@ -92,17 +97,22 @@ export default class Pane extends Component {
   render() {
     const {pane, layout, actions} = this.props;
     const styles = getStyles(pane);
+    const isJoinable = isJoinPossible(this.props);
 
     return (
       <div style={styles.pane} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>
         <div style={{
           width: '100%',
           height: '100%',
-          backgroundColor: 'rgba(0,200,0,0)',
+          backgroundColor: !isJoinable ? 'rgba(0,200,0,0)' : 'rgba(0,0,0,0.5)',
           position: 'absolute',
           top: 0,
           display: layout.displayBlock ? 'block' : 'none'
-        }}></div>
+        }}>
+        </div>
+        {isJoinPossible(this.props) ? 'true' : 'false'}
+        {JSON.stringify(pane.childIds)}
+        {pane.id}
         <Triangle
           corner={SW}
           color='rgba(127,127,127,0.5)'
@@ -119,7 +129,6 @@ export default class Pane extends Component {
           pane={pane}
           actions={actions}
         />
-
       </div>
     );
   }

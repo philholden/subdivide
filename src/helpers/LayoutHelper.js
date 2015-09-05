@@ -4,7 +4,9 @@ import {
   CHILD_LEFT,
   CHILD_RIGHT,
   ROW,
-  COL
+  COL,
+  SW,
+  NE
 } from '../constants/BlenderLayoutConstants';
 
 import {List} from 'immutable';
@@ -176,6 +178,12 @@ export function setBlock(state, action) {
     .set('displayBlock', displayBlock);
 }
 
+export function setCornerDown(state, action) {
+  return state
+    .set('cornerDownId', action.id)
+    .set('cornerDownLocation', action.corner);
+}
+
 export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
   let rootPane = state.panes.get(rootId).toJS();
   let dividerMap = {};
@@ -204,6 +212,7 @@ export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
 
     parent.childIds.forEach((childId, i)=> {
       child = state.panes.get(childId).toJS();
+
       hasDivider = i !== 0;
       dividerOffset = 0;
       if (hasDivider) {
@@ -261,3 +270,55 @@ export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
   return {dividerMap, paneMap};
 }
 
+export function isJoinPossible1({layout, pane}) {
+  if (pane.isGroup) return false;
+  const {cornerDownId, cornerDownLocation} = layout;
+  const parent = layout.panes.get(pane.parentId);
+  if (!parent) return false;
+  const siblings = parent.childIds;
+  const index = siblings.indexOf(cornerDownId);
+  const beforeId = siblings.get(index - 1);
+  const afterId = siblings.get(index + 1);
+  const isBeforeGroup = beforeId !== undefined && layout.panes.get(beforeId).isGroup;
+  const isAfterGroup = afterId !== undefined && layout.panes.get(afterId).isGroup;
+  const isBefore = beforeId === pane.id && !isBeforeGroup;
+  const isAfter = afterId === pane.id && !isAfterGroup;
+  return (
+    cornerDownLocation === NE && (
+      (parent.direction === ROW && isAfter) ||
+      (parent.direction === COL && isBefore)
+    )
+  ) || (
+    cornerDownLocation === SW && (
+      (parent.direction === COL && isAfter) ||
+      (parent.direction === ROW && isBefore)
+    )
+  );
+}
+
+export function isJoinPossible({layout, pane}) {
+  const {cornerDownId, cornerDownLocation} = layout;
+  if (cornerDownId === undefined) return false;
+  const cornerDownPane = layout.panes.get(cornerDownId);
+  const parent = layout.panes.get(cornerDownPane.parentId);
+  if (!parent) return false;
+  const siblings = parent.childIds;
+  const index = siblings.indexOf(cornerDownId);
+  const beforeId = siblings.get(index - 1);
+  const afterId = siblings.get(index + 1);
+  const isBeforeGroup = beforeId !== undefined && layout.panes.get(beforeId).isGroup;
+  const isAfterGroup = afterId !== undefined && layout.panes.get(afterId).isGroup;
+  const canJoinBefore = beforeId === pane.id && !isBeforeGroup;
+  const canJoinAfter = afterId === pane.id && !isAfterGroup;
+  return (
+    cornerDownLocation === NE && (
+      (parent.direction === ROW && canJoinAfter) ||
+      (parent.direction === COL && canJoinBefore)
+    )
+  ) || (
+    cornerDownLocation === SW && (
+      (parent.direction === COL && canJoinAfter) ||
+      (parent.direction === ROW && canJoinBefore)
+    )
+  );
+}

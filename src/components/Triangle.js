@@ -4,6 +4,7 @@ import {NE, SW} from '../constants/BlenderLayoutConstants';
 import {
   SPLIT_JOIN_MODE
 } from '../../src/constants/BlenderLayoutConstants';
+import {findCornerAdjacent} from '../helpers/LayoutHelper';
 
 function triangleStyle({corner, color, size}) {
   var offset = (size + 3) / 2;
@@ -68,11 +69,12 @@ export default class Triangle extends Component {
       const {actions} = this.props;
       actions.setMode(undefined, undefined);
       actions.setBlock(false);
+      actions.setCornerDown(undefined, undefined);
       this.removeListeners();
     };
 
     this.onMouseDown = ({clientX, clientY}) => {
-      const {actions} = this.props;
+      const {actions, corner, pane} = this.props;
       //const {pane} = this.props;
       //const adjacent = getAdjacent(this.props);
       this.start = {
@@ -80,6 +82,8 @@ export default class Triangle extends Component {
         y: clientY
       };
       actions.setBlock(true);
+      actions.setCornerDown(pane.id, corner);
+      console.log('hello', pane.id);
 
       document.addEventListener('mousemove', this.onMouseMove);
       document.addEventListener('mouseup', this.onMouseUp);

@@ -14,6 +14,8 @@ export const CHILD_LEFT = 'CHILD_LEFT';
 export const CHILD_RIGHT = 'CHILD_RIGHT';
 export const CHILD_NONE = 'CHILD_NONE';
 
+export const CORNER_DOWN = 'CORNER_DOWN';
+
 export const ADD_CHILD_PANE = 'ADD_CHILD_PANE';
 export const REMOVE_CHILD_PANE = 'REMOVE_CHILD_PANE';
 export const REMOVE_PARENT_PANE = 'REMOVE_PARENT_PANE';
