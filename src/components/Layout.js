@@ -3,6 +3,9 @@ import Pane from './Pane';
 import Divider from './Divider';
 import {flatten} from '../helpers/LayoutHelper';
 import AnimationFrame from '../helpers/AnimationFrame';
+import {
+  ROW
+} from '../constants/BlenderLayoutConstants';
 
 export default class Layout extends Component {
   constructor(props, context) {
@@ -10,8 +13,27 @@ export default class Layout extends Component {
     this.animationFrame = new AnimationFrame();
     const {setSize} = props.actions;
 
-    this.onMouseMove = this.animationFrame.throttle((e) => {
-      // if mode is resize then resize
+    this.onMouseMove = this.animationFrame.throttle(({clientX, clientY}) => {
+      const {actions, layout} = this.props;
+      if (!layout.dividerDown) return;
+      const divider = layout.dividerDown;
+      const {
+        beforePaneId,
+        afterPaneId,
+        direction,
+        parentSize,
+        startX,
+        startY
+      } = divider;
+
+      let delta = direction === ROW ?
+        clientX - startX :
+        clientY - startY;
+      let deltaRatio = delta / parentSize;
+      let afterRatio = divider.afterRatio - deltaRatio;
+      let beforeRatio = divider.beforeRatio + deltaRatio;
+      actions.setSplitRatio(beforePaneId, beforeRatio);
+      actions.setSplitRatio(afterPaneId, afterRatio);
     });
 
     window.addEventListener('resize', () => {
@@ -58,6 +80,7 @@ export default class Layout extends Component {
 
   render() {
     const {layout, actions} = this.props;
+    console.log(layout.toJS());
     const panes = this.state.panes.map(pane => {
       return <Pane layout={layout} pane={pane} actions={actions} key={pane.id} />;
     });

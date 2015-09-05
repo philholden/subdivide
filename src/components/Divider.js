@@ -3,6 +3,7 @@ import {
   ROW,
   COL
 } from '../constants/BlenderLayoutConstants';
+import {setDividerDown} from '../helpers/LayoutHelper';
 
 function dividerStyle({width, height, top, left, direction}) {
 
@@ -39,41 +40,23 @@ export default class Divider extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.onMouseMove = ({clientX, clientY}) => {
-      const {actions, divider} = this.props;
-      const {beforePaneId, afterPaneId, direction, parentSize} = divider;
-      let {x, y} = this.start;
-      let delta = direction === ROW ? clientX - x : clientY - y;
-      let deltaRatio = delta / parentSize;
-      let afterRatio = this.start.afterRatio - deltaRatio;
-      let beforeRatio = this.start.beforeRatio + deltaRatio;
-      actions.setSplitRatio(beforePaneId, beforeRatio);
-      actions.setSplitRatio(afterPaneId, afterRatio);
-    };
-
     this.removeListeners = () => {
-      document.removeEventListener('mousemove', this.onMouseMove);
       document.removeEventListener('mouseup', this.onMouseUp);
     };
 
     this.onMouseUp = () => {
-      this.props.actions.setBlock(false);
+      const {actions} = this.props;
+      actions.setBlock(false);
+      actions.setDividerDown(undefined);
       this.removeListeners();
     };
 
     this.onMouseDown = ({clientX, clientY}) => {
       const {actions, divider} = this.props;
-      const {beforeRatio, afterRatio} = divider;
-      this.start = {
-        x: clientX,
-        y: clientY,
-        beforeRatio: beforeRatio,
-        afterRatio: afterRatio
-      };
 
       actions.setBlock(true);
+      actions.setDividerDown({...divider, startX: clientX, startY: clientY});
 
-      document.addEventListener('mousemove', this.onMouseMove);
       document.addEventListener('mouseup', this.onMouseUp);
     };
   }

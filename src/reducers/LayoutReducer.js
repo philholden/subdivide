@@ -5,7 +5,8 @@ import {
   SET_SIZE,
   SET_MODE,
   SET_BLOCK,
-  SET_CORNER_DOWN
+  SET_CORNER_DOWN,
+  SET_DIVIDER_DOWN
 } from '../constants/BlenderLayoutConstants';
 
 import { Record, List, Map} from 'immutable';
@@ -17,7 +18,8 @@ import {
   setSize,
   setMode,
   setBlock,
-  setCornerDown
+  setCornerDown,
+  setDividerDown
 } from '../helpers/LayoutHelper';
 
 export const Pane = new Record({
@@ -33,6 +35,7 @@ export const Layout = new Record({
   rootId: '0',
   dividerSize: 1,
   mode: undefined,
+  dividerDown: undefined,
   cornerDownId: undefined,
   cornerDownLocation: undefined,
   splitJoinId: undefined,
@@ -73,6 +76,10 @@ export default function LayoutReducer(state = initialState, action) {
 
   case SET_CORNER_DOWN:
     return setCornerDown(state, action);
+
+  case SET_DIVIDER_DOWN:
+    console.log(action);
+    return setDividerDown(state, action);
 
   default:
     return state;

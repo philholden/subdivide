@@ -184,6 +184,13 @@ export function setCornerDown(state, action) {
     .set('cornerDownLocation', action.corner);
 }
 
+export function setDividerDown(state, action) {
+  console.log(action.divider, state
+    .set('dividerDown', action.divider));
+  return state
+    .set('dividerDown', action.divider);
+}
+
 export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
   let rootPane = state.panes.get(rootId).toJS();
   let dividerMap = {};
