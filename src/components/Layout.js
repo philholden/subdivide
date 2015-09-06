@@ -4,7 +4,14 @@ import Divider from './Divider';
 import {flatten} from '../helpers/LayoutHelper';
 import AnimationFrame from '../helpers/AnimationFrame';
 import {
-  ROW
+  CHILD_ABOVE,
+  CHILD_BELOW,
+  CHILD_LEFT,
+  CHILD_RIGHT,
+  ROW,
+  COL,
+  SW,
+  NE
 } from '../constants/BlenderLayoutConstants';
 
 export default class Layout extends Component {
@@ -15,31 +22,75 @@ export default class Layout extends Component {
 
     this.onMouseMove = this.animationFrame.throttle(({clientX, clientY}) => {
       const {actions, layout} = this.props;
-      if (!layout.dividerDown) return;
-      const divider = layout.dividerDown;
-      const {
-        beforePaneId,
-        afterPaneId,
-        direction,
-        parentSize,
-        startX,
-        startY
-      } = divider;
 
-      let delta = direction === ROW ?
-        clientX - startX :
-        clientY - startY;
-      let deltaRatio = delta / parentSize;
-      let afterRatio = divider.afterRatio - deltaRatio;
-      let beforeRatio = divider.beforeRatio + deltaRatio;
-      actions.setSplitRatio(beforePaneId, beforeRatio);
-      actions.setSplitRatio(afterPaneId, afterRatio);
+      if (layout.dividerDown) {
+        const divider = layout.dividerDown;
+        const {
+          beforePaneId,
+          afterPaneId,
+          direction,
+          parentSize,
+          startX,
+          startY
+        } = divider;
+
+        let delta = direction === ROW ?
+          clientX - startX :
+          clientY - startY;
+        let deltaRatio = delta / parentSize;
+        let afterRatio = divider.afterRatio - deltaRatio;
+        let beforeRatio = divider.beforeRatio + deltaRatio;
+        actions.setSplitRatio(beforePaneId, beforeRatio);
+        actions.setSplitRatio(afterPaneId, afterRatio);
+      }
+
+      if (layout.cornerDown) {
+        const pane = layout.cornerDown;
+        const {split, setCornerDown} = actions;
+        const {width, height, left, top, id, corner} = pane;
+
+        if (clientX > left && clientX < left + width &&
+          clientY > top && clientY < top + height) {
+
+          if (corner === SW) {
+            if (clientX - left > 20) {
+              split(id, CHILD_LEFT);
+              setCornerDown(undefined);
+            } else if (top + height - clientY > 20) {
+              split(id, CHILD_BELOW);
+              setCornerDown(undefined);
+            }
+          }
+
+          if (corner === NE) {
+            if (left + width - clientX > 20) {
+              split(id, CHILD_RIGHT);
+              setCornerDown(undefined);
+            } else if (clientY - top > 20) {
+              split(id, CHILD_ABOVE);
+              setCornerDown(undefined);
+            }
+          }
+        }
+      }
+
     });
+
+    this.onMouseUp = () => {
+      const {actions, layout} = this.props;
+      if (layout.dividerDown) {
+        actions.setDividerDown(undefined);
+      }
+      if (layout.displayBlock) {
+        actions.setBlock(false);
+      }
+    };
 
     window.addEventListener('resize', () => {
       setSize(window.innerWidth, window.innerHeight);
     });
 
+    document.addEventListener('mouseup', this.onMouseUp);
     document.addEventListener('mousemove', this.onMouseMove);
 
     let {dividerMap, paneMap} = flatten(

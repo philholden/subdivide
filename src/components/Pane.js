@@ -40,46 +40,18 @@ export default class Pane extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.onMouseMove = (e) => {
-      const {clientX, clientY} = e;
-      const {layout, pane, actions} = this.props;
-      const {mode, splitJoinId, splitStartX, splitStartY} = layout;
-      const {setMode, split, setBlock, setCornerDown} = actions;
-      if (mode === SPLIT_JOIN_MODE) {
-        if (splitJoinId === pane.id) {
-          let deltaX = clientX - splitStartX;
-          let deltaY = clientY - splitStartY;
-          if (Math.abs(deltaX) > Math.abs(deltaY)) {
-            if (deltaX > 0) {
-              split(pane.id, CHILD_LEFT);
-            } else {
-              split(pane.id, CHILD_RIGHT);
-            }
-          } else {
-            if (deltaY > 0) {
-              split(pane.id, CHILD_ABOVE);
-            } else {
-              split(pane.id, CHILD_BELOW);
-            }
-          }
-          setMode(undefined, undefined, undefined, undefined);
-          setBlock(false);
-          setCornerDown(undefined, undefined);
-        }
-        e.stopPropagation();
-      }
-    };
-
-    this.onMouseUp = (e) => {
+    this.onMouseUp = () => {
+      //Note this on mouse up happens after layout on mouse up
       const {actions, layout, pane} = this.props;
-      const {setMode, join, setBlock, setCornerDown} = actions;
-      const {cornerDownId} = layout;
+      const {join} = actions;
+      console.log('pane', layout.toJS());
+      if (!layout.cornerDown) return;
+      const cornerDownId = layout.cornerDown.id;
       if(isJoinPossible(this.props)) {
-        setMode(undefined, undefined, undefined, undefined);
-        setBlock(false);
-        e.stopPropagation();
+        //setBlock(false);
+        //e.stopPropagation();
         join(cornerDownId, pane.id);
-        setCornerDown(undefined, undefined);
+        actions.setCornerDown(undefined);
       }
     };
   }

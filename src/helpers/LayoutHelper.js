@@ -180,8 +180,7 @@ export function setBlock(state, action) {
 
 export function setCornerDown(state, action) {
   return state
-    .set('cornerDownId', action.id)
-    .set('cornerDownLocation', action.corner);
+    .set('cornerDown', action.cornerDown);
 }
 
 export function setDividerDown(state, action) {
@@ -277,35 +276,10 @@ export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
   return {dividerMap, paneMap};
 }
 
-export function isJoinPossible1({layout, pane}) {
-  if (pane.isGroup) return false;
-  const {cornerDownId, cornerDownLocation} = layout;
-  const parent = layout.panes.get(pane.parentId);
-  if (!parent) return false;
-  const siblings = parent.childIds;
-  const index = siblings.indexOf(cornerDownId);
-  const beforeId = siblings.get(index - 1);
-  const afterId = siblings.get(index + 1);
-  const isBeforeGroup = beforeId !== undefined && layout.panes.get(beforeId).isGroup;
-  const isAfterGroup = afterId !== undefined && layout.panes.get(afterId).isGroup;
-  const isBefore = beforeId === pane.id && !isBeforeGroup;
-  const isAfter = afterId === pane.id && !isAfterGroup;
-  return (
-    cornerDownLocation === NE && (
-      (parent.direction === ROW && isAfter) ||
-      (parent.direction === COL && isBefore)
-    )
-  ) || (
-    cornerDownLocation === SW && (
-      (parent.direction === COL && isAfter) ||
-      (parent.direction === ROW && isBefore)
-    )
-  );
-}
-
 export function isJoinPossible({layout, pane}) {
-  const {cornerDownId, cornerDownLocation} = layout;
-  if (cornerDownId === undefined) return false;
+  const {cornerDown} = layout;
+  if (cornerDown === undefined) return false;
+  const cornerDownId = layout.cornerDown.id;
   const cornerDownPane = layout.panes.get(cornerDownId);
   const parent = layout.panes.get(cornerDownPane.parentId);
   if (!parent) return false;
@@ -318,12 +292,12 @@ export function isJoinPossible({layout, pane}) {
   const canJoinBefore = beforeId === pane.id && !isBeforeGroup;
   const canJoinAfter = afterId === pane.id && !isAfterGroup;
   return (
-    cornerDownLocation === NE && (
+    cornerDown.corner === NE && (
       (parent.direction === ROW && canJoinAfter) ||
       (parent.direction === COL && canJoinBefore)
     )
   ) || (
-    cornerDownLocation === SW && (
+    cornerDown.corner === SW && (
       (parent.direction === COL && canJoinAfter) ||
       (parent.direction === ROW && canJoinBefore)
     )

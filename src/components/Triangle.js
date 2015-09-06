@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Radium from 'radium';
-import {NE, SW} from '../constants/BlenderLayoutConstants';
 import {
-  SPLIT_JOIN_MODE
-} from '../../src/constants/BlenderLayoutConstants';
-import {findCornerAdjacent} from '../helpers/LayoutHelper';
+  SW,
+  NE
+} from '../constants/BlenderLayoutConstants';
 
 function triangleStyle({corner, color, size}) {
   var offset = (size + 3) / 2;
@@ -47,46 +46,10 @@ export default class Triangle extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.onMouseMove = ({clientX, clientY}) => {
-      const {actions, pane} = this.props;
-      //const adjacent = getAdjacent(this.props);
-      //const {direction, adjacentSize} = sizes;
-      let {x, y} = this.start;
-      let delta = {x: clientX - x, y: clientY - y};
-      if (Math.abs(delta.x) > 20 || Math.abs(delta.y) > 20) {
-        actions.setMode(pane.id, SPLIT_JOIN_MODE, x, y);
-        document.removeEventListener('mousemove', this.onMouseMove);
-      }
-    };
-
-    this.removeListeners = () => {
-      document.removeEventListener('mousemove', this.onMouseMove);
-      document.removeEventListener('mouseup', this.onMouseUp);
-    };
-
-    this.onMouseUp = () => {
-
-      const {actions} = this.props;
-      actions.setMode(undefined, undefined);
-      actions.setBlock(false);
-      actions.setCornerDown(undefined, undefined);
-      this.removeListeners();
-    };
-
-    this.onMouseDown = ({clientX, clientY}) => {
+    this.onMouseDown = () => {
       const {actions, corner, pane} = this.props;
-      //const {pane} = this.props;
-      //const adjacent = getAdjacent(this.props);
-      this.start = {
-        x: clientX,
-        y: clientY
-      };
       actions.setBlock(true);
-      actions.setCornerDown(pane.id, corner);
-      console.log('hello', pane.id);
-
-      document.addEventListener('mousemove', this.onMouseMove);
-      document.addEventListener('mouseup', this.onMouseUp);
+      actions.setCornerDown({...pane, corner: corner});
     };
   }
 

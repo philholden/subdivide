@@ -58,11 +58,10 @@ export function setBlock(displayBlock){
   };
 }
 
-export function setCornerDown(id, corner) {
+export function setCornerDown(cornerDown) {
   return {
     type: SET_CORNER_DOWN,
-    id,
-    corner
+    cornerDown
   };
 }
 
