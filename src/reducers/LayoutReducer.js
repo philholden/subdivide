@@ -67,8 +67,8 @@ export default function LayoutReducer(state = initialState, action) {
   case SET_SIZE:
     return setSize(state, action);
 
-  case SET_MODE:
-    return setMode(state, action);
+  // case SET_MODE:
+  //   return setMode(state, action);
 
   case SET_BLOCK:
     return setBlock(state, action);

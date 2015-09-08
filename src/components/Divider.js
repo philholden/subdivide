@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
-  ROW,
   COL
 } from '../constants/BlenderLayoutConstants';
-import {setDividerDown} from '../helpers/LayoutHelper';
 
 function dividerStyle({width, height, top, left, direction}) {
 
@@ -19,8 +17,6 @@ function dividerStyle({width, height, top, left, direction}) {
   var inner = {
     backgroundColor: '#000'
   };
-
-  let borderStyle = '1px solid #ccc';
 
   if (direction === COL) {
     outer.cursor = 'ns-resize';
@@ -67,7 +63,7 @@ export default class Divider extends Component {
 
   render() {
 
-    const styles = dividerStyle(this.props.divider)
+    const styles = dividerStyle(this.props.divider);
 
     return (
       <div

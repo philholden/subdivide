@@ -9,7 +9,6 @@ export default class AnimationFrame {
     this.incCounter = () => {
       this.counter += 1;
       this.id = reqAnimFrame(this.incCounter);
-      //console.log(Math.floor(this.counter / 60));
     };
 
     this.stop = () => {

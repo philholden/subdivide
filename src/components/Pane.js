@@ -3,12 +3,7 @@ import Triangle from './Triangle';
 
 import {
   NE,
-  SW,
-  CHILD_ABOVE,
-  CHILD_BELOW,
-  CHILD_LEFT,
-  CHILD_RIGHT,
-  SPLIT_JOIN_MODE
+  SW
 } from '../constants/BlenderLayoutConstants';
 import {
   isJoinPossible
@@ -27,10 +22,7 @@ function getStyles({
     top: top + 'px',
     left: left + 'px',
     overflow: 'hidden',
-    backgroundColor: '#xxx'.replace(/x/g, () => (((Math.random() * 6) + 10) | 0).toString(16)),
-    // ':hover': {
-    //   backgroundColor: 'rgba(0,0,0,0.1)'
-    // }
+    //backgroundColor: '#xxx'.replace(/x/g, () => (((Math.random() * 6) + 10) | 0).toString(16))
   };
 
   return {pane};
@@ -44,7 +36,6 @@ export default class Pane extends Component {
       //Note this on mouse up happens after layout on mouse up
       const {actions, layout, pane} = this.props;
       const {join} = actions;
-      console.log('pane', layout.toJS());
       if (!layout.cornerDown) return;
       const cornerDownId = layout.cornerDown.id;
       if(isJoinPossible(this.props)) {
@@ -61,18 +52,21 @@ export default class Pane extends Component {
     //{pane.id} {pane.splitRatio} {sizes.contentWidth} {sizes.width}
 
 
-        // <iframe src="index2.html" frameBorder={'0'} style={{
-        //   width: '100%',
-        //   height: '100%'
-        // }}></iframe>
 
   render() {
     const {pane, layout, actions} = this.props;
     const styles = getStyles(pane);
     const isJoinable = isJoinPossible(this.props);
+        // {isJoinPossible(this.props) ? 'true' : 'false'}
+        // {JSON.stringify(pane.childIds)}
+        // {pane.id}
 
     return (
       <div style={styles.pane} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>
+        <iframe src="index2.html" frameBorder={'0'} style={{
+           width: '100%',
+           height: '100%'
+        }}></iframe>
         <div style={{
           width: '100%',
           height: '100%',
@@ -82,9 +76,6 @@ export default class Pane extends Component {
           display: layout.displayBlock ? 'block' : 'none'
         }}>
         </div>
-        {isJoinPossible(this.props) ? 'true' : 'false'}
-        {JSON.stringify(pane.childIds)}
-        {pane.id}
         <Triangle
           corner={SW}
           color='rgba(127,127,127,0.5)'

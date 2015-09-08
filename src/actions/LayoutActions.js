@@ -3,7 +3,6 @@ import {
   SPLIT,
   JOIN,
   SET_SIZE,
-  SET_MODE,
   SET_BLOCK,
   SET_CORNER_DOWN,
   SET_DIVIDER_DOWN
@@ -38,16 +37,6 @@ export function setSize(width, height){
     type: SET_SIZE,
     width,
     height
-  };
-}
-
-export function setMode(id, mode, splitStartX, splitStartY){
-  return {
-    type: SET_MODE,
-    mode,
-    id,
-    splitStartX,
-    splitStartY
   };
 }
 

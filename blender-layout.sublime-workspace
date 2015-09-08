@@ -4,16 +4,40 @@
 		"selected_items":
 		[
 			[
+				"cor",
+				"cornerDown"
+			],
+			[
+				"corner",
+				"cornerDown"
+			],
+			[
+				"cli",
+				"clientX"
+			],
+			[
+				"set",
+				"setDividerDown"
+			],
+			[
+				"SET",
+				"SET_DIVIDER_DOWN"
+			],
+			[
+				"cl",
+				"clientX"
+			],
+			[
+				"a",
+				"animationFrame"
+			],
+			[
 				"throttle",
 				"throttleMouse"
 			],
 			[
 				"re",
 				"reqAnimFrame"
-			],
-			[
-				"set",
-				"setCornerDown"
 			],
 			[
 				"corn",
@@ -216,6 +240,14 @@
 			}
 		},
 		{
+			"file": "index2.html",
+			"settings":
+			{
+				"buffer_size": 392,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "server.js",
 			"settings":
 			{
@@ -235,15 +267,25 @@
 			"file": "src/helpers/LayoutHelper.js",
 			"settings":
 			{
-				"buffer_size": 9896,
+				"buffer_size": 9095,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 13 files for \"cornerDownId\"\n\n/Users/ph185068/personal/blender-layout/src/components/Pane.js:\n   74        const {actions, layout, pane} = this.props;\n   75        const {setMode, join, setBlock, setCornerDown} = actions;\n   76:       const {cornerDownId} = layout;\n   77        if(isJoinPossible(this.props)) {\n   78          setMode(undefined, undefined, undefined, undefined);\n   79          setBlock(false);\n   80          e.stopPropagation();\n   81:         join(cornerDownId, pane.id);\n   82          setCornerDown(undefined, undefined);\n   83        }\n\n/Users/ph185068/personal/blender-layout/src/helpers/LayoutHelper.js:\n  279  export function isJoinPossible1({layout, pane}) {\n  280    if (pane.isGroup) return false;\n  281:   const {cornerDownId, cornerDownLocation} = layout;\n  282    const parent = layout.panes.get(pane.parentId);\n  283    if (!parent) return false;\n  284    const siblings = parent.childIds;\n  285:   const index = siblings.indexOf(cornerDownId);\n  286    const beforeId = siblings.get(index - 1);\n  287    const afterId = siblings.get(index + 1);\n  ...\n  304  \n  305  export function isJoinPossible({layout, pane}) {\n  306:   const {cornerDownId, cornerDownLocation} = layout;\n  307:   if (cornerDownId === undefined) return false;\n  308:   const cornerDownPane = layout.panes.get(cornerDownId);\n  309    const parent = layout.panes.get(cornerDownPane.parentId);\n  310    if (!parent) return false;\n  311    const siblings = parent.childIds;\n  312:   const index = siblings.indexOf(cornerDownId);\n  313    const beforeId = siblings.get(index - 1);\n  314    const afterId = siblings.get(index + 1);\n\n8 matches across 2 files\n",
+			"settings":
+			{
+				"buffer_size": 1665,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
 			}
 		},
 		{
 			"file": "src/helpers/AnimationFrame.js",
 			"settings":
 			{
-				"buffer_size": 777,
+				"buffer_size": 729,
 				"line_ending": "Unix"
 			}
 		},
@@ -251,7 +293,7 @@
 			"file": "src/components/Divider.js",
 			"settings":
 			{
-				"buffer_size": 2421,
+				"buffer_size": 1761,
 				"line_ending": "Unix"
 			}
 		},
@@ -259,7 +301,7 @@
 			"file": "src/actions/LayoutActions.js",
 			"settings":
 			{
-				"buffer_size": 921,
+				"buffer_size": 1038,
 				"line_ending": "Unix"
 			}
 		},
@@ -267,7 +309,7 @@
 			"file": "src/constants/BlenderLayoutConstants.js",
 			"settings":
 			{
-				"buffer_size": 858,
+				"buffer_size": 910,
 				"line_ending": "Unix"
 			}
 		},
@@ -275,7 +317,7 @@
 			"file": "src/reducers/LayoutReducer.js",
 			"settings":
 			{
-				"buffer_size": 1350,
+				"buffer_size": 1472,
 				"line_ending": "Unix"
 			}
 		},
@@ -291,7 +333,15 @@
 			"file": "src/components/Pane.js",
 			"settings":
 			{
-				"buffer_size": 3586,
+				"buffer_size": 2455,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "README.md",
+			"settings":
+			{
+				"buffer_size": 583,
 				"line_ending": "Unix"
 			}
 		},
@@ -315,7 +365,7 @@
 			"file": "src/components/Triangle.js",
 			"settings":
 			{
-				"buffer_size": 2704,
+				"buffer_size": 1365,
 				"line_ending": "Unix"
 			}
 		},
@@ -323,7 +373,7 @@
 			"file": "src/components/Layout.js",
 			"settings":
 			{
-				"buffer_size": 1762,
+				"buffer_size": 3869,
 				"line_ending": "Unix"
 			}
 		}
@@ -458,6 +508,7 @@
 		"height": 93.0,
 		"where_history":
 		[
+			"/Users/ph185068/personal/blender-layout/src",
 			"/Users/ph185068/projects/di/table-spike/node_modules/redux-devtools",
 			"/Users/ph185068/projects/di/table-spike/src"
 		]
@@ -467,6 +518,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"direction",
+			"cornerDownLocation",
+			"cornerDownId",
+			"findCornerAdjacent",
 			"pane",
 			"console",
 			"hello",
@@ -539,7 +594,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -572,11 +627,44 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 14,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
+					"file": "index2.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 392,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								225,
+								225
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
 					"file": "server.js",
 					"semi_transient": false,
 					"settings":
@@ -605,11 +693,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 15,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "webpack.config.js",
 					"semi_transient": false,
 					"settings":
@@ -638,24 +726,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "src/helpers/LayoutHelper.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9896,
+						"buffer_size": 9095,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8820,
-								8820
+								8961,
+								8961
 							]
 						],
 						"settings":
@@ -668,27 +756,102 @@
 							"trim_trailing_white_space_on_save": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 4663.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 5,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1665,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										251,
+										263
+									],
+									[
+										477,
+										489
+									],
+									[
+										752,
+										764
+									],
+									[
+										972,
+										984
+									],
+									[
+										1174,
+										1186
+									],
+									[
+										1231,
+										1243
+									],
+									[
+										1322,
+										1334
+									],
+									[
+										1523,
+										1535
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								595,
+								595
+							]
+						],
+						"settings":
+						{
+							"default_dir": "/Users/ph185068/personal/blender-layout",
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
 					"file": "src/helpers/AnimationFrame.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 777,
+						"buffer_size": 729,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								738,
-								738
+								578,
+								578
 							]
 						],
 						"settings":
@@ -705,90 +868,90 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "src/components/Divider.js",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 2421,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"editorconfig": true,
-							"ensure_newline_at_eof_on_save": true,
-							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true,
-							"trim_trailing_white_space_on_save": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 866.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "src/actions/LayoutActions.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 921,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								36,
-								36
-							]
-						],
-						"settings":
-						{
-							"editorconfig": true,
-							"ensure_newline_at_eof_on_save": true,
-							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true,
-							"trim_trailing_white_space_on_save": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
 					"buffer": 7,
-					"file": "src/constants/BlenderLayoutConstants.js",
+					"file": "src/components/Divider.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 858,
+						"buffer_size": 1761,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								488,
-								488
+								132,
+								132
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 354.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "src/actions/LayoutActions.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1038,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								734,
+								734
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 540.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "src/constants/BlenderLayoutConstants.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 910,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								907,
+								907
 							]
 						],
 						"settings":
@@ -802,46 +965,46 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "src/reducers/LayoutReducer.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1472,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								647,
+								647
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 155.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "src/reducers/LayoutReducer.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1350,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								617,
-								617
-							]
-						],
-						"settings":
-						{
-							"editorconfig": true,
-							"ensure_newline_at_eof_on_save": true,
-							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true,
-							"trim_trailing_white_space_on_save": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 650.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
+					"buffer": 11,
 					"file": "src/containers/App.js",
 					"semi_transient": false,
 					"settings":
@@ -870,24 +1033,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 12,
 					"file": "src/components/Pane.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3586,
+						"buffer_size": 2455,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1803,
-								1803
+								843,
+								843
 							]
 						],
 						"settings":
@@ -900,14 +1063,49 @@
 							"trim_trailing_white_space_on_save": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 133.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 13,
+					"file": "README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 583,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								534,
+								534
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"open_with_edit": true,
+							"spell_check": true,
+							"syntax": "Packages/Markdown/Markdown.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
 					"file": "package.json",
 					"semi_transient": false,
 					"settings":
@@ -936,11 +1134,11 @@
 						"translation.y": 34.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 13,
+					"stack_index": 17,
 					"type": "text"
 				},
 				{
-					"buffer": 12,
+					"buffer": 15,
 					"file": ".babelrc",
 					"semi_transient": false,
 					"settings":
@@ -969,7 +1167,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 12,
+					"stack_index": 16,
 					"type": "text"
 				}
 			]
@@ -979,53 +1177,20 @@
 			"sheets":
 			[
 				{
-					"buffer": 13,
+					"buffer": 16,
 					"file": "src/components/Triangle.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2704,
+						"buffer_size": 1365,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1172,
-								1172
-							]
-						],
-						"settings":
-						{
-							"editorconfig": true,
-							"ensure_newline_at_eof_on_save": true,
-							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true,
-							"trim_trailing_white_space_on_save": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 558.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "src/components/Layout.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1762,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								398,
-								398
+								136,
+								136
 							]
 						],
 						"settings":
@@ -1039,6 +1204,39 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "src/components/Layout.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3869,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2207,
+								2207
+							]
+						],
+						"settings":
+						{
+							"editorconfig": true,
+							"ensure_newline_at_eof_on_save": true,
+							"syntax": "Packages/Babel/JavaScript (Babel).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"trim_trailing_white_space_on_save": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 954.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1075,7 +1273,7 @@
 		"cols":
 		[
 			0.0,
-			0.5,
+			0.409757587449,
 			1.0
 		],
 		"rows":
@@ -1117,7 +1315,7 @@
 		[
 			[
 				"",
-				"~/projects/di/table-spike/table-spike.sublime-project"
+				"~/projects/di/hello-native/AwesomeProject/advert-native.sublime-project"
 			]
 		],
 		"width": 380.0

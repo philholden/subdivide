@@ -144,7 +144,6 @@ describe('pane reducer', () => {
   });
 
   describe('join one of two in row below root', () => {
-    let original, parent, added;
     beforeEach(() => {
       startState = (new Layout())
         .set('rootId', '1')

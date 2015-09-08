@@ -9,7 +9,6 @@ import {
   CHILD_LEFT,
   CHILD_RIGHT,
   ROW,
-  COL,
   SW,
   NE
 } from '../constants/BlenderLayoutConstants';
@@ -131,7 +130,7 @@ export default class Layout extends Component {
 
   render() {
     const {layout, actions} = this.props;
-    console.log(layout.toJS());
+    //console.log(layout.toJS());
     const panes = this.state.panes.map(pane => {
       return <Pane layout={layout} pane={pane} actions={actions} key={pane.id} />;
     });

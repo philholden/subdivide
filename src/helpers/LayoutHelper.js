@@ -163,15 +163,6 @@ export function setSize(state, {width, height}) {
   return state.set('width', width).set('height', height);
 }
 
-export function setMode(state, action) {
-  const {mode, id, splitStartX, splitStartY} = action;
-  return state
-    .set('mode', mode)
-    .set('splitJoinId', id)
-    .set('splitStartX', splitStartX)
-    .set('splitStartY', splitStartY);
-}
-
 export function setBlock(state, action) {
   const {displayBlock} = action;
   return state

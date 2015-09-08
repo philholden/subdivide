@@ -1,7 +1,7 @@
 {
-  "name": "blender-layout",
+  "name": "subdivide",
   "version": "0.0.0",
-  "description": "Sharing of state between game instances on different clients",
+  "description": "Layout system that allows panes to be infinitely subdivided",
   "main": "index.js",
   "scripts": {
     "test": "mocha test --compilers js:babel/register --recursive",
@@ -9,9 +9,13 @@
     "build": "NODE_ENV=production node node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js",
     "lint": "eslint src"
   },
-  "author": "",
+  "author": {
+    "name": "Phil Holden",
+    "url": ""
+  },
   "license": "ISC",
   "devDependencies": {
+    "babel": "^5.8.23",
     "babel-core": "^5.6.3",
     "babel-eslint": "^3.1.18",
     "babel-loader": "^5.1.4",
@@ -25,13 +29,10 @@
     "json-loader": "^0.5.2",
     "mocha": "^2.3.0",
     "node-libs-browser": "^0.5.2",
-    "node-sass": "^3.2.0",
     "react-transform-catch-errors": "^0.1.1",
     "react-transform-webpack-hmr": "^0.1.3",
     "redbox-react": "^1.0.1",
     "redux-devtools": "^2.1.0",
-    "sass-loader": "^1.0.2",
-    "style-loader": "^0.12.3",
     "url-loader": "^0.5.6",
     "webpack": "^1.9.12",
     "webpack-dev-middleware": "^1.2.0",
@@ -47,5 +48,13 @@
     "react-redux": "^2.1.0",
     "redux": "^2.0.0",
     "redux-thunk": "^0.1.0"
-  }
+  },
+  "keywords": [
+    "immutable",
+    "redux",
+    "layout",
+    "panes",
+    "blender",
+    "devtools"
+  ]
 }
