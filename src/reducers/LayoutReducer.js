@@ -29,14 +29,13 @@ export const Pane = new Record({
 
 export const Layout = new Record({
   rootId: '0',
-  dividerSize: 1,
+//  dividerSize: 3,
+  borderSize: 1,
+  cellSpacing: 3,
+  touchMargin: 2,
   mode: undefined,
   dividerDown: undefined,
   cornerDown: undefined,
-//  splitJoinId: undefined,
-  newDividerId: undefined,
-  // splitStartX: undefined,
-  // splitStartY: undefined,
   width: 800,
   height: 600,
   panes: Map({

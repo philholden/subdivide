@@ -3,33 +3,47 @@ import {
   COL
 } from '../constants/BlenderLayoutConstants';
 
-function dividerStyle({width, height, top, left, direction}) {
+function dividerStyle({width, height, top, left, direction, borderSize, touchMargin}) {
 
-  var outer = {
+  var touch = {
     width: width + 'px',
     height: height + 'px',
-    top: (top - 1) + 'px',
-    left: (left - 1) + 'px',
-    backgroundColor: 'rgba(0,0,0,0.2)',
+    top: top + 'px',
+    left: left + 'px',
+    backgroundColor: 'rgba(0,255,0,1)',
+    position: 'absolute'
+  };
+
+  var border = {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0,0,0,1)',
     position: 'absolute'
   };
 
   var inner = {
-    backgroundColor: '#000'
+    position: 'absolute',
+    backgroundColor: '#00f',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
   };
 
   if (direction === COL) {
-    outer.cursor = 'ns-resize';
-    outer.paddingTop = '1px';
-    outer.paddingBottom = '1px';
+    touch.cursor = 'row-resize';
+    border.top = border.bottom = touchMargin + 'px';
+    inner.top = inner.bottom = borderSize + 'px';
   } else {
-    outer.cursor = 'ew-resize';
-    outer.paddingLeft = '1px';
-    outer.paddingRight = '1px';
+    touch.cursor = 'col-resize';
+    border.left = border.right = touchMargin + 'px';
+    inner.left = inner.right = borderSize + 'px';
   }
 
 
-  return {inner, outer};
+  return {inner, border, touch};
 }
 
 export default class Divider extends Component {
@@ -65,11 +79,13 @@ export default class Divider extends Component {
 
     return (
       <div
-        style={styles.outer}
+        style={styles.touch}
         onMouseDown={this.onMouseDown}
         className="divider">
-         <div style={styles.inner}></div>
+        <div style={styles.border}>
+           <div style={styles.inner}></div>
         </div>
+      </div>
     );
   }
 }

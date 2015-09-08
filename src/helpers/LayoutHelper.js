@@ -90,7 +90,6 @@ export function split(state, {id, splitType, startX, startY}) {
     (startY - paneSize.top) / paneSize.height;
   let ratioA = ratio = offset ? ratio : 1 - ratio;
   let ratioB = 1 - ratioA;
-  console.log(pane.parentId, oldParentId);
   if (newPane.parentId === oldParentId) {
     ratioA *= paneSize.splitRatio;
     ratioB *= paneSize.splitRatio;
@@ -105,9 +104,6 @@ export function split(state, {id, splitType, startX, startY}) {
   let flat = flatten(state, state.rootId,
      {width: state.width, height: state.height});
   let divider = flat = {...flat.dividerMap[newDividerId], startX, startY};
-
-
-  // console.log('flat', flat.dividerMap[beforePaneId + 'n' + afterPaneId]);
   state = state.set('dividerDown', divider);
   return state;
 }
@@ -202,12 +198,15 @@ export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
   let rootPane = state.panes.get(rootId).toJS();
   let dividerMap = {};
   let paneMap = {};
-  const dividerSize = state.dividerSize;
+
+  const {cellSpacing, touchMargin, borderSize} = state;
+  const dividerSize = cellSpacing + (touchMargin * 2);
 
   rootPane.width = width;
   rootPane.height = height;
   rootPane.left = left;
   rootPane.top = top;
+  rootPane.depth = 0;
 
   if (!rootPane.isGroup) {
     paneMap[rootId] = rootPane;
@@ -217,21 +216,24 @@ export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
     let x = parent.left;
     let y = parent.top;
     let child;
-    let dividerOffset;
+    let spacingOffset;
     let hasDivider = false;
     let beforePaneId;
     let divider;
     let beforeRatio;
 
-
-    parent.childIds.forEach((childId, i)=> {
+    parent.childIds.forEach((childId, i) => {
       child = state.panes.get(childId).toJS();
+      child.depth = parent.depth + 1;
 
       hasDivider = i !== 0;
-      dividerOffset = 0;
+      spacingOffset = 0;
       if (hasDivider) {
-        dividerOffset = dividerSize;
+        spacingOffset = cellSpacing;
         divider = {
+          depth: child.depth,
+          borderSize: borderSize,
+          touchMargin: touchMargin,
           left: x,
           top: y,
           beforePaneId: beforePaneId,
@@ -246,25 +248,27 @@ export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
 
       if (parent.direction === ROW) {
         if (hasDivider) {
+          divider.left = x - touchMargin;
           divider.width = dividerSize;
           divider.height = parent.height;
-          x += dividerSize;
+          x += cellSpacing;
           dividerMap[beforePaneId + 'n' + child.id] = divider;
         }
-        child.width = parent.width * child.splitRatio - dividerOffset;
+        child.width = parent.width * child.splitRatio - spacingOffset;
         child.height = parent.height;
         child.left = x;
         child.top = y;
         x += child.width;
       } else if (parent.direction === COL) {
         if (hasDivider) {
+          divider.top = y - touchMargin;
           divider.width = parent.width;
           divider.height = dividerSize;
-          y += dividerSize;
+          y += cellSpacing;
           dividerMap[beforePaneId + 'n' + child.id] = divider;
         }
         child.width = parent.width;
-        child.height = parent.height * child.splitRatio - dividerOffset;
+        child.height = parent.height * child.splitRatio - spacingOffset;
         child.left = x;
         child.top = y;
         y += child.height;

@@ -119,7 +119,7 @@ export default class Layout extends Component {
       }
     );
     this.setState({
-      dividers: Object.values(dividerMap),
+      dividers: Object.values(dividerMap).sort((a, b) => a.depth - b.depth),
       panes: Object.values(paneMap)
     });
   }
