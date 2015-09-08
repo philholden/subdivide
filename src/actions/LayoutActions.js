@@ -16,11 +16,13 @@ export function setSplitRatio(id, splitRatio) {
   };
 }
 
-export function split(id, splitType){
+export function split(id, splitType, startX, startY){
   return {
     type: SPLIT,
     id,
-    splitType
+    splitType,
+    startX,
+    startY
   };
 }
 

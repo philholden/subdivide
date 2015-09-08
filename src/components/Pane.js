@@ -39,7 +39,6 @@ export default class Pane extends Component {
       if (!layout.cornerDown) return;
       const cornerDownId = layout.cornerDown.id;
       if(isJoinPossible(this.props)) {
-        //setBlock(false);
         //e.stopPropagation();
         join(cornerDownId, pane.id);
         actions.setCornerDown(undefined);
@@ -70,10 +69,10 @@ export default class Pane extends Component {
         <div style={{
           width: '100%',
           height: '100%',
-          backgroundColor: !isJoinable ? 'rgba(0,200,0,0)' : 'rgba(0,0,0,0.5)',
+          backgroundColor: !isJoinable ? 'rgba(0,200,0,0.5)' : 'rgba(0,0,0,0.5)',
           position: 'absolute',
           top: 0,
-          display: layout.displayBlock ? 'block' : 'none'
+          display: layout.cornerDown || layout.dividerDown ? 'block' : 'none'
         }}>
         </div>
         <Triangle

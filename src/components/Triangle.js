@@ -5,7 +5,7 @@ import {
   NE
 } from '../constants/BlenderLayoutConstants';
 
-function triangleStyle({corner, color, size}) {
+function triangleStyle({corner, color, size, layout}) {
   var offset = (size + 3) / 2;
   var style = {
     width: size + 'px',
@@ -13,6 +13,7 @@ function triangleStyle({corner, color, size}) {
     position: 'absolute',
     backgroundColor: color,
     opacity: 0,
+    display: layout.dividerDown ? 'none' : 'block',
     transition: 'opacity 0.2s',
     border: '1px solid rgba(0,0,0,0.5)',
     ':hover': {
@@ -48,15 +49,19 @@ export default class Triangle extends Component {
 
     this.onMouseDown = () => {
       const {actions, corner, pane} = this.props;
-      actions.setBlock(true);
       actions.setCornerDown({...pane, corner: corner});
+    };
+
+    this.onMouseUp = () => {
+      const {actions, corner, pane} = this.props;
+      actions.setCornerDown(undefined);
     };
   }
 
   render() {
     const styles = triangleStyle(this.props);
     return (
-      <div style={styles} onMouseDown={this.onMouseDown} />
+      <div style={styles} onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}/>
     );
   }
 }

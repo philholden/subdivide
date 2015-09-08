@@ -23,6 +23,7 @@ export default class Layout extends Component {
       const {actions, layout} = this.props;
 
       if (layout.dividerDown) {
+        console.log('dd');
         const divider = layout.dividerDown;
         const {
           beforePaneId,
@@ -45,7 +46,7 @@ export default class Layout extends Component {
 
       if (layout.cornerDown) {
         const pane = layout.cornerDown;
-        const {split, setCornerDown} = actions;
+        const {split} = actions;
         const {width, height, left, top, id, corner} = pane;
 
         if (clientX > left && clientX < left + width &&
@@ -53,21 +54,17 @@ export default class Layout extends Component {
 
           if (corner === SW) {
             if (clientX - left > 20) {
-              split(id, CHILD_LEFT);
-              setCornerDown(undefined);
+              split(id, CHILD_LEFT, clientX, clientY);
             } else if (top + height - clientY > 20) {
-              split(id, CHILD_BELOW);
-              setCornerDown(undefined);
+              split(id, CHILD_BELOW, clientX, clientY);
             }
           }
 
           if (corner === NE) {
             if (left + width - clientX > 20) {
-              split(id, CHILD_RIGHT);
-              setCornerDown(undefined);
+              split(id, CHILD_RIGHT, clientX, clientY);
             } else if (clientY - top > 20) {
-              split(id, CHILD_ABOVE);
-              setCornerDown(undefined);
+              split(id, CHILD_ABOVE, clientX, clientY);
             }
           }
         }
@@ -80,9 +77,9 @@ export default class Layout extends Component {
       if (layout.dividerDown) {
         actions.setDividerDown(undefined);
       }
-      if (layout.displayBlock) {
-        actions.setBlock(false);
-      }
+      // if (layout.cornerDown) {
+      //   actions.setCornerDown(undefined);
+      // }
     };
 
     window.addEventListener('resize', () => {

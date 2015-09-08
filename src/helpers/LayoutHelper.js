@@ -54,11 +54,15 @@ function getOffset(splitType) {
   if (splitType === CHILD_BELOW || splitType === CHILD_RIGHT) return 1;
 }
 
-export function split(state, {id, splitType}) {
+export function split(state, {id, splitType, startX, startY}) {
   let pane = state.panes.get(id);
   let parent = state.panes.get(pane.parentId);
   let direction = getDirection(splitType);
   let isRoot = id === state.rootId;
+  let flat1 = flatten(state, state.rootId,
+     {width: state.width, height: state.height});
+  let paneSize = flat1.paneMap[id];
+  let oldParentId = pane.parentId;
 
   if (!parent || (parent.direction !== direction)) {
     let out = wrapPane(state, id);
@@ -79,11 +83,32 @@ export function split(state, {id, splitType}) {
   });
   let offset = getOffset(splitType);
   childIds = childIds.splice(index + offset, 0, newPane.id);
+  let beforePaneId = offset ? pane.id : newPane.id;
+  let afterPaneId = offset ? newPane.id : pane.id;
+  let ratio = direction === ROW ?
+    (startX - paneSize.left) / paneSize.width :
+    (startY - paneSize.top) / paneSize.height;
+  let ratioA = ratio = offset ? ratio : 1 - ratio;
+  let ratioB = 1 - ratioA;
+  console.log(pane.parentId, oldParentId);
+  if (newPane.parentId === oldParentId) {
+    ratioA *= paneSize.splitRatio;
+    ratioB *= paneSize.splitRatio;
+  }
   parent = parent.set('childIds', childIds);
   state = state.setIn(['panes', parent.id], parent);
   state = state.setIn(['panes', newPane.id], newPane);
-  state = state.setIn(['panes', pane.id, 'splitRatio'], pane.splitRatio * 0.75);
-  state = state.setIn(['panes', newPane.id, 'splitRatio'], pane.splitRatio * 0.25);
+  state = state.setIn(['panes', pane.id, 'splitRatio'], ratioA);
+  state = state.setIn(['panes', newPane.id, 'splitRatio'], ratioB);
+  state = state.set('cornerDown', undefined);
+  let newDividerId = beforePaneId + 'n' + afterPaneId;
+  let flat = flatten(state, state.rootId,
+     {width: state.width, height: state.height});
+  let divider = flat = {...flat.dividerMap[newDividerId], startX, startY};
+
+
+  // console.log('flat', flat.dividerMap[beforePaneId + 'n' + afterPaneId]);
+  state = state.set('dividerDown', divider);
   return state;
 }
 
@@ -163,20 +188,12 @@ export function setSize(state, {width, height}) {
   return state.set('width', width).set('height', height);
 }
 
-export function setBlock(state, action) {
-  const {displayBlock} = action;
-  return state
-    .set('displayBlock', displayBlock);
-}
-
 export function setCornerDown(state, action) {
   return state
     .set('cornerDown', action.cornerDown);
 }
 
 export function setDividerDown(state, action) {
-  console.log(action.divider, state
-    .set('dividerDown', action.divider));
   return state
     .set('dividerDown', action.divider);
 }
