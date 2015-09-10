@@ -23,7 +23,6 @@ export default class Layout extends Component {
       const {actions, layout} = this.props;
 
       if (layout.dividerDown) {
-        console.log('dd');
         const divider = layout.dividerDown;
         const {
           beforePaneId,
@@ -40,8 +39,10 @@ export default class Layout extends Component {
         let deltaRatio = delta / parentSize;
         let afterRatio = divider.afterRatio - deltaRatio;
         let beforeRatio = divider.beforeRatio + deltaRatio;
-        actions.setSplitRatio(beforePaneId, beforeRatio);
-        actions.setSplitRatio(afterPaneId, afterRatio);
+        if (beforeRatio * parentSize > 20 && afterRatio * parentSize > 20) {
+          actions.setSplitRatio(beforePaneId, beforeRatio);
+          actions.setSplitRatio(afterPaneId, afterRatio);
+        }
       }
 
       if (layout.cornerDown) {
@@ -53,17 +54,17 @@ export default class Layout extends Component {
           clientY > top && clientY < top + height) {
 
           if (corner === SW) {
-            if (clientX - left > 20) {
+            if (clientX - left > 25) {
               split(id, CHILD_LEFT, clientX, clientY);
-            } else if (top + height - clientY > 20) {
+            } else if (top + height - clientY > 25) {
               split(id, CHILD_BELOW, clientX, clientY);
             }
           }
 
           if (corner === NE) {
-            if (left + width - clientX > 20) {
+            if (left + width - clientX > 25) {
               split(id, CHILD_RIGHT, clientX, clientY);
-            } else if (clientY - top > 20) {
+            } else if (clientY - top > 25) {
               split(id, CHILD_ABOVE, clientX, clientY);
             }
           }

@@ -3,7 +3,8 @@ import Triangle from './Triangle';
 
 import {
   NE,
-  SW
+  SW,
+  ROW
 } from '../constants/BlenderLayoutConstants';
 import {
   isJoinPossible
@@ -21,7 +22,7 @@ function getStyles({
     height: height + 'px',
     top: top + 'px',
     left: left + 'px',
-    overflow: 'hidden',
+    overflow: 'hidden'
     //backgroundColor: '#xxx'.replace(/x/g, () => (((Math.random() * 6) + 10) | 0).toString(16))
   };
 
@@ -39,26 +40,21 @@ export default class Pane extends Component {
       if (!layout.cornerDown) return;
       const cornerDownId = layout.cornerDown.id;
       if(isJoinPossible(this.props)) {
-        //e.stopPropagation();
         join(cornerDownId, pane.id);
         actions.setCornerDown(undefined);
       }
     };
   }
 
-
-
-    //{pane.id} {pane.splitRatio} {sizes.contentWidth} {sizes.width}
-
-
-
   render() {
     const {pane, layout, actions} = this.props;
     const styles = getStyles(pane);
     const isJoinable = isJoinPossible(this.props);
-        // {isJoinPossible(this.props) ? 'true' : 'false'}
-        // {JSON.stringify(pane.childIds)}
-        // {pane.id}
+    const {dividerDown} = layout;
+    const cursor = !dividerDown ? undefined :
+      dividerDown.direction === ROW ?
+        'col-resize' :
+        'row-resize';
 
     return (
       <div style={styles.pane} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>
@@ -69,15 +65,16 @@ export default class Pane extends Component {
         <div style={{
           width: '100%',
           height: '100%',
-          backgroundColor: !isJoinable ? 'rgba(0,200,0,0.5)' : 'rgba(0,0,0,0.5)',
+          backgroundColor: !isJoinable ? 'rgba(0,200,0,0)' : 'rgba(0,0,0,0.5)',
           position: 'absolute',
+          cursor: cursor,
           top: 0,
           display: layout.cornerDown || layout.dividerDown ? 'block' : 'none'
         }}>
         </div>
         <Triangle
           corner={SW}
-          color='rgba(127,127,127,0.5)'
+          color='#dadadf'
           size={40}
           layout={layout}
           pane={pane}
@@ -85,7 +82,7 @@ export default class Pane extends Component {
         />
         <Triangle
           corner={NE}
-          color='rgba(127,127,127,0.5)'
+          color='#dadadf'
           size={40}
           layout={layout}
           pane={pane}

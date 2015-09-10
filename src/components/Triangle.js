@@ -15,7 +15,8 @@ function triangleStyle({corner, color, size, layout}) {
     opacity: 0,
     display: layout.dividerDown ? 'none' : 'block',
     transition: 'opacity 0.2s',
-    border: '1px solid rgba(0,0,0,0.5)',
+    border: '1px solid #c0c0d0',
+  //  boxShadow: '0px 0px 10px 1px rgba(0,0,0,0.88)',
     ':hover': {
       opacity: 1
     }

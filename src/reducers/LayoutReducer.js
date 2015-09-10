@@ -66,7 +66,6 @@ export default function LayoutReducer(state = initialState, action) {
     return setCornerDown(state, action);
 
   case SET_DIVIDER_DOWN:
-    console.log(action);
     return setDividerDown(state, action);
 
   default:

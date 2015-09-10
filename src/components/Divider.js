@@ -10,7 +10,7 @@ function dividerStyle({width, height, top, left, direction, borderSize, touchMar
     height: height + 'px',
     top: top + 'px',
     left: left + 'px',
-    backgroundColor: 'rgba(0,255,0,1)',
+    backgroundColor: 'rgba(0,0,0,0)',
     position: 'absolute'
   };
 
@@ -19,13 +19,13 @@ function dividerStyle({width, height, top, left, direction, borderSize, touchMar
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'rgba(0,0,0,1)',
+    backgroundColor: '#c0c0d0',
     position: 'absolute'
   };
 
   var inner = {
     position: 'absolute',
-    backgroundColor: '#00f',
+    backgroundColor: '#e0e0f0',
     top: 0,
     bottom: 0,
     left: 0,
