@@ -23,3 +23,8 @@ export const SET_SPLIT_RATIO = 'SET_SPLIT_RATIO';
 export const SET_SIZE = 'SET_SIZE';
 export const SET_BLOCK = 'SET_BLOCK';
 export const SET_DIVIDER_DOWN = 'SET_DIVIDER_DOWN';
+
+export const JOIN_RIGHT_ARROW = 'JOIN_RIGHT_ARROW';
+export const JOIN_UP_ARROW = 'JOIN_UP_ARROW';
+export const JOIN_LEFT_ARROW = 'JOIN_LEFT_ARROW';
+export const JOIN_DOWN_ARROW = 'JOIN_DOWN_ARROW';

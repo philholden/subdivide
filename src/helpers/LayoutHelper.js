@@ -3,6 +3,10 @@ import {
   CHILD_BELOW,
   CHILD_LEFT,
   CHILD_RIGHT,
+  JOIN_RIGHT_ARROW,
+  JOIN_UP_ARROW,
+  JOIN_LEFT_ARROW,
+  JOIN_DOWN_ARROW,
   ROW,
   COL,
   SW,
@@ -194,6 +198,34 @@ export function setDividerDown(state, action) {
     .set('dividerDown', action.divider);
 }
 
+export function getJoinDirection({layout, pane}) {
+  const {cornerDown} = layout;
+  if (cornerDown === undefined) return false;
+  const cornerDownId = layout.cornerDown.id;
+  const cornerDownPane = layout.panes.get(cornerDownId);
+  const parent = layout.panes.get(cornerDownPane.parentId);
+  if (!parent) return false;
+  const siblings = parent.childIds;
+  const index = siblings.indexOf(cornerDownId);
+  const beforeId = siblings.get(index - 1);
+  const afterId = siblings.get(index + 1);
+  const isBeforeGroup = beforeId !== undefined && layout.panes.get(beforeId).isGroup;
+  const isAfterGroup = afterId !== undefined && layout.panes.get(afterId).isGroup;
+  const canJoinBefore = beforeId === pane.id && !isBeforeGroup;
+  const canJoinAfter = afterId === pane.id && !isAfterGroup;
+  return (
+    cornerDown.corner === NE && (
+      (parent.direction === ROW && canJoinAfter && JOIN_RIGHT_ARROW) ||
+      (parent.direction === COL && canJoinBefore && JOIN_UP_ARROW)
+    )
+  ) || (
+    cornerDown.corner === SW && (
+      (parent.direction === COL && canJoinAfter && JOIN_DOWN_ARROW) ||
+      (parent.direction === ROW && canJoinBefore && JOIN_LEFT_ARROW)
+    )
+  );
+}
+
 export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
   let rootPane = state.panes.get(rootId).toJS();
   let dividerMap = {};
@@ -223,8 +255,10 @@ export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
     let beforeRatio;
 
     parent.childIds.forEach((childId, i) => {
-      child = state.panes.get(childId).toJS();
+      let pane = state.panes.get(childId);
+      child = pane.toJS();
       child.depth = parent.depth + 1;
+      child.joinDirection = getJoinDirection({layout: state, pane});
 
       hasDivider = i !== 0;
       spacingOffset = 0;
@@ -287,6 +321,9 @@ export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
 
   return {dividerMap, paneMap};
 }
+
+
+
 
 export function isJoinPossible({layout, pane}) {
   const {cornerDown} = layout;

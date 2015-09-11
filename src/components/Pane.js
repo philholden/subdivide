@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Triangle from './Triangle';
+import CornerOverlay from './CornerOverlay';
 
 import {
   NE,
@@ -56,6 +57,12 @@ export default class Pane extends Component {
         'col-resize' :
         'row-resize';
 
+    let cornerOverlay = () => {
+      if (!isJoinable) return false;
+      return <CornerOverlay pane={pane} layout={layout} />;
+    };
+
+          // backgroundColor: !isJoinable ? 'rgba(0,200,0,0)' : 'rgba(0,0,0,0.5)',
     return (
       <div style={styles.pane} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>
         <iframe src="index2.html" frameBorder={'0'} style={{
@@ -65,12 +72,12 @@ export default class Pane extends Component {
         <div style={{
           width: '100%',
           height: '100%',
-          backgroundColor: !isJoinable ? 'rgba(0,200,0,0)' : 'rgba(0,0,0,0.5)',
           position: 'absolute',
           cursor: cursor,
           top: 0,
           display: layout.cornerDown || layout.dividerDown ? 'block' : 'none'
         }}>
+        {cornerOverlay()}
         </div>
         <Triangle
           corner={SW}
