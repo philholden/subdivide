@@ -256,8 +256,10 @@ export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
 
     parent.childIds.forEach((childId, i) => {
       let pane = state.panes.get(childId);
+      let {cornerDown} = state;
       child = pane.toJS();
       child.depth = parent.depth + 1;
+      child.canSplit = cornerDown && cornerDown.id === childId;
       child.joinDirection = getJoinDirection({layout: state, pane});
 
       hasDivider = i !== 0;

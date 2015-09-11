@@ -58,7 +58,7 @@ export default class Pane extends Component {
         'row-resize';
 
     let cornerOverlay = () => {
-      if (!isJoinable) return false;
+      //if (!isJoinable) return false;
       return <CornerOverlay pane={pane} layout={layout} />;
     };
 
