@@ -10,9 +10,9 @@ import {
 } from '../constants/BlenderLayoutConstants';
 
 import {Divider} from '../reducers/LayoutReducer';
+import {Map} from 'immutable';
 
 function getJoinDirection({layout, pane}) {
-  console.log(pane);
   const {cornerDown} = layout;
   if (cornerDown === undefined) return false;
   const cornerDownId = layout.cornerDown.id;
@@ -41,6 +41,8 @@ function getJoinDirection({layout, pane}) {
 }
 
 export default function secondPass(state) {
+  let dividerMap = Map();
+
   const {rootId, width, height} = state;
   const left = 0;
   const top = 0;
@@ -80,7 +82,6 @@ export default function secondPass(state) {
       if (hasDivider) {
         spacingOffset = cellSpacing;
         divider = {
-          depth: child.depth,
           borderSize: borderSize,
           touchMargin: touchMargin,
           left: x,
@@ -100,8 +101,9 @@ export default function secondPass(state) {
           divider.left = x - touchMargin;
           divider.width = dividerSize;
           divider.height = parent.height;
-          state = state.setIn(['dividers', divider.id],
-              new Divider(divider));
+          dividerMap = dividerMap.set(divider.id, new Divider(divider));
+          // state = state.setIn(['dividers', divider.id],
+          //     new Divider(divider));
           x += cellSpacing;
         }
         child = child.merge({
@@ -116,8 +118,9 @@ export default function secondPass(state) {
           divider.top = y - touchMargin;
           divider.width = parent.width;
           divider.height = dividerSize;
-          state = state.setIn(['dividers', divider.id],
-              new Divider(divider));
+          dividerMap = dividerMap.set(divider.id, new Divider(divider));
+          // state = state.setIn(['dividers', divider.id],
+          //     new Divider(divider));
           y += cellSpacing;
         }
         child = child.merge({
@@ -138,7 +141,7 @@ export default function secondPass(state) {
     });
   };
   flattenChildren(rootPane);
-  console.log(state.toJS());
+  state = state.set('dividers', dividerMap);
   return state;
 }
 

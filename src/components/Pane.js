@@ -45,6 +45,7 @@ export default class Pane extends Component {
   render() {
     const {pane, layout, actions} = this.props;
     const styles = getStyles(pane);
+    //if (true) return <div>Hello</div>;
 
     return (
       <div style={styles.pane} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>

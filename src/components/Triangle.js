@@ -54,7 +54,7 @@ export default class Triangle extends Component {
     };
 
     this.onMouseUp = () => {
-      const {actions, corner, pane} = this.props;
+      const {actions} = this.props;
       actions.setCornerDown(undefined);
     };
   }

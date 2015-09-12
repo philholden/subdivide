@@ -90,18 +90,18 @@ export default class Layout extends Component {
     document.addEventListener('mouseup', this.onMouseUp);
     document.addEventListener('mousemove', this.onMouseMove);
 
-    let {dividerMap, paneMap} = flatten(
-      props.layout,
-      props.layout.rootId, {
-        width: props.layout.width,
-        height: props.layout.height
-      }
-    );
+    // let {dividerMap, paneMap} = flatten(
+    //   props.layout,
+    //   props.layout.rootId, {
+    //     width: props.layout.width,
+    //     height: props.layout.height
+    //   }
+    // );
 
-    this.state = {
-      dividers: Object.values(dividerMap),
-      panes: Object.values(paneMap)
-    };
+    // this.state = {
+    //   dividers: Object.values(dividerMap),
+    //   panes: Object.values(paneMap)
+    // };
 
     setSize(window.innerWidth, window.innerHeight);
   }
@@ -112,29 +112,46 @@ export default class Layout extends Component {
 
   componentWillReceiveProps(nextProps) {
     const {layout} = nextProps;
-    let {dividerMap, paneMap} = flatten(
-      layout,
-      layout.rootId, {
-        width: layout.width,
-        height: layout.height
-      }
-    );
-    this.setState({
-      dividers: Object.values(dividerMap).sort((a, b) => a.depth - b.depth),
-      panes: Object.values(paneMap)
-    });
+    // let {dividerMap, paneMap} = flatten(
+    //   layout,
+    //   layout.rootId, {
+    //     width: layout.width,
+    //     height: layout.height
+    //   }
+    // );
+    // this.setState({
+    //   dividers: Object
+    //     .values(this.props.layout.divi)
+    //     .sort((a, b) => a.depth - b.depth),
+    //   panes: Object.values(paneMap)
+    // });
   }
 
 
   render() {
     const {layout, actions} = this.props;
-    //console.log(layout.toJS());
-    const panes = this.state.panes.map(pane => {
-      return <Pane layout={layout} pane={pane} actions={actions} key={pane.id} />;
-    });
-    const dividers = this.state.dividers.map(divider => {
-      return <Divider layout={layout} divider={divider} actions={actions} key={divider.id} />;
-    });
+    const panes = Object
+      .values(layout.panes.toJS())
+      .filter(pane => !pane.isGroup)
+      .map(pane => {
+        // console.log(pane instanceof Map, this.state.panes[pane.id]);
+        return <Pane
+          layout={layout}
+          pane={pane}
+          actions={actions}
+          key={pane.id}
+        />;
+      });
+    const dividers = Object
+      .values(layout.dividers.toJS())
+      .map(divider => {
+        return <Divider
+          layout={layout}
+          divider={divider}
+          actions={actions}
+          key={divider.id}
+        />;
+      });
     return (
       <div>{panes}{dividers}</div>
     );

@@ -21,8 +21,8 @@ export default class CornerOverlay extends Component {
   }
 
   updateDivideOverlay() {
-    if (!this.props.pane.canSplit) return;
     const {pane, layout} = this.props;
+    if (!pane.canSplit || !layout.cornerDown) return;
     const {corner} = layout.cornerDown;
 
     const canvas = this.refs.canvas;
