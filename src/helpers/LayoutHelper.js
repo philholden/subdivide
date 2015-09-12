@@ -15,6 +15,7 @@ import {
 
 import {List} from 'immutable';
 import {Pane} from '../reducers/LayoutReducer';
+import secondPass from './secondPass';
 
 function getNextId(state) {
   return (
@@ -63,9 +64,7 @@ export function split(state, {id, splitType, startX, startY}) {
   let parent = state.panes.get(pane.parentId);
   let direction = getDirection(splitType);
   let isRoot = id === state.rootId;
-  let flat1 = flatten(state, state.rootId,
-     {width: state.width, height: state.height});
-  let paneSize = flat1.paneMap[id];
+  let oldPane = pane;
   let oldParentId = pane.parentId;
 
   if (!parent || (parent.direction !== direction)) {
@@ -90,13 +89,13 @@ export function split(state, {id, splitType, startX, startY}) {
   let beforePaneId = offset ? pane.id : newPane.id;
   let afterPaneId = offset ? newPane.id : pane.id;
   let ratio = direction === ROW ?
-    (startX - paneSize.left) / paneSize.width :
-    (startY - paneSize.top) / paneSize.height;
+    (startX - oldPane.left) / oldPane.width :
+    (startY - oldPane.top) / oldPane.height;
   let ratioA = ratio = offset ? ratio : 1 - ratio;
   let ratioB = 1 - ratioA;
   if (newPane.parentId === oldParentId) {
-    ratioA *= paneSize.splitRatio;
-    ratioB *= paneSize.splitRatio;
+    ratioA *= oldPane.splitRatio;
+    ratioB *= oldPane.splitRatio;
   }
   parent = parent.set('childIds', childIds);
   state = state.setIn(['panes', parent.id], parent);
@@ -105,9 +104,8 @@ export function split(state, {id, splitType, startX, startY}) {
   state = state.setIn(['panes', newPane.id, 'splitRatio'], ratioB);
   state = state.set('cornerDown', undefined);
   let newDividerId = beforePaneId + 'n' + afterPaneId;
-  let flat = flatten(state, state.rootId,
-     {width: state.width, height: state.height});
-  let divider = flat = {...flat.dividerMap[newDividerId], startX, startY};
+  state = secondPass(state);
+  let divider = {...state.dividers.get(newDividerId).toJS(), startX, startY};
   state = state.set('dividerDown', divider);
   return state;
 }
@@ -196,161 +194,4 @@ export function setCornerDown(state, action) {
 export function setDividerDown(state, action) {
   return state
     .set('dividerDown', action.divider);
-}
-
-export function getJoinDirection({layout, pane}) {
-  const {cornerDown} = layout;
-  if (cornerDown === undefined) return false;
-  const cornerDownId = layout.cornerDown.id;
-  const cornerDownPane = layout.panes.get(cornerDownId);
-  const parent = layout.panes.get(cornerDownPane.parentId);
-  if (!parent) return false;
-  const siblings = parent.childIds;
-  const index = siblings.indexOf(cornerDownId);
-  const beforeId = siblings.get(index - 1);
-  const afterId = siblings.get(index + 1);
-  const isBeforeGroup = beforeId !== undefined && layout.panes.get(beforeId).isGroup;
-  const isAfterGroup = afterId !== undefined && layout.panes.get(afterId).isGroup;
-  const canJoinBefore = beforeId === pane.id && !isBeforeGroup;
-  const canJoinAfter = afterId === pane.id && !isAfterGroup;
-  return (
-    cornerDown.corner === NE && (
-      (parent.direction === ROW && canJoinAfter && JOIN_RIGHT_ARROW) ||
-      (parent.direction === COL && canJoinBefore && JOIN_UP_ARROW)
-    )
-  ) || (
-    cornerDown.corner === SW && (
-      (parent.direction === COL && canJoinAfter && JOIN_DOWN_ARROW) ||
-      (parent.direction === ROW && canJoinBefore && JOIN_LEFT_ARROW)
-    )
-  );
-}
-
-export function flatten(state, rootId, {width, height, left = 0, top = 0}) {
-  let rootPane = state.panes.get(rootId).toJS();
-  let dividerMap = {};
-  let paneMap = {};
-
-  const {cellSpacing, touchMargin, borderSize} = state;
-  const dividerSize = cellSpacing + (touchMargin * 2);
-
-  rootPane.width = width;
-  rootPane.height = height;
-  rootPane.left = left;
-  rootPane.top = top;
-  rootPane.depth = 0;
-
-  if (!rootPane.isGroup) {
-    paneMap[rootId] = rootPane;
-  }
-
-  let flattenChildren = (parent) => {
-    let x = parent.left;
-    let y = parent.top;
-    let child;
-    let spacingOffset;
-    let hasDivider = false;
-    let beforePaneId;
-    let divider;
-    let beforeRatio;
-
-    parent.childIds.forEach((childId, i) => {
-      let pane = state.panes.get(childId);
-      let {cornerDown} = state;
-      child = pane.toJS();
-      child.depth = parent.depth + 1;
-      child.canSplit = cornerDown && cornerDown.id === childId;
-      child.joinDirection = getJoinDirection({layout: state, pane});
-
-      hasDivider = i !== 0;
-      spacingOffset = 0;
-      if (hasDivider) {
-        spacingOffset = cellSpacing;
-        divider = {
-          depth: child.depth,
-          borderSize: borderSize,
-          touchMargin: touchMargin,
-          left: x,
-          top: y,
-          beforePaneId: beforePaneId,
-          afterPaneId: child.id,
-          beforeRatio: beforeRatio,
-          afterRatio: child.splitRatio,
-          direction: parent.direction,
-          parentSize: parent.direction === ROW ? parent.width : parent.height,
-          id: beforePaneId + 'n' + child.id
-        };
-      }
-
-      if (parent.direction === ROW) {
-        if (hasDivider) {
-          divider.left = x - touchMargin;
-          divider.width = dividerSize;
-          divider.height = parent.height;
-          x += cellSpacing;
-          dividerMap[beforePaneId + 'n' + child.id] = divider;
-        }
-        child.width = parent.width * child.splitRatio - spacingOffset;
-        child.height = parent.height;
-        child.left = x;
-        child.top = y;
-        x += child.width;
-      } else if (parent.direction === COL) {
-        if (hasDivider) {
-          divider.top = y - touchMargin;
-          divider.width = parent.width;
-          divider.height = dividerSize;
-          y += cellSpacing;
-          dividerMap[beforePaneId + 'n' + child.id] = divider;
-        }
-        child.width = parent.width;
-        child.height = parent.height * child.splitRatio - spacingOffset;
-        child.left = x;
-        child.top = y;
-        y += child.height;
-      }
-      beforePaneId = child.id;
-      beforeRatio = child.splitRatio;
-      if (child.isGroup) {
-        flattenChildren(child);
-      } else {
-        paneMap[childId] = child;
-      }
-    });
-  };
-
-  flattenChildren(rootPane);
-
-  return {dividerMap, paneMap};
-}
-
-
-
-
-export function isJoinPossible({layout, pane}) {
-  const {cornerDown} = layout;
-  if (cornerDown === undefined) return false;
-  const cornerDownId = layout.cornerDown.id;
-  const cornerDownPane = layout.panes.get(cornerDownId);
-  const parent = layout.panes.get(cornerDownPane.parentId);
-  if (!parent) return false;
-  const siblings = parent.childIds;
-  const index = siblings.indexOf(cornerDownId);
-  const beforeId = siblings.get(index - 1);
-  const afterId = siblings.get(index + 1);
-  const isBeforeGroup = beforeId !== undefined && layout.panes.get(beforeId).isGroup;
-  const isAfterGroup = afterId !== undefined && layout.panes.get(afterId).isGroup;
-  const canJoinBefore = beforeId === pane.id && !isBeforeGroup;
-  const canJoinAfter = afterId === pane.id && !isAfterGroup;
-  return (
-    cornerDown.corner === NE && (
-      (parent.direction === ROW && canJoinAfter) ||
-      (parent.direction === COL && canJoinBefore)
-    )
-  ) || (
-    cornerDown.corner === SW && (
-      (parent.direction === COL && canJoinAfter) ||
-      (parent.direction === ROW && canJoinBefore)
-    )
-  );
 }

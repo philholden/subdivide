@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Pane from './Pane';
 import Divider from './Divider';
-import {flatten} from '../helpers/LayoutHelper';
 import AnimationFrame from '../helpers/AnimationFrame';
 import {
   CHILD_ABOVE,
@@ -90,18 +89,6 @@ export default class Layout extends Component {
     document.addEventListener('mouseup', this.onMouseUp);
     document.addEventListener('mousemove', this.onMouseMove);
 
-    // let {dividerMap, paneMap} = flatten(
-    //   props.layout,
-    //   props.layout.rootId, {
-    //     width: props.layout.width,
-    //     height: props.layout.height
-    //   }
-    // );
-
-    // this.state = {
-    //   dividers: Object.values(dividerMap),
-    //   panes: Object.values(paneMap)
-    // };
 
     setSize(window.innerWidth, window.innerHeight);
   }
@@ -109,24 +96,6 @@ export default class Layout extends Component {
   componentWillUnmount() {
     this.animationFrame.stop();
   }
-
-  componentWillReceiveProps(nextProps) {
-    const {layout} = nextProps;
-    // let {dividerMap, paneMap} = flatten(
-    //   layout,
-    //   layout.rootId, {
-    //     width: layout.width,
-    //     height: layout.height
-    //   }
-    // );
-    // this.setState({
-    //   dividers: Object
-    //     .values(this.props.layout.divi)
-    //     .sort((a, b) => a.depth - b.depth),
-    //   panes: Object.values(paneMap)
-    // });
-  }
-
 
   render() {
     const {layout, actions} = this.props;
