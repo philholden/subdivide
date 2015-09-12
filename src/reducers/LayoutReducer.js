@@ -15,8 +15,10 @@ import {
   setSplitRatio,
   setSize,
   setCornerDown,
-  setDividerDown
+  setDividerDown,
 } from '../helpers/LayoutHelper';
+
+import secondPass from '../helpers/secondPass';
 
 export const Pane = new Record({
   id: '0',
@@ -24,7 +26,15 @@ export const Pane = new Record({
   isGroup: false,
   direction: undefined,
   parentId: undefined,
-  splitRatio: 1
+  splitRatio: 1,
+
+  top: undefined,
+  left: undefined,
+  width: undefined,
+  height: undefined,
+
+  canSplit: undefined,
+  joinDirection: undefined
 });
 
 export const Layout = new Record({
@@ -40,14 +50,21 @@ export const Layout = new Record({
   height: 600,
   panes: Map({
     '0': new Pane()
-  })
+  }),
+  dividers: Map()
+});
+
+export const Divider = new Record({
+
 });
 
 const initialState = new Layout();
 
 
 
-export default function LayoutReducer(state = initialState, action) {
+
+
+let firstPass = (state, action) => {
 
   switch (action.type) {
   case SPLIT:
@@ -71,4 +88,10 @@ export default function LayoutReducer(state = initialState, action) {
   default:
     return state;
   }
+};
+
+export default function LayoutReducer(state = initialState, action) {
+  state = firstPass(state, action);
+  state = secondPass(state);
+  return state;
 }
