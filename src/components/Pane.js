@@ -4,12 +4,8 @@ import CornerOverlay from './CornerOverlay';
 
 import {
   NE,
-  SW,
-  ROW
+  SW
 } from '../constants/BlenderLayoutConstants';
-import {
-  isJoinPossible
-} from '../helpers/LayoutHelper';
 
 function getStyles({
       width,
@@ -24,7 +20,6 @@ function getStyles({
     top: top + 'px',
     left: left + 'px',
     overflow: 'hidden'
-    //backgroundColor: '#xxx'.replace(/x/g, () => (((Math.random() * 6) + 10) | 0).toString(16))
   };
 
   return {pane};
@@ -40,7 +35,7 @@ export default class Pane extends Component {
       const {join} = actions;
       if (!layout.cornerDown) return;
       const cornerDownId = layout.cornerDown.id;
-      if(isJoinPossible(this.props)) {
+      if(pane.joinDirection) {
         join(cornerDownId, pane.id);
         actions.setCornerDown(undefined);
       }
@@ -50,35 +45,15 @@ export default class Pane extends Component {
   render() {
     const {pane, layout, actions} = this.props;
     const styles = getStyles(pane);
-    const isJoinable = isJoinPossible(this.props);
-    const {dividerDown} = layout;
-    const cursor = !dividerDown ? undefined :
-      dividerDown.direction === ROW ?
-        'col-resize' :
-        'row-resize';
 
-    let cornerOverlay = () => {
-      //if (!isJoinable) return false;
-      return <CornerOverlay pane={pane} layout={layout} />;
-    };
-
-          // backgroundColor: !isJoinable ? 'rgba(0,200,0,0)' : 'rgba(0,0,0,0.5)',
     return (
       <div style={styles.pane} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>
         <iframe src="index2.html" frameBorder={'0'} style={{
            width: '100%',
            height: '100%'
         }}></iframe>
-        <div style={{
-          width: '100%',
-          height: '100%',
-          position: 'absolute',
-          cursor: cursor,
-          top: 0,
-          display: layout.cornerDown || layout.dividerDown ? 'block' : 'none'
-        }}>
-        {cornerOverlay()}
-        </div>
+
+          <CornerOverlay pane={pane} layout={layout} />
         <Triangle
           corner={SW}
           color='#dadadf'
@@ -99,4 +74,3 @@ export default class Pane extends Component {
     );
   }
 }
-//{`id:${pane.id} pos: (${pane.width}, ${pane.height})`}
