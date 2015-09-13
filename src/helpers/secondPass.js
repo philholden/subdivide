@@ -49,14 +49,15 @@ export default function secondPass(state) {
   const top = 0;
   let rootPane = state.panes.get(rootId);
 
-  const {cellSpacing, touchMargin, borderSize} = state;
+  const {cellSpacing, touchMargin, borderSize, cornerDown} = state;
   const dividerSize = cellSpacing + (touchMargin * 2);
 
   rootPane = rootPane.merge({
     width,
     height,
     top,
-    left
+    left,
+    canSplit: cornerDown && cornerDown.id === rootId
   });
 
   state = state.mergeIn(['panes', rootId], rootPane);
@@ -72,7 +73,6 @@ export default function secondPass(state) {
 
     parent.childIds.forEach((childId, i) => {
       let child = state.panes.get(childId);
-      let {cornerDown} = state;
       let canSplit = cornerDown && cornerDown.id === childId;
       let joinDirection = getJoinDirection({layout: state, pane: child});
 
