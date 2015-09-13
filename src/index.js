@@ -1,8 +1,5 @@
 import 'babel-core/polyfill';
-import React from 'react';
-import ReactDom from 'react-dom';
-import App from './containers/App';
 
+import Subdivide from './containers/Subdivide';
 
-ReactDom.render(<App />, document.getElementById('root'));
-
+export default Subdivide;

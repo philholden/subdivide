@@ -63,7 +63,7 @@ export default class Divider extends Component {
     this.onMouseDown = ({clientX, clientY}) => {
       const {actions, divider} = this.props;
 
-      actions.setDividerDown({...divider, startX: clientX, startY: clientY});
+      actions.setDividerDown({...divider.toJS(), startX: clientX, startY: clientY});
 
       document.addEventListener('mouseup', this.onMouseUp);
     };

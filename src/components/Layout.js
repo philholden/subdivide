@@ -98,21 +98,24 @@ export default class Layout extends Component {
   }
 
   render() {
-    const {layout, actions} = this.props;
-    const panes = Object
-      .values(layout.panes.toJS())
-      .filter(pane => !pane.isGroup)
+    const {layout, actions, DefaultComponent} = this.props;
+    let panes = [];
+    let dividers = [];
+    layout.panes.filter(pane => !pane.isGroup)
       .map(pane => {
-        // console.log(pane instanceof Map, this.state.panes[pane.id]);
         return <Pane
           layout={layout}
           pane={pane}
           actions={actions}
           key={pane.id}
+          DefaultComponent={DefaultComponent}
         />;
+      })
+      .forEach(pane => {
+        panes.push(pane);
       });
-    const dividers = Object
-      .values(layout.dividers.toJS())
+
+    layout.dividers
       .map(divider => {
         return <Divider
           layout={layout}
@@ -120,6 +123,9 @@ export default class Layout extends Component {
           actions={actions}
           key={divider.id}
         />;
+      })
+      .forEach(divider => {
+        dividers.push(divider);
       });
     return (
       <div>{panes}{dividers}</div>

@@ -15,10 +15,11 @@ export default class App extends Component {
     );
   }
   render() {
-    const {layout} = this.props;
+    const {layout, DefaultComponent} = this.props;
     const {actions} = this;
+    const props = {layout, actions, DefaultComponent};
     return (
-      <Layout layout={layout} actions={actions} />
+      <Layout {...props} />
     );
   }
 }

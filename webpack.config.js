@@ -6,7 +6,7 @@ module.exports = {
   context: __dirname,
   entry: [
     'webpack-hot-middleware/client',
-    './src/index.js'
+    './src/dev-index.js'
   ],
   output: {
     path: path.join(__dirname, 'dist'),

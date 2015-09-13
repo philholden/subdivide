@@ -43,18 +43,13 @@ export default class Pane extends Component {
   }
 
   render() {
-    const {pane, layout, actions} = this.props;
+    const {pane, layout, actions, DefaultComponent} = this.props;
     const styles = getStyles(pane);
-    //if (true) return <div>Hello</div>;
 
     return (
       <div style={styles.pane} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>
-        <iframe src="index2.html" frameBorder={'0'} style={{
-           width: '100%',
-           height: '100%'
-        }}></iframe>
-
-          <CornerOverlay pane={pane} layout={layout} />
+        <DefaultComponent />
+        <CornerOverlay pane={pane} layout={layout} />
         <Triangle
           corner={SW}
           color='#dadadf'

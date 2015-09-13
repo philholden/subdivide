@@ -1,6 +1,6 @@
 {
   "name": "subdivide",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Layout system that allows panes to be infinitely subdivided",
   "main": "index.js",
   "scripts": {
