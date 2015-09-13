@@ -3,14 +3,8 @@ import {
   CHILD_BELOW,
   CHILD_LEFT,
   CHILD_RIGHT,
-  JOIN_RIGHT_ARROW,
-  JOIN_UP_ARROW,
-  JOIN_LEFT_ARROW,
-  JOIN_DOWN_ARROW,
   ROW,
-  COL,
-  SW,
-  NE
+  COL
 } from '../constants/BlenderLayoutConstants';
 
 import {List} from 'immutable';

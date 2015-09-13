@@ -21,12 +21,13 @@ function getJoinDirection({layout, pane}) {
   if (!parent) return false;
   const siblings = parent.childIds;
   const index = siblings.indexOf(cornerDownId);
-  const beforeId = siblings.get(index - 1);
+  const beforeId = index < 1 ? undefined : siblings.get(index - 1);
   const afterId = siblings.get(index + 1);
   const isBeforeGroup = beforeId !== undefined && layout.panes.get(beforeId).isGroup;
   const isAfterGroup = afterId !== undefined && layout.panes.get(afterId).isGroup;
   const canJoinBefore = beforeId === pane.id && !isBeforeGroup;
   const canJoinAfter = afterId === pane.id && !isAfterGroup;
+
   return (
     cornerDown.corner === NE && (
       (parent.direction === ROW && canJoinAfter && JOIN_RIGHT_ARROW) ||
