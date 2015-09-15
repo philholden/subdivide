@@ -50,7 +50,6 @@ export default function secondPass(state) {
   let rootPane = state.panes.get(rootId);
 
   const {cellSpacing, touchMargin, borderSize, cornerDown} = state;
-  const dividerSize = cellSpacing + (touchMargin * 2);
 
   rootPane = rootPane.merge({
     width,
@@ -99,8 +98,7 @@ export default function secondPass(state) {
 
       if (parent.direction === ROW) {
         if (hasDivider) {
-          divider.left = x - touchMargin;
-          divider.width = dividerSize;
+          divider.width = cellSpacing;
           divider.height = parent.height;
           dividerMap = dividerMap.set(divider.id, new Divider(divider));
           // state = state.setIn(['dividers', divider.id],
@@ -116,9 +114,8 @@ export default function secondPass(state) {
         x += child.width;
       } else if (parent.direction === COL) {
         if (hasDivider) {
-          divider.top = y - touchMargin;
           divider.width = parent.width;
-          divider.height = dividerSize;
+          divider.height = cellSpacing;
           dividerMap = dividerMap.set(divider.id, new Divider(divider));
           // state = state.setIn(['dividers', divider.id],
           //     new Divider(divider));

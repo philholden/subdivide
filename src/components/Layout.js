@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Pane from './Pane';
 import Divider from './Divider';
+import Dividers from './Dividers';
 import AnimationFrame from '../helpers/AnimationFrame';
 import {
   CHILD_ABOVE,
@@ -128,7 +129,10 @@ export default class Layout extends Component {
         dividers.push(divider);
       });
     return (
-      <div>{panes}{dividers}</div>
+      <div>
+        {panes}
+        <Dividers dividers={layout.dividers} layout={layout} actions={actions} />
+      </div>
     );
   }
 }

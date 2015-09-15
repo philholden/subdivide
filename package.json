@@ -43,8 +43,8 @@
     "es6-promise": "^2.3.0",
     "immutable": "^3.7.4",
     "radium": "^0.13.8",
-    "react": "^0.14.0-beta3",
-    "react-dom": "^0.14.0-beta3",
+    "react": "^0.14.0-rc1",
+    "react-dom": "^0.14.0-rc1",
     "react-redux": "^2.1.0",
     "redux": "^2.0.0",
     "redux-thunk": "^0.1.0"
