@@ -49,7 +49,7 @@ export default function secondPass(state) {
   const top = 0;
   let rootPane = state.panes.get(rootId);
 
-  const {cellSpacing, touchMargin, borderSize, cornerDown} = state;
+  const {cellSpacing, cornerDown} = state;
 
   rootPane = rootPane.merge({
     width,
@@ -82,8 +82,6 @@ export default function secondPass(state) {
       if (hasDivider) {
         spacingOffset = cellSpacing;
         divider = {
-          borderSize: borderSize,
-          touchMargin: touchMargin,
           left: x,
           top: y,
           beforePaneId: beforePaneId,

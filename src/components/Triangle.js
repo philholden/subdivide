@@ -52,17 +52,12 @@ export default class Triangle extends Component {
       const {actions, corner, pane} = this.props;
       actions.setCornerDown({...pane.toJS(), corner: corner});
     };
-
-    this.onMouseUp = () => {
-      const {actions} = this.props;
-      actions.setCornerDown(undefined);
-    };
   }
 
   render() {
     const styles = triangleStyle(this.props);
     return (
-      <div style={styles} onMouseDown={this.onMouseDown} onMouseUp={this.onMouseUp}/>
+      <div style={styles} onMouseDown={this.onMouseDown} />
     );
   }
 }

@@ -77,9 +77,12 @@ export default class Layout extends Component {
       if (layout.dividerDown) {
         actions.setDividerDown(undefined);
       }
-      // if (layout.cornerDown) {
-      //   actions.setCornerDown(undefined);
-      // }
+      // give pane onMouseUp a chance to fire
+      setTimeout(()=>{
+        if (layout.cornerDown) {
+          actions.setCornerDown(undefined);
+        }
+      }, 10);
     };
 
     window.addEventListener('resize', () => {
