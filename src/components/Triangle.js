@@ -28,7 +28,6 @@ export default class Triangle extends Component {
       backgroundColor: 'rgba(0,0,0,0)',
       opacity: 1,
       display: layout.dividerDown ? 'none' : 'block',
-   //   transition: 'opacity 0.2s',
       ':hover': {
         opacity: 1
       }
