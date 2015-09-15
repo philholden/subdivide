@@ -1,5 +1,7 @@
 export const NE = 'NE';
 export const SW = 'SW';
+export const SE = 'SE';
+export const NW = 'NW';
 //export const ROW_SPLIT = 'ROW_SPLIT';
 //export const COL_SPLIT = 'COL_SPLIT';
 

@@ -9,7 +9,9 @@ import {
   CHILD_RIGHT,
   ROW,
   SW,
-  NE
+  NE,
+  SE,
+  NW
 } from '../constants/BlenderLayoutConstants';
 
 export default class Layout extends Component {
@@ -63,6 +65,22 @@ export default class Layout extends Component {
           if (corner === NE) {
             if (left + width - clientX > 25) {
               split(id, CHILD_RIGHT, clientX, clientY);
+            } else if (clientY - top > 25) {
+              split(id, CHILD_ABOVE, clientX, clientY);
+            }
+          }
+
+          if (corner === SE) {
+            if (left + width - clientX > 25) {
+              split(id, CHILD_RIGHT, clientX, clientY);
+            } else if (top + height - clientY > 25) {
+              split(id, CHILD_BELOW, clientX, clientY);
+            }
+          }
+
+          if (corner === NW) {
+            if (clientX - left > 25) {
+              split(id, CHILD_LEFT, clientX, clientY);
             } else if (clientY - top > 25) {
               split(id, CHILD_ABOVE, clientX, clientY);
             }

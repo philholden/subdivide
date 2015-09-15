@@ -3,6 +3,8 @@ import {
   COL,
   NE,
   SW,
+  NW,
+  SE,
   JOIN_RIGHT_ARROW,
   JOIN_UP_ARROW,
   JOIN_LEFT_ARROW,
@@ -30,13 +32,23 @@ function getJoinDirection({layout, pane}) {
 
   return (
     cornerDown.corner === NE && (
-      (parent.direction === ROW && canJoinAfter && JOIN_RIGHT_ARROW) ||
-      (parent.direction === COL && canJoinBefore && JOIN_UP_ARROW)
+      (parent.direction === COL && canJoinBefore && JOIN_UP_ARROW) ||
+      (parent.direction === ROW && canJoinAfter && JOIN_RIGHT_ARROW)
     )
   ) || (
     cornerDown.corner === SW && (
       (parent.direction === COL && canJoinAfter && JOIN_DOWN_ARROW) ||
       (parent.direction === ROW && canJoinBefore && JOIN_LEFT_ARROW)
+    )
+  ) || (
+    cornerDown.corner === NW && (
+      (parent.direction === COL && canJoinBefore && JOIN_UP_ARROW) ||
+      (parent.direction === ROW && canJoinBefore && JOIN_LEFT_ARROW)
+    )
+  ) || (
+    cornerDown.corner === SE && (
+      (parent.direction === COL && canJoinAfter && JOIN_DOWN_ARROW) ||
+      (parent.direction === ROW && canJoinAfter && JOIN_RIGHT_ARROW)
     )
   );
 }

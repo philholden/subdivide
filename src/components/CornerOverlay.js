@@ -4,6 +4,8 @@ import {
   COL,
   SW,
   NE,
+  SE,
+  NW,
   JOIN_RIGHT_ARROW,
   JOIN_UP_ARROW,
   JOIN_LEFT_ARROW,
@@ -31,7 +33,7 @@ export default class CornerOverlay extends Component {
     height = Math.round(height + top - (top | 0));
     width = Math.round(width + left - (left | 0));
     let dashRatio = 0.5;
-    let dashWidth = 1;
+    let dashWidth = 3;
     let dashSpacing = 20;
     let dashLength = dashRatio * dashSpacing;
     let offset = 34;
@@ -46,13 +48,29 @@ export default class CornerOverlay extends Component {
       for (let y = 0; y < height; y += dashSpacing) {
         ctx.rect(offset, height - y - dashLength, dashWidth, dashLength);
       }
-    } else {
+    } else if (corner === NE) {
       for (let x = 0; x < width; x += dashSpacing) {
         ctx.rect(width - x - dashLength, offset, dashLength, dashWidth);
       }
 
       for (let y = 0; y < height; y += dashSpacing) {
         ctx.rect(width - offset - dashWidth, y, dashWidth, dashLength);
+      }
+    } else if (corner === NW) {
+      for (let x = 0; x < width; x += dashSpacing) {
+        ctx.rect(x, offset, dashLength, dashWidth);
+      }
+
+      for (let y = 0; y < height; y += dashSpacing) {
+        ctx.rect(offset, y, dashWidth, dashLength);
+      }
+    } else if (corner === SE) {
+      for (let x = 0; x < width; x += dashSpacing) {
+        ctx.rect(width - x - dashLength, height - offset - dashWidth, dashLength, dashWidth);
+      }
+
+      for (let y = 0; y < height; y += dashSpacing) {
+        ctx.rect(width - offset - dashWidth, height - y - dashLength, dashWidth, dashLength);
       }
     }
 

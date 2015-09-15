@@ -4,7 +4,9 @@ import CornerOverlay from './CornerOverlay';
 
 import {
   NE,
-  SW
+  SW,
+  SE,
+  NW
 } from '../constants/BlenderLayoutConstants';
 
 function getStyles({
@@ -53,7 +55,7 @@ export default class Pane extends Component {
         <Triangle
           corner={SW}
           color='#dadadf'
-          size={40}
+          size={42}
           layout={layout}
           pane={pane}
           actions={actions}
@@ -61,7 +63,23 @@ export default class Pane extends Component {
         <Triangle
           corner={NE}
           color='#dadadf'
-          size={40}
+          size={42}
+          layout={layout}
+          pane={pane}
+          actions={actions}
+        />
+        <Triangle
+          corner={NW}
+          color='#dadadf'
+          size={42}
+          layout={layout}
+          pane={pane}
+          actions={actions}
+        />
+        <Triangle
+          corner={SE}
+          color='#dadadf'
+          size={42}
           layout={layout}
           pane={pane}
           actions={actions}
