@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Pane from './Pane';
-import Divider from './Divider';
 import Dividers from './Dividers';
 import AnimationFrame from '../helpers/AnimationFrame';
 import {
@@ -100,9 +99,8 @@ export default class Layout extends Component {
 
   render() {
     const {layout, actions, DefaultComponent} = this.props;
-    let panes = [];
-    let dividers = [];
-    layout.panes.filter(pane => !pane.isGroup)
+
+    let panes = layout.panes.toList().filter(pane => !pane.isGroup)
       .map(pane => {
         return <Pane
           layout={layout}
@@ -111,23 +109,8 @@ export default class Layout extends Component {
           key={pane.id}
           DefaultComponent={DefaultComponent}
         />;
-      })
-      .forEach(pane => {
-        panes.push(pane);
       });
 
-    layout.dividers
-      .map(divider => {
-        return <Divider
-          layout={layout}
-          divider={divider}
-          actions={actions}
-          key={divider.id}
-        />;
-      })
-      .forEach(divider => {
-        dividers.push(divider);
-      });
     return (
       <div>
         {panes}
