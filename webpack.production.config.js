@@ -29,6 +29,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'subdivide.js',
+    library: 'Subdivide',
+    libraryTarget: 'umd',
     publicPath: '/static/'
   },
   plugins: [
