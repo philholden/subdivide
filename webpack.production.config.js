@@ -16,7 +16,7 @@ var reduxExternal = {
 };
 
 module.exports = {
-   externals: {
+  externals: {
     'react': reactExternal,
     'react-native': reactExternal,
     'redux': reduxExternal
