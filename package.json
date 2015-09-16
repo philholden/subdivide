@@ -1,7 +1,7 @@
 {
   "name": "subdivide",
   "version": "0.0.1",
-  "description": "Layout system that allows panes to be infinitely subdivided",
+  "description": "User defined UI Layout: Every pane can be subdivided and any widget assigned to any pane.",
   "main": "index.js",
   "scripts": {
     "test": "mocha test --compilers js:babel/register --recursive",
@@ -9,9 +9,14 @@
     "build": "NODE_ENV=production node node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js",
     "lint": "eslint src"
   },
+  "repository" :
+  {
+    "type" : "git",
+    "url" : "https://github.com/philholden/subdivide"
+  },
   "author": {
     "name": "Phil Holden",
-    "url": ""
+    "url": "https://github.com/philholden"
   },
   "license": "ISC",
   "devDependencies": {
