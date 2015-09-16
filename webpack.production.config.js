@@ -5,7 +5,6 @@ module.exports = {
   devtool: 'source-map',
   context: __dirname,
   entry: [
-    'webpack-hot-middleware/client',
     './src/index.js'
   ],
   output: {
@@ -15,7 +14,6 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __TESTTOOLS__: false,
       __DEVTOOLS__: false // <-------- DISABLE redux-devtools HERE
     })
   ],
