@@ -1,4 +1,4 @@
-import 'babel-core/polyfill';
+//import 'babel-core/polyfill';
 
 import Subdivide from './containers/Subdivide';
 
