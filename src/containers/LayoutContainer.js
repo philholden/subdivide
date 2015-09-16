@@ -6,7 +6,7 @@ import * as LayoutActions from '../actions/LayoutActions';
 @connect(state => ({
   layout: state.layout
 }))
-export default class App extends Component {
+export default class LayoutContainer extends Component {
   constructor(props, context) {
     super(props, context);
     this.actions = bindActionCreators(
