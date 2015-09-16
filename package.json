@@ -2,7 +2,7 @@
   "name": "subdivide",
   "version": "0.0.1",
   "description": "User defined UI Layout: Every pane can be subdivided and any widget assigned to any pane.",
-  "main": "src/index.js",
+  "main": "dist/subdivide.js",
   "scripts": {
     "test": "mocha test --compilers js:babel/register --recursive",
     "start": "node server.js",
@@ -41,9 +41,8 @@
     "url-loader": "^0.5.6",
     "webpack": "^1.9.12",
     "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.0.0"
-  },
-  "dependencies": {
+    "webpack-hot-middleware": "^2.0.0",
+
     "core-js": "^1.1.1",
     "es6-promise": "^2.3.0",
     "immutable": "^3.7.4",
@@ -53,6 +52,8 @@
     "react-redux": "^2.1.0",
     "redux": "^2.0.0",
     "redux-thunk": "^0.1.0"
+  },
+  "dependencies": {
   },
   "keywords": [
     "immutable",
