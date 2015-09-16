@@ -2,7 +2,7 @@
   "name": "subdivide",
   "version": "0.0.1",
   "description": "User defined UI Layout: Every pane can be subdivided and any widget assigned to any pane.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "mocha test --compilers js:babel/register --recursive",
     "start": "node server.js",
