@@ -72,10 +72,6 @@ export const Divider = new Record({
 
 const initialState = new Layout();
 
-
-
-
-
 let firstPass = (state, action) => {
 
   switch (action.type) {

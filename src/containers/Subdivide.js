@@ -11,13 +11,13 @@ function configureStore(initialState) {
   )(createStore);
 
   let store = finalCreateStore(reducer, initialState);
-  // if (module.hot) {
-  //   // Enable Webpack hot module replacement for reducers
-  //   module.hot.accept('../reducers', () => {
-  //     const nextRootReducer = require('../reducers/index');
-  //     store.replaceReducer(nextRootReducer);
-  //   });
-  // }
+  if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('../reducers', () => {
+      const nextRootReducer = require('../reducers/index');
+      store.replaceReducer(nextRootReducer);
+    });
+  }
 
   return store;
 }

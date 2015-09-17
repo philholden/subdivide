@@ -115,7 +115,7 @@ export default class Layout extends Component {
   }
 
   componentWillUnmount() {
-    if (this.animationFrame) this.animationFrame.stop();
+    this.animationFrame.stop();
   }
 
   render() {
