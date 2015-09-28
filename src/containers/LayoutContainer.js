@@ -13,7 +13,7 @@ export default class LayoutContainer extends Component {
       LayoutActions,
       this.props.dispatch
     );
-    window.actions = this.actions;
+    //window.actions = this.actions;
   }
   render() {
     const {layout, DefaultComponent} = this.props;

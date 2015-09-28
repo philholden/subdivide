@@ -23,7 +23,7 @@ function configureStore(initialState) {
 }
 
 const store = configureStore();
-window.store = store;
+//window.store = store;
 
 export default class Subdivide extends Component {
 
