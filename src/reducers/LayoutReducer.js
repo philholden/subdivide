@@ -16,6 +16,7 @@ import {
   setSize,
   setCornerDown,
   setDividerDown,
+  deserialize
 } from '../helpers/LayoutHelper';
 
 import secondPass from '../helpers/secondPass';
@@ -73,6 +74,7 @@ export const Divider = new Record({
 const initialState = new Layout();
 
 let firstPass = (state, action) => {
+  state = deserialize(state);
 
   switch (action.type) {
   case SPLIT:

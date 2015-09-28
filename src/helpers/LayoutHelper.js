@@ -8,7 +8,7 @@ import {
 } from '../constants/BlenderLayoutConstants';
 
 import {List} from 'immutable';
-import {Pane} from '../reducers/LayoutReducer';
+import {Pane, Layout, Divider} from '../reducers/LayoutReducer';
 import secondPass from './secondPass';
 
 function getNextId(state) {
@@ -18,6 +18,28 @@ function getNextId(state) {
       .map(pane => parseInt(pane.id))
       .max() + 1
   ) + '';
+}
+
+export function deserialize(layout) {
+  if (layout instanceof Layout) return layout;
+  let panes = Map();
+  let dividers = Map();
+  Object.keys(layout.dividers).forEach( key => {
+    let divider = layout.dividers[key];
+    dividers.set(key, Divider(divider));
+  });
+  Object.keys(layout.panes).forEach( key => {
+    let pane = layout.panes[key];
+    dividers.set(key, Pane({
+      ...pane,
+      childIds: List(pane.childIds)
+    }));
+  });
+  return new Layout({
+    ...layout,
+    panes,
+    dividers
+  });
 }
 
 function wrapPane(state, id) {
