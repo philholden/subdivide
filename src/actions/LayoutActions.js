@@ -5,8 +5,16 @@ import {
   SET_SIZE,
   SET_BLOCK,
   SET_CORNER_DOWN,
-  SET_DIVIDER_DOWN
+  SET_DIVIDER_DOWN,
+  SET_STATE
 } from '../constants/BlenderLayoutConstants';
+
+export function setState(state) {
+  return {
+    type: SET_STATE,
+    state
+  };
+}
 
 export function setSplitRatio(id, splitRatio) {
   return {

@@ -16,6 +16,8 @@ export const CHILD_LEFT = 'CHILD_LEFT';
 export const CHILD_RIGHT = 'CHILD_RIGHT';
 export const CHILD_NONE = 'CHILD_NONE';
 
+export const SET_STATE = 'SET_STATE';
+
 export const CORNER_DOWN = 'CORNER_DOWN';
 
 export const ADD_CHILD_PANE = 'ADD_CHILD_PANE';

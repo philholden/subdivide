@@ -7,7 +7,7 @@ import {
   COL
 } from '../constants/BlenderLayoutConstants';
 
-import {List} from 'immutable';
+import {List, Map} from 'immutable';
 import {Pane, Layout, Divider} from '../reducers/LayoutReducer';
 import secondPass from './secondPass';
 
@@ -26,11 +26,11 @@ export function deserialize(layout) {
   let dividers = Map();
   Object.keys(layout.dividers).forEach( key => {
     let divider = layout.dividers[key];
-    dividers.set(key, Divider(divider));
+    dividers = dividers.set(key, Divider(divider));
   });
   Object.keys(layout.panes).forEach( key => {
     let pane = layout.panes[key];
-    dividers.set(key, Pane({
+    panes = panes.set(key, Pane({
       ...pane,
       childIds: List(pane.childIds)
     }));

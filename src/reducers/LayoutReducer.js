@@ -4,7 +4,8 @@ import {
   SET_SPLIT_RATIO,
   SET_SIZE,
   SET_CORNER_DOWN,
-  SET_DIVIDER_DOWN
+  SET_DIVIDER_DOWN,
+  SET_STATE
 } from '../constants/BlenderLayoutConstants';
 
 import { Record, List, Map} from 'immutable';
@@ -94,6 +95,8 @@ let firstPass = (state, action) => {
 
   case SET_DIVIDER_DOWN:
     return setDividerDown(state, action);
+  case SET_STATE:
+    return deserialize(action.state);
 
   default:
     return state;
