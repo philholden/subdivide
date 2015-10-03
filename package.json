@@ -5,6 +5,7 @@
   "main": "./dist/subdivide.js",
   "scripts": {
     "test": "mocha test --compilers js:babel/register --recursive",
+    "test:watch": "npm run test -- --watch",
     "start": "node server.js",
     "build": "NODE_ENV=production node node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js",
     "lint": "eslint src"
