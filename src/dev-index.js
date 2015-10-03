@@ -1,6 +1,6 @@
 //import 'babel-core/polyfill';
 import React, {Component} from 'react';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
 import Subdivide from './containers/Subdivide';
 
 class IframeComponent extends Component {
@@ -14,5 +14,5 @@ class IframeComponent extends Component {
   }
 }
 
-ReactDom.render(<Subdivide DefaultComponent={IframeComponent}/>, document.getElementById('root'));
+ReactDOM.render(<Subdivide DefaultComponent={IframeComponent}/>, document.getElementById('root'));
 
