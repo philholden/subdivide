@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, compose } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
 import reducer from '../reducers';
 import LayoutContainer from './LayoutContainer';
 
 function configureStore(initialState) {
-  let finalCreateStore = compose(
-    applyMiddleware(thunk),
-  )(createStore);
-
-  let store = finalCreateStore(reducer, initialState);
+  let store = createStore(reducer, initialState);
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {

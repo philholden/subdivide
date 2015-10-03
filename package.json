@@ -49,8 +49,7 @@
   },
   "dependencies": {
     "immutable": "^3.7.4",
-    "radium": "^0.13.8",
-    "redux-thunk": "^0.1.0"
+    "radium": "^0.13.8"
   },
   "keywords": [
     "immutable",
