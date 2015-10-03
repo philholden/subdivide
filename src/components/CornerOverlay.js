@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
   ROW,
-  COL,
   SW,
   NE,
   SE,
