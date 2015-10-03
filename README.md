@@ -1,5 +1,7 @@
 # Subdivide Layout
 
+[![Video](http://img.youtube.com/vi/3ePrvrx9otk/0.jpg)](http://www.youtube.com/watch?v=3ePrvrx9otk)
+
 A web application shell for displaying components in panes which can be:
 
 * infinitively subdivided
