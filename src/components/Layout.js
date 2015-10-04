@@ -12,7 +12,7 @@ import {
   NE,
   SE,
   NW
-} from '../constants/BlenderLayoutConstants';
+} from '../constants';
 
 export default class Layout extends Component {
   constructor(props, context) {

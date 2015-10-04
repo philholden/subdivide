@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   COL
-} from '../constants/BlenderLayoutConstants';
+} from '../constants';
 import DividerTouch from './DividerTouch';
 
 var Rect = (props) => {

@@ -7,7 +7,7 @@ import {
   SW,
   SE,
   NW
-} from '../constants/BlenderLayoutConstants';
+} from '../constants';
 
 function getStyles({
       width,

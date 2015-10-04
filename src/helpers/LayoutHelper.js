@@ -5,7 +5,7 @@ import {
   CHILD_RIGHT,
   ROW,
   COL
-} from '../constants/BlenderLayoutConstants';
+} from '../constants';
 
 import {List, Map} from 'immutable';
 import {Pane, Layout, Divider} from '../reducers';

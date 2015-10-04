@@ -7,7 +7,7 @@ import {
   SET_CORNER_DOWN,
   SET_DIVIDER_DOWN,
   SET_STATE
-} from '../constants/BlenderLayoutConstants';
+} from '../constants';
 
 export function setState(state) {
   return {

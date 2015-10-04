@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   COL
-} from '../constants/BlenderLayoutConstants';
+} from '../constants';
 
 export default class Divider extends Component {
   constructor(props, context) {

@@ -11,7 +11,7 @@ import {
   COL,
   SPLIT,
   JOIN
-} from '../../src/constants/BlenderLayoutConstants';
+} from '../../src/constants';
 
 import { Record, List, Map} from 'immutable';
 

@@ -5,7 +5,7 @@ import {
   NE,
   SE,
   NW
-} from '../constants/BlenderLayoutConstants';
+} from '../constants';
 
 @Radium
 export default class Triangle extends Component {

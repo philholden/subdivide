@@ -9,7 +9,7 @@ import {
   JOIN_UP_ARROW,
   JOIN_LEFT_ARROW,
   JOIN_DOWN_ARROW
-} from '../constants/BlenderLayoutConstants';
+} from '../constants';
 
 export default class CornerOverlay extends Component {
 
