@@ -1,7 +1,6 @@
-//import 'babel-core/polyfill';
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Subdivide from './containers/Subdivide';
+import Subdivide from './index';
 
 class IframeComponent extends Component {
   render() {
@@ -9,10 +8,13 @@ class IframeComponent extends Component {
       <iframe src="index2.html" frameBorder={'0'} style={{
          width: '100%',
          height: '100%'
-      }}></iframe>
+      }} />
     );
   }
 }
 
-ReactDOM.render(<Subdivide DefaultComponent={IframeComponent}/>, document.getElementById('root'));
+ReactDOM.render(
+  <Subdivide DefaultComponent={IframeComponent} />,
+  document.getElementById('root')
+);
 

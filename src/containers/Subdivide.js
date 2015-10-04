@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { createStore } from 'redux';
+import { createStore, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import reducer from '../reducers';
-import LayoutContainer from './LayoutContainer';
+import Layout from '../components/Layout';
+import * as LayoutActions from '../actions/LayoutActions';
 
 function configureStore(initialState) {
   let store = createStore(reducer, initialState);
@@ -16,16 +18,27 @@ function configureStore(initialState) {
   return store;
 }
 
+const ConnectedLayout = connect(
+  state => ({ layout: state })
+)(Layout);
+
 export default class Subdivide extends Component {
   constructor(props) {
     super(props);
-    this.store = configureStore();
+
+    const {dispatch} = props;
+    if (dispatch) {
+      this.actions = bindActionCreators(LayoutActions, dispatch);
+    } else {
+      this.store = configureStore();
+      this.actions = bindActionCreators(LayoutActions, this.store.dispatch);
+    }
   }
 
   render() {
-    const {DefaultComponent} = this.props;
-    return (
-      <LayoutContainer DefaultComponent={DefaultComponent} store={this.store} />
-    );
+    const {store, actions} = this;
+    return store ?
+      <ConnectedLayout {...this.props} store={store} actions={actions} /> :
+      <Layout {...this.props} actions={actions} />;
   }
 }
