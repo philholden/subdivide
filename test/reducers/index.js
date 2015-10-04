@@ -1,6 +1,6 @@
 import expect from 'expect';
-import LayoutReducer from '../../src/reducers/LayoutReducer';
-import {Pane, Layout} from '../../src/reducers/LayoutReducer';
+import layout from '../../src/reducers';
+import {Pane, Layout} from '../../src/reducers';
 import {
   SET_SPLIT_RATIO,
   CHILD_ABOVE,
@@ -36,7 +36,7 @@ describe('pane reducer', () => {
         splitType: CHILD_RIGHT
       };
 
-      endState = LayoutReducer(startState, action);
+      endState = layout(startState, action);
       original = endState.panes.get('0');
       parent = endState.panes.get(original.parentId);
       //console.log(original, parent);
@@ -76,7 +76,7 @@ describe('pane reducer', () => {
         splitType: CHILD_LEFT
       };
 
-      endState = LayoutReducer(startState, action);
+      endState = layout(startState, action);
       original = endState.panes.get('0');
       parent = endState.panes.get(original.parentId);
       added = endState.panes.get(parent.childIds.first());
@@ -102,7 +102,7 @@ describe('pane reducer', () => {
         splitType: CHILD_ABOVE
       };
 
-      endState = LayoutReducer(startState, action);
+      endState = layout(startState, action);
       original = endState.panes.get('0');
       parent = endState.panes.get(original.parentId);
       added = endState.panes.get(parent.childIds.first());
@@ -128,7 +128,7 @@ describe('pane reducer', () => {
         splitType: CHILD_BELOW
       };
 
-      endState = LayoutReducer(startState, action);
+      endState = layout(startState, action);
       original = endState.panes.get('0');
       parent = endState.panes.get(original.parentId);
       added = endState.panes.get(parent.childIds.last());
@@ -178,7 +178,7 @@ describe('pane reducer', () => {
         retainId: '2'
       };
 
-      endState = LayoutReducer(startState, action);
+      endState = layout(startState, action);
     });
 
     it('remaining pane should be root', () => {
@@ -251,7 +251,7 @@ describe('pane reducer', () => {
         retainId: '2'
       };
 
-      endState = LayoutReducer(startState, action);
+      endState = layout(startState, action);
       //console.log(endState.toJS());
     });
 
@@ -332,7 +332,7 @@ describe('pane reducer', () => {
         retainId: '3'
       };
 
-      endState = LayoutReducer(startState, action);
+      endState = layout(startState, action);
       //console.log(endState.toJS());
     });
 

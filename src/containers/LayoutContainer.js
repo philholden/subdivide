@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 import * as LayoutActions from '../actions/LayoutActions';
 
 function mapStateToProps(state) {
-  return { layout: state.layout };
+  return { layout: state };
 }
 function mapDispatchToProps(dispatch) {
   return {

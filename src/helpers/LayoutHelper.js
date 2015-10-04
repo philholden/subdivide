@@ -8,7 +8,7 @@ import {
 } from '../constants/BlenderLayoutConstants';
 
 import {List, Map} from 'immutable';
-import {Pane, Layout, Divider} from '../reducers/LayoutReducer';
+import {Pane, Layout, Divider} from '../reducers';
 import secondPass from './secondPass';
 
 function getNextId(state) {

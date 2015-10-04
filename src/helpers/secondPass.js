@@ -11,7 +11,7 @@ import {
   JOIN_DOWN_ARROW,
 } from '../constants/BlenderLayoutConstants';
 
-import {Divider} from '../reducers/LayoutReducer';
+import {Divider} from '../reducers';
 import {Map} from 'immutable';
 
 function getJoinDirection({layout, pane}) {
