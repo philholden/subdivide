@@ -98,7 +98,7 @@ ReactDOM.render(
 
 ## Thanks
 
-Subdivide was inspired by [Blender's](http://blender.orgs) subdividable UI. I have wanted to implement this on the web for ages. Final kick to get it done was seeing [this discussion](https://github.com/gaearon/redux-devtools/issues/41#issuecomment-129898889) on the `redux-devtools` repo.
+Subdivide was inspired by [Blender's](http://blender.org) subdividable UI. I have wanted to implement this on the web for ages. Final kick to get it done was seeing [this discussion](https://github.com/gaearon/redux-devtools/issues/41#issuecomment-129898889) on the `redux-devtools` repo.
 
 Subdivide uses [Redux](https://github.com/rackt/redux) to manage state. Thanks to [@gaearon](https://github.com/gaearon) for the great library, talks, docs and feedback.
 
