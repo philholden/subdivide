@@ -7,7 +7,8 @@ import {
   SET_SIZE,
   SET_CORNER_DOWN,
   SET_DIVIDER_DOWN,
-  SET_STATE
+  SET_STATE,
+  SET_PANE_PROPS
 } from '../constants';
 
 import {
@@ -17,7 +18,8 @@ import {
   setSize,
   setCornerDown,
   setDividerDown,
-  deserialize
+  deserialize,
+  setPaneProps
 } from '../helpers/LayoutHelper';
 
 import secondPass from '../helpers/secondPass';
@@ -96,6 +98,8 @@ let firstPass = (state, action) => {
     return setDividerDown(state, action);
   case SET_STATE:
     return deserialize(action.state);
+  case SET_PANE_PROPS:
+    return setPaneProps(state, action);
 
   default:
     return state;
