@@ -28,6 +28,7 @@ export const SET_SIZE = 'SET_SIZE';
 export const SET_BLOCK = 'SET_BLOCK';
 export const SET_DIVIDER_DOWN = 'SET_DIVIDER_DOWN';
 export const SET_CORNER_DOWN = 'SET_CORNER_DOWN';
+export const SET_PANE_PROPS = 'SET_PANE_PROPS';
 
 export const JOIN_RIGHT_ARROW = 'JOIN_RIGHT_ARROW';
 export const JOIN_UP_ARROW = 'JOIN_UP_ARROW';

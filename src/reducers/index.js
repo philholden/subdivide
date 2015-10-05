@@ -36,7 +36,8 @@ export const Pane = new Record({
   height: undefined,
 
   canSplit: undefined,
-  joinDirection: undefined
+  joinDirection: undefined,
+  props: {}
 });
 
 export const Layout = new Record({

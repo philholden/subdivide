@@ -211,3 +211,7 @@ export function setDividerDown(state, action) {
   return state
     .set('dividerDown', action.divider);
 }
+
+export function setPaneProps(state, {id, props}) {
+  return state.setIn(['panes', id, 'props'], props);
+}
