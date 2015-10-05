@@ -20,6 +20,14 @@ It should also be possible to quickly mash up applications out of preexisting pa
 
 ## Usage
 
+You can install Subdivide with `npm` and then use WebPack or Browserify to import / require it. 
+
+```bash
+npm install subdivide
+```
+
+Subdivide exposes the Subdivide component and its reducer.
+
 `<Subdivide>` acts like a chameleon, `reducer` is a named export of the package.
 
 * If you use it directly, it will create its own store and use it;
