@@ -21,10 +21,10 @@ export default class Layout extends Component {
     const {setSize} = props.actions;
 
     this.onMouseMove = this.animationFrame.throttle(({clientX, clientY}) => {
-      const {actions, layout} = this.props;
+      const {actions, subdivide} = this.props;
 
-      if (layout.dividerDown) {
-        const divider = layout.dividerDown;
+      if (subdivide.dividerDown) {
+        const divider = subdivide.dividerDown;
         const {
           beforePaneId,
           afterPaneId,
@@ -46,8 +46,8 @@ export default class Layout extends Component {
         }
       }
 
-      if (layout.cornerDown) {
-        const pane = layout.cornerDown;
+      if (subdivide.cornerDown) {
+        const pane = subdivide.cornerDown;
         const {split} = actions;
         const {width, height, left, top, id, corner} = pane;
 
@@ -91,13 +91,13 @@ export default class Layout extends Component {
     });
 
     this.onMouseUp = () => {
-      const {actions, layout} = this.props;
-      if (layout.dividerDown) {
+      const {actions, subdivide} = this.props;
+      if (subdivide.dividerDown) {
         actions.setDividerDown(undefined);
       }
       // give pane onMouseUp a chance to fire
       setTimeout(()=>{
-        if (layout.cornerDown) {
+        if (subdivide.cornerDown) {
           actions.setCornerDown(undefined);
         }
       }, 10);
@@ -119,12 +119,12 @@ export default class Layout extends Component {
   }
 
   render() {
-    const {layout, actions, DefaultComponent} = this.props;
+    const {subdivide, actions, DefaultComponent} = this.props;
 
-    let panes = layout.panes.toList().filter(pane => !pane.isGroup)
+    let panes = subdivide.panes.toList().filter(pane => !pane.isGroup)
       .map(pane => {
         return <Pane
-          layout={layout}
+          subdivide={subdivide}
           pane={pane}
           actions={actions}
           key={pane.id}
@@ -135,7 +135,7 @@ export default class Layout extends Component {
     return (
       <div>
         {panes}
-        <Dividers dividers={layout.dividers} layout={layout} actions={actions} />
+        <Dividers dividers={subdivide.dividers} subdivide={subdivide} actions={actions} />
       </div>
     );
   }

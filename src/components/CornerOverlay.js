@@ -22,9 +22,9 @@ export default class CornerOverlay extends Component {
   }
 
   updateDivideOverlay() {
-    const {pane, layout} = this.props;
-    if (!pane.canSplit || !layout.cornerDown) return;
-    const {corner} = layout.cornerDown;
+    const {pane, subdivide} = this.props;
+    if (!pane.canSplit || !subdivide.cornerDown) return;
+    const {corner} = subdivide.cornerDown;
 
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext('2d');
@@ -168,12 +168,12 @@ export default class CornerOverlay extends Component {
   }
 
   render() {
-    let {layout} = this.props;
+    let {subdivide} = this.props;
     let {joinDirection, canSplit} = this.props.pane;
-    if (!(layout.cornerDown || layout.dividerDown)) return false;
+    if (!(subdivide.cornerDown || subdivide.dividerDown)) return false;
 
     if (!(joinDirection || canSplit)) {
-      const {dividerDown} = layout;
+      const {dividerDown} = subdivide;
         const cursor = !dividerDown ? undefined :
           dividerDown.direction === ROW ?
             'col-resize' :

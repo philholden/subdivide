@@ -3,7 +3,7 @@ import { createStore, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import reducer from '../reducers';
 import Layout from '../components/Layout';
-import * as LayoutActions from '../actions/LayoutActions';
+import * as SubdivideActionCreators from '../actions/SubdivideActionCreators';
 
 function configureStore(initialState) {
   let store = createStore(reducer, initialState);
@@ -19,7 +19,7 @@ function configureStore(initialState) {
 }
 
 const ConnectedLayout = connect(
-  state => ({ layout: state })
+  state => ({ subdivide: state })
 )(Layout);
 
 export default class Subdivide extends Component {
@@ -28,10 +28,10 @@ export default class Subdivide extends Component {
 
     const {dispatch} = props;
     if (dispatch) {
-      this.actions = bindActionCreators(LayoutActions, dispatch);
+      this.actions = bindActionCreators(SubdivideActionCreators, dispatch);
     } else {
       this.store = configureStore();
-      this.actions = bindActionCreators(LayoutActions, this.store.dispatch);
+      this.actions = bindActionCreators(SubdivideActionCreators, this.store.dispatch);
     }
   }
 

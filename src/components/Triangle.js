@@ -19,7 +19,7 @@ export default class Triangle extends Component {
   }
 
   getStyles() {
-    let {corner, color, size, layout, pane} = this.props;
+    let {corner, color, size, subdivide, pane} = this.props;
     var offset = (size + 3) / 2;
     var outer = {
       width: size,
@@ -27,7 +27,7 @@ export default class Triangle extends Component {
       position: 'absolute',
       backgroundColor: 'rgba(0,0,0,0)',
       opacity: 1,
-      display: layout.dividerDown ? 'none' : 'block',
+      display: subdivide.dividerDown ? 'none' : 'block',
       ':hover': {
         opacity: 1
       }
@@ -67,7 +67,7 @@ export default class Triangle extends Component {
       };
     }
 
-    let hover = Radium.getState(this.state, 'outer', ':hover') && (!layout.cornerDown || layout.cornerDown.id === pane.id) ? 0 : offset;
+    let hover = Radium.getState(this.state, 'outer', ':hover') && (!subdivide.cornerDown || subdivide.cornerDown.id === pane.id) ? 0 : offset;
 
     let inner = {
       border: '1px solid #c0c0d0',

@@ -32,7 +32,7 @@ export default class Divider extends Component {
 
   dividerStyle() {
     const {width, height, top, left, direction} = this.props.divider;
-    const {touchMargin} = this.props.layout;
+    const {touchMargin} = this.props.subdivide;
     var touch = {
       width,
       height,

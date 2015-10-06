@@ -6,13 +6,22 @@ import {
   SET_BLOCK,
   SET_CORNER_DOWN,
   SET_DIVIDER_DOWN,
-  SET_STATE
+  SET_STATE,
+  SET_PANE_PROPS
 } from '../constants';
 
 export function setState(state) {
   return {
     type: SET_STATE,
     state
+  };
+}
+
+export function setPaneProps(id, props) {
+  return {
+    type: SET_PANE_PROPS,
+    id,
+    props
   };
 }
 

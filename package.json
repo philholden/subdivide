@@ -1,6 +1,6 @@
 {
   "name": "subdivide",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "User defined UI Layout: Every pane can be subdivided and any widget assigned to any pane.",
   "main": "./dist/subdivide.js",
   "scripts": {

@@ -32,11 +32,11 @@ export default class Pane extends Component {
     super(props, context);
 
     this.onMouseUp = () => {
-      //Note this on mouse up happens after layout on mouse up
-      const {actions, layout, pane} = this.props;
+      //Note this on mouse up happens after subdivide on mouse up
+      const {actions, subdivide, pane} = this.props;
       const {join} = actions;
-      if (!layout.cornerDown) return;
-      const cornerDownId = layout.cornerDown.id;
+      if (!subdivide.cornerDown) return;
+      const cornerDownId = subdivide.cornerDown.id;
       if(pane.joinDirection) {
         join(cornerDownId, pane.id);
         actions.setCornerDown(undefined);
@@ -45,18 +45,18 @@ export default class Pane extends Component {
   }
 
   render() {
-    const {pane, layout, actions, DefaultComponent} = this.props;
+    const {pane, subdivide, actions, DefaultComponent} = this.props;
     const styles = getStyles(pane);
 
     return (
       <div style={styles.pane} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>
-        <DefaultComponent subDivActions={actions} subDivState={layout} />
-        <CornerOverlay pane={pane} layout={layout} />
+        <DefaultComponent {...pane.props} subdivdeActions={actions} subdivide={subdivide} />
+        <CornerOverlay pane={pane} subdivide={subdivide} />
         <Triangle
           corner={SW}
           color='#dadadf'
           size={42}
-          layout={layout}
+          subdivide={subdivide}
           pane={pane}
           actions={actions}
         />
@@ -64,7 +64,7 @@ export default class Pane extends Component {
           corner={NE}
           color='#dadadf'
           size={42}
-          layout={layout}
+          subdivide={subdivide}
           pane={pane}
           actions={actions}
         />
@@ -72,7 +72,7 @@ export default class Pane extends Component {
           corner={NW}
           color='#dadadf'
           size={42}
-          layout={layout}
+          subdivide={subdivide}
           pane={pane}
           actions={actions}
         />
@@ -80,7 +80,7 @@ export default class Pane extends Component {
           corner={SE}
           color='#dadadf'
           size={42}
-          layout={layout}
+          subdivide={subdivide}
           pane={pane}
           actions={actions}
         />
