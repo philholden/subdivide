@@ -83,7 +83,7 @@ class IframeComponent extends Component {
 
 const ConnectedSubdivide = connect(
   // Tell where to grab the relevant state
-  state => ({ layout: state.subdivide })
+  state => ({ subdivide: state.subdivide })
 )(Subdivide);
 
 ReactDOM.render(

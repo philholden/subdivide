@@ -20,23 +20,23 @@ function getNextId(state) {
   ) + '';
 }
 
-export function deserialize(layout) {
-  if (layout instanceof Layout) return layout;
+export function deserialize(subdivide) {
+  if (subdivide instanceof Layout) return subdivide;
   let panes = Map();
   let dividers = Map();
-  Object.keys(layout.dividers).forEach( key => {
-    let divider = layout.dividers[key];
+  Object.keys(subdivide.dividers).forEach( key => {
+    let divider = subdivide.dividers[key];
     dividers = dividers.set(key, Divider(divider));
   });
-  Object.keys(layout.panes).forEach( key => {
-    let pane = layout.panes[key];
+  Object.keys(subdivide.panes).forEach( key => {
+    let pane = subdivide.panes[key];
     panes = panes.set(key, Pane({
       ...pane,
       childIds: List(pane.childIds)
     }));
   });
   return new Layout({
-    ...layout,
+    ...subdivide,
     panes,
     dividers
   });

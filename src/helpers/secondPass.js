@@ -14,19 +14,19 @@ import {
 import {Divider} from '../reducers';
 import {Map} from 'immutable';
 
-function getJoinDirection({layout, pane}) {
-  const {cornerDown} = layout;
+function getJoinDirection({subdivide, pane}) {
+  const {cornerDown} = subdivide;
   if (cornerDown === undefined) return false;
-  const cornerDownId = layout.cornerDown.id;
-  const cornerDownPane = layout.panes.get(cornerDownId);
-  const parent = layout.panes.get(cornerDownPane.parentId);
+  const cornerDownId = subdivide.cornerDown.id;
+  const cornerDownPane = subdivide.panes.get(cornerDownId);
+  const parent = subdivide.panes.get(cornerDownPane.parentId);
   if (!parent) return false;
   const siblings = parent.childIds;
   const index = siblings.indexOf(cornerDownId);
   const beforeId = index < 1 ? undefined : siblings.get(index - 1);
   const afterId = siblings.get(index + 1);
-  const isBeforeGroup = beforeId !== undefined && layout.panes.get(beforeId).isGroup;
-  const isAfterGroup = afterId !== undefined && layout.panes.get(afterId).isGroup;
+  const isBeforeGroup = beforeId !== undefined && subdivide.panes.get(beforeId).isGroup;
+  const isAfterGroup = afterId !== undefined && subdivide.panes.get(afterId).isGroup;
   const canJoinBefore = beforeId === pane.id && !isBeforeGroup;
   const canJoinAfter = afterId === pane.id && !isAfterGroup;
 
@@ -85,7 +85,7 @@ export default function secondPass(state) {
     parent.childIds.forEach((childId, i) => {
       let child = state.panes.get(childId);
       let canSplit = cornerDown && cornerDown.id === childId;
-      let joinDirection = getJoinDirection({layout: state, pane: child});
+      let joinDirection = getJoinDirection({subdivide: state, pane: child});
 
       child = child.merge({canSplit, joinDirection});
 

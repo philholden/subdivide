@@ -19,8 +19,8 @@ var Rect = (props) => {
 };
 
 var Dividers = (props) => {
-  const {dividers, layout, actions} = props;
-  const {borderSize} = layout;
+  const {dividers, subdivide, actions} = props;
+  const {borderSize} = subdivide;
   //let touch = dividers.map(touch).toSeq();
   let toBorder = (divider) => {
     const {width, height, top, left, id} = divider;
@@ -60,12 +60,12 @@ var Dividers = (props) => {
       style.width = style.width + style.left;
       style.left = 0;
     }
-    style.width = Math.min(style.width, layout.width - style.left);
+    style.width = Math.min(style.width, subdivide.width - style.left);
     if (style.top < 0) {
       style.height = style.height + style.top;
       style.top = 0;
     }
-    style.height = Math.min(style.height, layout.height - style.top);
+    style.height = Math.min(style.height, subdivide.height - style.top);
 
     return <Rect style={style} key={id} />;
   };
@@ -73,7 +73,7 @@ var Dividers = (props) => {
   let toTouch = (divider) => {
     return <DividerTouch
               divider={divider}
-              layout={layout}
+              subdivide={subdivide}
               actions={actions}
               key={divider.id}
             />;

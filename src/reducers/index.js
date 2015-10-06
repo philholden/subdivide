@@ -106,7 +106,7 @@ let firstPass = (state, action) => {
   }
 };
 
-export default function layout(state = Layout(), action) {
+export default function subdivide(state = Layout(), action) {
   state = firstPass(state, action);
   state = secondPass(state);
   return state;
