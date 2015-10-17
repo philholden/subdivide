@@ -42,7 +42,7 @@ For example:
 ```js
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import Subdivide from './index';
+import Subdivide from 'subdivide';
 
 class IframeComponent extends Component {
   render() {
@@ -67,7 +67,7 @@ ReactDOM.render(
 import React, {Component} from 'react';
 import {createStore, combineReducers} from 'redux';
 import ReactDOM from 'react-dom';
-import Subdivide, { reducer as subdivide } from './index';
+import Subdivide, { reducer as subdivide } from 'subdivide';
 import {connect, Provider} from 'react-redux';
 
 const store = createStore(combineReducers({
