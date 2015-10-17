@@ -50,7 +50,10 @@ export default class Pane extends Component {
 
     return (
       <div style={styles.pane} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>
-        <DefaultComponent {...pane.props} subdivdeActions={actions} subdivide={subdivide} />
+        <DefaultComponent
+          subdividePane={pane}
+          subdivideActions={actions}
+          subdivide={subdivide} />
         <CornerOverlay pane={pane} subdivide={subdivide} />
         <Triangle
           corner={SW}
