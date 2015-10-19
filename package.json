@@ -5,11 +5,12 @@
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf lib",
-    "build": "NODE_ENV=production node node_modules/webpack/bin/webpack.js -p --config webpack.production.config.js",
+    "build": "babel src --out-dir lib",
     "lint": "eslint src",
     "test": "mocha test --compilers js:babel/register --recursive",
     "test:watch": "npm run test -- --watch",
-    "start": "node server.js"
+    "start": "node server.js",
+    "prepublish": "npm run lint && npm run test && npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
