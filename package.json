@@ -1,6 +1,6 @@
 {
   "name": "subdivide",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "User defined UI Layout: Every pane can be subdivided and any widget assigned to any pane.",
   "main": "lib/index.js",
   "scripts": {
@@ -50,8 +50,7 @@
     "webpack-hot-middleware": "^2.0.0"
   },
   "dependencies": {
-    "immutable": "^3.7.4",
-    "radium": "^0.13.8"
+    "immutable": "^3.7.4"
   },
   "keywords": [
     "immutable",

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Radium from 'radium';
+
 import {
   SW,
   NE,
@@ -7,19 +7,29 @@ import {
   NW
 } from '../constants';
 
-@Radium
 export default class Triangle extends Component {
-  constructor(props, context) {
-    super(props, context);
 
-    this.onMouseDown = () => {
-      const {actions, corner, pane} = this.props;
-      actions.setCornerDown({...pane.toJS(), corner: corner});
-    };
+  onMouseDown() {
+    const {actions, corner, pane} = this.props;
+    actions.setCornerDown({...pane.toJS(), corner: corner});
+  };
+
+  onMouseEnter() {
+    const {actions, corner, pane} = this.props;
+    actions.setCornerHover({
+      paneId: pane.id,
+      corner
+    });
+  }
+
+  onMouseLeave() {
+    const {actions} = this.props;
+    actions.setCornerHover(undefined);
   }
 
   getStyles() {
     let {corner, color, size, subdivide, pane} = this.props;
+    let {cornerHover} = subdivide;
     var offset = (size + 3) / 2;
     var outer = {
       width: size,
@@ -27,10 +37,7 @@ export default class Triangle extends Component {
       position: 'absolute',
       backgroundColor: 'rgba(0,0,0,0)',
       opacity: 1,
-      display: subdivide.dividerDown ? 'none' : 'block',
-      ':hover': {
-        opacity: 1
-      }
+      display: subdivide.dividerDown ? 'none' : 'block'
     };
 
     if (corner === NE) {
@@ -67,7 +74,11 @@ export default class Triangle extends Component {
       };
     }
 
-    let hover = Radium.getState(this.state, 'outer', ':hover') && (!subdivide.cornerDown || subdivide.cornerDown.id === pane.id) ? 0 : offset;
+    let hover = cornerHover &&
+        cornerHover.paneId === pane.id &&
+        cornerHover.corner === corner ?
+        0 :
+        offset;
 
     let inner = {
       border: '1px solid #c0c0d0',
@@ -83,11 +94,16 @@ export default class Triangle extends Component {
 
   }
 
-          // <div style={styles.inner} />
   render() {
     var styles = this.getStyles();
     return (
-        <div key='outer' style={styles.outer} onMouseDown={this.onMouseDown}>
+        <div
+          key='outer'
+          style={styles.outer}
+          onMouseDown={() => this.onMouseDown()}
+          onMouseEnter={() => this.onMouseEnter()}
+          onMouseLeave={() => this.onMouseLeave()}
+        >
           <div style={styles.inner} />
         </div>
     );

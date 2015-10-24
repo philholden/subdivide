@@ -207,6 +207,11 @@ export function setCornerDown(state, action) {
     .set('cornerDown', action.cornerDown);
 }
 
+export function setCornerHover(state, action) {
+  return state
+    .set('cornerHover', action.cornerHover);
+}
+
 export function setDividerDown(state, action) {
   return state
     .set('dividerDown', action.divider);

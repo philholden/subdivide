@@ -8,7 +8,8 @@ import {
   SET_CORNER_DOWN,
   SET_DIVIDER_DOWN,
   SET_STATE,
-  SET_PANE_PROPS
+  SET_PANE_PROPS,
+  SET_CORNER_HOVER
 } from '../constants';
 
 import {
@@ -19,7 +20,8 @@ import {
   setCornerDown,
   setDividerDown,
   deserialize,
-  setPaneProps
+  setPaneProps,
+  setCornerHover,
 } from '../helpers/LayoutHelper';
 
 import secondPass from '../helpers/secondPass';
@@ -51,6 +53,7 @@ export const Layout = new Record({
   mode: undefined,
   dividerDown: undefined,
   cornerDown: undefined,
+  cornerHover: undefined,
   width: 800,
   height: 600,
   panes: Map({
@@ -93,6 +96,9 @@ let firstPass = (state, action) => {
 
   case SET_CORNER_DOWN:
     return setCornerDown(state, action);
+
+  case SET_CORNER_HOVER:
+    return setCornerHover(state, action);
 
   case SET_DIVIDER_DOWN:
     return setDividerDown(state, action);
