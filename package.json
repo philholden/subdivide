@@ -1,11 +1,11 @@
 {
   "name": "subdivide",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "User defined UI Layout: Every pane can be subdivided and any widget assigned to any pane.",
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf lib",
-    "build": "babel src --out-dir lib",
+    "build": "NODE_ENV=production babel src --out-dir lib",
     "lint": "eslint src",
     "test": "mocha test --compilers js:babel/register --recursive",
     "test:watch": "npm run test -- --watch",
