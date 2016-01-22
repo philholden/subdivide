@@ -1,3 +1,13 @@
+# Component Boilerplate
+
+[![travis build](https://img.shields.io/travis/philholden/component-boilerplate.svg?style=flat-square)](https://travis-ci.org/philholden/component-boilerplate)
+[![codecov coverage](https://img.shields.io/codecov/c/github/philholden/component-boilerplate.svg?style=flat-square)](https://codecov.io/github/philholden/component-boilerplate)
+[![version](https://img.shields.io/npm/v/@philholden/component-boilerplate.svg?style=flat-square)](http://npm.im/@philholden/component-boilerplate)
+[![downloads](https://img.shields.io/npm/dm/@philholden/component-boilerplate.svg?style=flat-square)](http://npm-stat.com/charts.html?package=@philholden/component-boilerplate&from=2015-08-01)
+[![CC0 License](https://img.shields.io/npm/l/@philholden/component-boilerplate.svg?style=flat-square)](https://creativecommons.org/publicdomain/zero/1.0/)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
+
+
 # Subdivide Layout
 
 [![Video](http://img.youtube.com/vi/3ePrvrx9otk/0.jpg)](http://www.youtube.com/watch?v=3ePrvrx9otk)
@@ -111,5 +121,3 @@ Subdivide was inspired by [Blender's](http://blender.org) subdividable UI. I hav
 Subdivide uses [Redux](https://github.com/rackt/redux) to manage state. Thanks to [@gaearon](https://github.com/gaearon) for the great library, talks, docs and feedback.
 
 Work began in a hackathon at [NCR Edinburgh](http://ncredinburgh.com). A big thanks to them for allowing it to be open sourced so I can continue to work on it in my own time. NCR is [hiring](http://ncredinburgh.com/jobs/vacancies/java-javascript-software_engineer) if you like React and Redux (and Scotland) they are a great place to work. 
-
-

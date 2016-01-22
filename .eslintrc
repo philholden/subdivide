@@ -1,4 +1,5 @@
 {
+  "extends": "rackt",
   "ecmaFeatures": {
     "jsx": true,
     "modules": true
@@ -12,15 +13,15 @@
   "rules": {
     "quotes": [2, "single"],
     "strict": [2, "never"],
-    "curly": [2, "multi-line"],
+    "babel/generator-star-spacing": 1,
+    "babel/object-shorthand": 1,
+    "babel/no-await-in-loop": 1,
     "react/jsx-uses-react": 2,
     "react/jsx-uses-vars": 2,
-    "react/react-in-jsx-scope": 2,
-    "eol-last": 0,
-    "brace-style": [2, "1tbs", { "allowSingleLine": true }],
-    "new-cap": [2, {"capIsNew": false}]
+    "react/react-in-jsx-scope": 2
   },
   "plugins": [
+    "babel",
     "react"
   ]
 }

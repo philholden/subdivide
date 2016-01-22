@@ -1,35 +1,35 @@
 
 const reqAnimFrame = requestAnimationFrame ||
-      ((fn) => setTimeout(fn, 1000 / 60));
+      ((fn) => setTimeout(fn, 1000 / 60))
 
 export default class AnimationFrame {
   constructor() {
-    this.counter = 0;
+    this.counter = 0
 
     this.incCounter = () => {
-      this.counter += 1;
-      this.id = reqAnimFrame(this.incCounter);
-    };
+      this.counter += 1
+      this.id = reqAnimFrame(this.incCounter)
+    }
 
     this.stop = () => {
       if (requestAnimationFrame) {
-        cancelAnimationFrame(this.id);
+        cancelAnimationFrame(this.id)
       } else {
-        clearTimeout(this.id);
+        clearTimeout(this.id)
       }
-    };
+    }
 
     this.throttle = (fn) => {
-      let lastCall = this.counter;
+      let lastCall = this.counter
       return (e) => {
         if (this.counter !== lastCall) {
-          fn(e);
-          lastCall = this.counter;
+          fn(e)
+          lastCall = this.counter
         }
-      };
-    };
+      }
+    }
 
-    this.incCounter();
+    this.incCounter()
   }
 }
 

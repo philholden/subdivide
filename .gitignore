@@ -1,5 +1,7 @@
-node_modules
 .DS_Store
-*.sublime-project
-*.sublime-workspace
+node_modules
+npm-debug.log
+dist
+.nyc_output
+coverage
 lib

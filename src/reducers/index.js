@@ -1,4 +1,4 @@
-import { Record, List, Map} from 'immutable';
+import { Record, List, Map } from 'immutable'
 
 import {
   SPLIT,
@@ -10,7 +10,7 @@ import {
   SET_STATE,
   SET_PANE_PROPS,
   SET_CORNER_HOVER
-} from '../constants';
+} from '../constants'
 
 import {
   split,
@@ -22,9 +22,9 @@ import {
   deserialize,
   setPaneProps,
   setCornerHover,
-} from '../helpers/LayoutHelper';
+} from '../helpers/LayoutHelper'
 
-import secondPass from '../helpers/secondPass';
+import secondPass from '../helpers/secondPass'
 
 export const Pane = new Record({
   id: '0',
@@ -42,7 +42,7 @@ export const Pane = new Record({
   canSplit: undefined,
   joinDirection: undefined,
   props: {}
-});
+})
 
 export const Layout = new Record({
   rootId: '0',
@@ -60,7 +60,7 @@ export const Layout = new Record({
     '0': new Pane()
   }),
   dividers: Map()
-});
+})
 
 export const Divider = new Record({
   id: undefined,
@@ -76,44 +76,44 @@ export const Divider = new Record({
   afterRatio: undefined,
   direction: undefined,
   parentSize: undefined
-});
+})
 
 let firstPass = (state, action) => {
-  state = deserialize(state);
+  state = deserialize(state)
 
   switch (action.type) {
-  case SPLIT:
-    return split(state, action);
+    case SPLIT:
+      return split(state, action)
 
-  case JOIN:
-    return join(state, action);
+    case JOIN:
+      return join(state, action)
 
-  case SET_SPLIT_RATIO:
-    return setSplitRatio(state, action);
+    case SET_SPLIT_RATIO:
+      return setSplitRatio(state, action)
 
-  case SET_SIZE:
-    return setSize(state, action);
+    case SET_SIZE:
+      return setSize(state, action)
 
-  case SET_CORNER_DOWN:
-    return setCornerDown(state, action);
+    case SET_CORNER_DOWN:
+      return setCornerDown(state, action)
 
-  case SET_CORNER_HOVER:
-    return setCornerHover(state, action);
+    case SET_CORNER_HOVER:
+      return setCornerHover(state, action)
 
-  case SET_DIVIDER_DOWN:
-    return setDividerDown(state, action);
-  case SET_STATE:
-    return deserialize(action.state);
-  case SET_PANE_PROPS:
-    return setPaneProps(state, action);
+    case SET_DIVIDER_DOWN:
+      return setDividerDown(state, action)
+    case SET_STATE:
+      return deserialize(action.state)
+    case SET_PANE_PROPS:
+      return setPaneProps(state, action)
 
-  default:
-    return state;
+    default:
+      return state
   }
-};
+}
 
 export default function subdivide(state = Layout(), action) {
-  state = firstPass(state, action);
-  state = secondPass(state);
-  return state;
+  state = firstPass(state, action)
+  state = secondPass(state)
+  return state
 }

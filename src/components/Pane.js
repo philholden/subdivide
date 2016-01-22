@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import Triangle from './Triangle';
-import CornerOverlay from './CornerOverlay';
+import React, { Component } from 'react'
+import Triangle from './Triangle'
+import CornerOverlay from './CornerOverlay'
 
 import {
   NE,
   SW,
   SE,
   NW
-} from '../constants';
+} from '../constants'
 
 function getStyles({
       width,
@@ -22,31 +22,31 @@ function getStyles({
     top: top + 'px',
     left: left + 'px',
     overflow: 'hidden'
-  };
+  }
 
-  return {pane};
+  return { pane }
 }
 
 export default class Pane extends Component {
   constructor(props, context) {
-    super(props, context);
+    super(props, context)
 
     this.onMouseUp = () => {
       //Note this on mouse up happens after subdivide on mouse up
-      const {actions, subdivide, pane} = this.props;
-      const {join} = actions;
-      if (!subdivide.cornerDown) return;
-      const cornerDownId = subdivide.cornerDown.id;
+      const { actions, subdivide, pane } = this.props
+      const { join } = actions
+      if (!subdivide.cornerDown) return
+      const cornerDownId = subdivide.cornerDown.id
       if(pane.joinDirection) {
-        join(cornerDownId, pane.id);
-        actions.setCornerDown(undefined);
+        join(cornerDownId, pane.id)
+        actions.setCornerDown(undefined)
       }
-    };
+    }
   }
 
   render() {
-    const {pane, subdivide, actions, DefaultComponent} = this.props;
-    const styles = getStyles(pane);
+    const { pane, subdivide, actions, DefaultComponent } = this.props
+    const styles = getStyles(pane)
 
     return (
       <div style={styles.pane} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>
@@ -57,7 +57,7 @@ export default class Pane extends Component {
         <CornerOverlay pane={pane} subdivide={subdivide} />
         <Triangle
           corner={SW}
-          color='#dadadf'
+          color="#dadadf"
           size={42}
           subdivide={subdivide}
           pane={pane}
@@ -65,7 +65,7 @@ export default class Pane extends Component {
         />
         <Triangle
           corner={NE}
-          color='#dadadf'
+          color="#dadadf"
           size={42}
           subdivide={subdivide}
           pane={pane}
@@ -73,7 +73,7 @@ export default class Pane extends Component {
         />
         <Triangle
           corner={NW}
-          color='#dadadf'
+          color="#dadadf"
           size={42}
           subdivide={subdivide}
           pane={pane}
@@ -81,16 +81,14 @@ export default class Pane extends Component {
         />
         <Triangle
           corner={SE}
-          color='#dadadf'
+          color="#dadadf"
           size={42}
           subdivide={subdivide}
           pane={pane}
           actions={actions}
         />
       </div>
-    );
+    )
   }
 }
-
-
 
