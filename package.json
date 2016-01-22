@@ -1,6 +1,5 @@
 {
   "name": "subdivide",
-  "version": "0.0.1-semantic",
   "description": "User defined UI Layout: Every pane can be subdivided and any widget assigned to any pane.",
   "main": "lib/index.js",
   "scripts": {
@@ -22,7 +21,7 @@
     "test:ava": "NODE_ENV=test ava src/**/*.test.js --require babel-register --require ./src/scripts/null-compiler",
     "test:ava:watch": "nodemon -w src --exec 'npm t -- --verbose'",
     "test:cover": "nyc --reporter=lcov --reporter=text npm t",
-    "semantic-release": "semantic-release pre && npm publish --access=public && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
@@ -89,16 +88,13 @@
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0",
     "webpack-stats-plugin": "^0.1.1",
-
     "babel-preset-stage-1": "^6.3.13",
     "color-array": "0.0.5",
     "react": "^0.14.3",
-    "react-docgen": "^2.6.1",
     "react-dom": "^0.14.3",
     "redux": "^3.0.0",
     "react-redux": "^3.0.1",
     "mocha": "^2.3.3"
-
   },
   "config": {
     "ghooks": {
