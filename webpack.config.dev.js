@@ -16,10 +16,10 @@ module.exports = {
     //   'webpack-hot-middleware/client',
     //   './docs/app.js'
     // ],
-    'demo': [
+    'examples': [
       'eventsource-polyfill', // necessary for hot reloading with IE
       'webpack-hot-middleware/client',
-      './demo/app.js'
+      './examples/app.js'
     ]
   },
   output: {

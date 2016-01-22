@@ -1,10 +1,10 @@
 # Component Boilerplate
 
-[![travis build](https://img.shields.io/travis/philholden/component-boilerplate.svg?style=flat-square)](https://travis-ci.org/philholden/component-boilerplate)
-[![codecov coverage](https://img.shields.io/codecov/c/github/philholden/component-boilerplate.svg?style=flat-square)](https://codecov.io/github/philholden/component-boilerplate)
-[![version](https://img.shields.io/npm/v/@philholden/component-boilerplate.svg?style=flat-square)](http://npm.im/@philholden/component-boilerplate)
-[![downloads](https://img.shields.io/npm/dm/@philholden/component-boilerplate.svg?style=flat-square)](http://npm-stat.com/charts.html?package=@philholden/component-boilerplate&from=2015-08-01)
-[![CC0 License](https://img.shields.io/npm/l/@philholden/component-boilerplate.svg?style=flat-square)](https://creativecommons.org/publicdomain/zero/1.0/)
+[![travis build](https://img.shields.io/travis/philholden/subdivide.svg?style=flat-square)](https://travis-ci.org/philholden/subdivide)
+[![codecov coverage](https://img.shields.io/codecov/c/github/philholden/subdivide.svg?style=flat-square)](https://codecov.io/github/philholden/subdivide)
+[![version](https://img.shields.io/npm/v/subdivide.svg?style=flat-square)](http://npm.im/subdivide)
+[![downloads](https://img.shields.io/npm/dm/subdivide.svg?style=flat-square)](http://npm-stat.com/charts.html?package/subdivide&from=2015-08-01)
+[![CC0 License](https://img.shields.io/npm/l/subdivide.svg?style=flat-square)](https://creativecommons.org/publicdomain/zero/1.0/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
 
 
