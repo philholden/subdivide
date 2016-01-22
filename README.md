@@ -28,6 +28,19 @@ It should also be possible to quickly mash up applications out of preexisting pa
 
 ----
 
+## Run Example
+```bash
+git clone git@github.com:philholden/subdivide.git
+npm install
+npm start
+```
+
+Open the following link in a browser:
+
+http://localhost:3000/examples/
+
+----
+
 ## Usage
 
 You can install Subdivide with `npm` and then use WebPack or Browserify to import / require it. 
