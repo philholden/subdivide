@@ -81,7 +81,7 @@ ReactDOM.render(
 );
 ```
 
-NOTE: In Chrome iframes are reloaded whenever a sibling element that appears above them is removed from the DOM. If `iframeSafe` is set to `true` then when a pane is removed it will be replaced by an empty `<div></div>` this will prevent iframes reloading when panes are merged. 
+NOTE: In Chrome iframes are reloaded whenever a sibling element that appears above them is removed from the DOM. If `iframeSafe` is set to `true` then when a pane is removed it will be replaced by an empty `<div></div>` this will prevent iframes reloading when panes are deleted (i.e. merged).
 
 ## Usage with `connect()`
 
