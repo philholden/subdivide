@@ -1,6 +1,6 @@
 {
   "name": "subdivide",
-  "description": "User defined UI Layout: Every pane can be subdivided and any widget assigned to any pane.",
+  "description": "Split pane layout system for React. Each pane can be subdivided and any widget assigned to any pane allowing users define layout.",
   "main": "lib/index.js",
   "scripts": {
     "clean": "rimraf lib",

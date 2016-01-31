@@ -11,7 +11,7 @@
 
 _(Click image to watch video)_
 
-A web application shell for displaying components in panes which can be:
+Split pane layout system for React. Each pane can be subdivided and any widget assigned to any pane allowing users define layout. Panes can be:
 
 * infinitively subdivided
 * subdivided horizontally or vertically
