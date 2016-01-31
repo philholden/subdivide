@@ -45,7 +45,7 @@ module.exports = {
         include: [
           path.join(__dirname, 'src'),
           path.join(__dirname, 'docs'),
-          path.join(__dirname, 'demo')
+          path.join(__dirname, 'examples')
         ]
       },
       {

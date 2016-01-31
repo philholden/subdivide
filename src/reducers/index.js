@@ -21,7 +21,7 @@ import {
   setDividerDown,
   deserialize,
   setPaneProps,
-  setCornerHover,
+  setCornerHover
 } from '../helpers/LayoutHelper'
 
 import secondPass from '../helpers/secondPass'
