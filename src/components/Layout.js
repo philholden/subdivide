@@ -119,18 +119,33 @@ export default class Layout extends Component {
   }
 
   render() {
-    const { subdivide, actions, DefaultComponent } = this.props
-
-    let panes = subdivide.panes.toList().filter(pane => !pane.isGroup)
-      .map(pane => {
-        return <Pane
-          subdivide={subdivide}
-          pane={pane}
-          actions={actions}
-          key={pane.id}
-          DefaultComponent={DefaultComponent}
-        />
+    const { subdivide, actions, DefaultComponent, iframeSafe } = this.props
+    let panes
+    if (iframeSafe) {
+      panes = subdivide.allPanesIdsEver.toJS().map(id => {
+        const pane = subdivide.panes.get(id)
+        return (
+          <Pane
+            subdivide={subdivide}
+            pane={pane}
+            actions={actions}
+            key={id}
+            DefaultComponent={DefaultComponent}
+          />
+        )
       })
+    } else {
+      panes = subdivide.panes.toList().filter(pane => !pane.isGroup)
+        .map(pane => {
+          return <Pane
+            subdivide={subdivide}
+            pane={pane}
+            actions={actions}
+            key={pane.id}
+            DefaultComponent={DefaultComponent}
+          />
+        })
+    }
 
     return (
       <div>

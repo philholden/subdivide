@@ -76,10 +76,12 @@ class IframeComponent extends Component {
 }
 
 ReactDOM.render(
-  <Subdivide DefaultComponent={IframeComponent} />,
+  <Subdivide DefaultComponent={IframeComponent} iframeSafe={true} />,
   document.getElementById('root')
 );
 ```
+
+NOTE: In Chrome iframes are reloaded whenever a sibling element that appears above them is removed from the DOM. If `iframeSafe` is set to `true` then when a pane is removed it will be replaced by an empty `<div></div>` this will prevent iframes reloading when panes are merged. 
 
 ## Usage with `connect()`
 

@@ -45,6 +45,11 @@ export default class Pane extends Component {
   }
 
   render() {
+
+    if (this.props.pane === undefined || this.props.pane.isGroup) {
+      return <div style={{ visibility: 'hidden' }}></div>
+    }
+
     const { pane, subdivide, actions, DefaultComponent } = this.props
     const styles = getStyles(pane)
 

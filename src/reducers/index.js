@@ -59,6 +59,7 @@ export const Layout = new Record({
   panes: Map({
     '0': new Pane()
   }),
+  allPanesIdsEver: List([ '0' ]),
   dividers: Map()
 })
 

@@ -54,6 +54,7 @@ function wrapPane(state, id) {
     parentId: pane.parentId,
     splitRatio: pane.splitRatio
   })
+  state = state.set('allPanesIdsEver', state.allPanesIdsEver.push(groupId))
   pane = pane.set('parentId', groupId)
   state = state.setIn([ 'panes', id ], pane)
   state = state.setIn([ 'panes', groupId ], group)
@@ -114,6 +115,7 @@ export function split(state, { id, splitType, startX, startY }) {
     ratioB *= oldPane.splitRatio
   }
   parent = parent.set('childIds', childIds)
+  state = state.set('allPanesIdsEver', state.allPanesIdsEver.push(newPane.id))
   state = state.setIn([ 'panes', parent.id ], parent)
   state = state.setIn([ 'panes', newPane.id ], newPane)
   state = state.setIn([ 'panes', pane.id, 'splitRatio' ], ratioA)
