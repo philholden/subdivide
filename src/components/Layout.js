@@ -15,6 +15,10 @@ import {
 } from '../constants'
 
 export default class Layout extends Component {
+  static defaultProps = {
+    iframeSafe: true
+  };
+
   constructor(props, context) {
     super(props, context)
     this.animationFrame = new AnimationFrame()
@@ -122,7 +126,7 @@ export default class Layout extends Component {
     const { subdivide, actions, DefaultComponent, iframeSafe } = this.props
     let panes
     if (iframeSafe) {
-      panes = subdivide.allPanesIdsEver.toJS().map(id => {
+      panes = subdivide.allPanesIdsEver.toList().toJS().map(id => {
         const pane = subdivide.panes.get(id)
         return (
           <Pane

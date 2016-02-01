@@ -53,7 +53,7 @@ class Chooser extends Component {
   }
 }
 
-const App = () => <Subdivide DefaultComponent={Chooser} iframeSafe={true} />
+const App = () => <Subdivide DefaultComponent={Chooser} />
 
 const styles = {
   menu: {

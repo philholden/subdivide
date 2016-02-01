@@ -13,7 +13,7 @@ let pages = require.context('./pages', false, /.*.js$/)
   .keys()
   .map(page => page.replace('./', '').replace('.js',''))
 
-const Menu = props => {
+const Menu = () => {
   const menu = []
   pages
     .map(page => <Link to={page} key={page}>{page}</Link>)

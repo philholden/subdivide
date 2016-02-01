@@ -1,4 +1,4 @@
-import { Record, List, Map } from 'immutable'
+import { Record, List, Map, OrderedSet } from 'immutable'
 
 import {
   SPLIT,
@@ -59,7 +59,7 @@ export const Layout = new Record({
   panes: Map({
     '0': new Pane()
   }),
-  allPanesIdsEver: List([ '0' ]),
+  allPanesIdsEver: OrderedSet.of('0'),
   dividers: Map()
 })
 

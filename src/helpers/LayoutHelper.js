@@ -12,12 +12,14 @@ import { Pane, Layout, Divider } from '../reducers'
 import secondPass from './secondPass'
 
 function getNextId(state) {
-  return (
-    state
-      .get('panes')
-      .map(pane => parseInt(pane.id))
-      .max() + 1
-  ) + ''
+  const panes = state.get('panes')
+
+  let id = 0
+  while (panes.get(id + '') !== undefined) {
+    id += 1
+  }
+
+  return id + ''
 }
 
 export function deserialize(subdivide) {
@@ -54,7 +56,7 @@ function wrapPane(state, id) {
     parentId: pane.parentId,
     splitRatio: pane.splitRatio
   })
-  state = state.set('allPanesIdsEver', state.allPanesIdsEver.push(groupId))
+  state = state.set('allPanesIdsEver', state.allPanesIdsEver.add(groupId))
   pane = pane.set('parentId', groupId)
   state = state.setIn([ 'panes', id ], pane)
   state = state.setIn([ 'panes', groupId ], group)
@@ -115,7 +117,7 @@ export function split(state, { id, splitType, startX, startY }) {
     ratioB *= oldPane.splitRatio
   }
   parent = parent.set('childIds', childIds)
-  state = state.set('allPanesIdsEver', state.allPanesIdsEver.push(newPane.id))
+  state = state.set('allPanesIdsEver', state.allPanesIdsEver.add(newPane.id))
   state = state.setIn([ 'panes', parent.id ], parent)
   state = state.setIn([ 'panes', newPane.id ], newPane)
   state = state.setIn([ 'panes', pane.id, 'splitRatio' ], ratioA)
