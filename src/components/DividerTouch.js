@@ -3,26 +3,34 @@ import {
   COL
 } from '../constants'
 
+const noop = () => {};
 export default class Divider extends Component {
   constructor(props, context) {
     super(props, context)
+    const doc = typeof document !== 'undefined' ? document : null;
 
-    this.removeListeners = () => {
-      document.removeEventListener('mouseup', this.onMouseUp)
-    }
+    if (doc) {
+      this.removeListeners = () => {
+        doc.removeEventListener('mouseup', this.onMouseUp)
+      }
 
-    this.onMouseUp = () => {
-      const { actions } = this.props
-      actions.setDividerDown(undefined)
-      this.removeListeners()
-    }
+      this.onMouseUp = () => {
+        const { actions } = this.props
+        actions.setDividerDown(undefined)
+        this.removeListeners()
+      }
 
-    this.onMouseDown = ({ clientX, clientY }) => {
-      const { actions, divider } = this.props
+      this.onMouseDown = ({ clientX, clientY }) => {
+        const { actions, divider } = this.props
 
-      actions.setDividerDown({ ...divider.toJS(), startX: clientX, startY: clientY })
+        actions.setDividerDown({ ...divider.toJS(), startX: clientX, startY: clientY })
 
-      document.addEventListener('mouseup', this.onMouseUp)
+        doc.addEventListener('mouseup', this.onMouseUp)
+      }
+    } else {
+      this.removeListeners = noop;
+      this.onMouseUp = noop;
+      this.onMouseDown = noop;
     }
   }
 
