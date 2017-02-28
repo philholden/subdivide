@@ -1,5 +1,6 @@
 
-const reqAnimFrame = requestAnimationFrame ||
+const reqAnimFrame = typeof requestAnimationFrame  === 'function' ?
+      requestAnimationFrame :
       ((fn) => setTimeout(fn, 1000 / 60))
 
 export default class AnimationFrame {

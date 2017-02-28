@@ -106,16 +106,21 @@ export default class Layout extends Component {
         }
       }, 10)
     }
+    const win = typeof window !== 'undefined' ?
+      window :
+      null;
 
-    window.addEventListener('resize', () => {
-      setSize(window.innerWidth, window.innerHeight)
-    })
+    if (win) {
+      win.addEventListener('resize', () => {
+        setSize(win.innerWidth, win.innerHeight)
+      })
 
-    document.addEventListener('mouseup', this.onMouseUp)
-    document.addEventListener('mousemove', this.onMouseMove)
+      win.document.addEventListener('mouseup', this.onMouseUp)
+      win.document.addEventListener('mousemove', this.onMouseMove)
 
 
-    setSize(window.innerWidth, window.innerHeight)
+      setSize(win.innerWidth, win.innerHeight)
+    }
   }
 
   componentWillUnmount() {
