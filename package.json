@@ -11,16 +11,15 @@
     "start": "node devServer.js",
     "lint": "eslint src",
     "commit": "git-cz",
-    "open-coverage": "open ./coverage/lcov-report/index.html",
-    "check-coverage": "nyc check-coverage --statements 0 --branches 0 --functions 0 --lines 0",
-    "report-coverage": "nyc report --reporter=text-lcov | codecov",
-    "test": "npm run test:mocha",
-    "test:watch": "npm run test:mocha:watch",
-    "test:mocha": "NODE_ENV=lib mocha --opts mocha.opts",
-    "test:mocha:watch": "npm run test:mocha -- --watch",
-    "test:ava": "NODE_ENV=test ava src/**/*.test.js --require babel-register --require ./src/scripts/null-compiler",
-    "test:ava:watch": "nodemon -w src --exec 'npm t -- --verbose'",
-    "test:cover": "nyc --reporter=lcov --reporter=text npm t",
+    "test": "npm run test:ava",
+    "test:watch": "npm run test:ava:watch",
+    "test:ava": "NODE_ENV=test nyc ava",
+    "test:ava:watch": "NODE_ENV=test ava --verbose --watch",
+    "cover": "nyc report --reporter=html",
+    "cover:watch": "nodemon -e js,jsx --watch src/ test/ --exec 'npm run test && npm run cover'",
+    "cover:show": "open coverage/index.html",
+    "cover:alls": "nyc report --reporter=text-lcov | coveralls",
+    "cover:check": "nyc check-coverage --statements 0 --branches 0 --functions 0 --lines 0",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
@@ -38,6 +37,17 @@
     "blender",
     "devtools"
   ],
+  "ava": {
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit",
+    "failFast": true
+  },
+  "nyc": {
+    "sourceMap": false,
+    "instrument": false
+  },
   "author": "Phil Holden (http://github.com/philholden)",
   "license": "MIT",
   "bugs": {
@@ -45,29 +55,32 @@
   },
   "homepage": "https://github.com/philholden/subdivide",
   "devDependencies": {
-    "ava": "^0.9.1",
+    "ava": "^0.18.2",
     "babel-cli": "^6.4.0",
     "babel-core": "^6.3.15",
-    "babel-eslint": "^5.0.0-beta4",
+    "babel-eslint": "^7.2.1",
     "babel-loader": "^6.2.0",
+    "babel-plugin-istanbul": "^4.1.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-webpack-loaders": "^0.1.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-react-hmre": "^1.0.0",
+    "babel-preset-stage-1": "^6.3.13",
     "babel-preset-stage-2": "^6.3.13",
     "babel-register": "^6.3.13",
     "clean-webpack-plugin": "^0.1.6",
     "codecov.io": "0.1.6",
+    "color-array": "0.0.5",
     "commitizen": "^2.5.0",
     "component-playground": "^1.0.5",
     "compression": "^1.6.0",
     "cross-env": "^1.0.6",
     "cz-conventional-changelog": "^1.1.5",
     "ecology": "^1.0.4",
-    "eslint": "^1.10.3",
-    "eslint-config-rackt": "^1.1.1",
-    "eslint-plugin-babel": "^3.0.0",
+    "eslint": "^3.18.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-prefer-object-spread": "^1.1.0",
     "eslint-plugin-react": "^3.11.3",
     "eventsource-polyfill": "^0.9.6",
     "expect": "^1.13.4",
@@ -77,11 +90,16 @@
     "formidable-landers": "0.0.5",
     "ghooks": "0.3.2",
     "is_js": "^0.7.6",
-    "nodemon": "^1.8.1",
-    "nyc": "^5.3.0",
+    "mocha": "^2.3.3",
+    "nodemon": "^1.11.0",
+    "nyc": "^10.1.2",
+    "react": "^0.14.3",
     "react-addons-test-utils": "^0.14.6",
     "react-docgen": "^2.6.1",
+    "react-dom": "^0.14.3",
+    "react-redux": "^3.0.1",
     "react-router": "^2.0.0-rc5",
+    "redux": "^3.0.0",
     "rimraf": "^2.4.3",
     "semantic-release": "^4.3.5",
     "socket.io": "^1.4.0",
@@ -90,27 +108,22 @@
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0",
-    "webpack-stats-plugin": "^0.1.1",
-    "babel-preset-stage-1": "^6.3.13",
-    "color-array": "0.0.5",
-    "react": "^0.14.3",
-    "react-dom": "^0.14.3",
-    "redux": "^3.0.0",
-    "react-redux": "^3.0.1",
-    "mocha": "^2.3.3"
+    "webpack-stats-plugin": "^0.1.1"
   },
   "config": {
     "ghooks": {
-      "pre-commit": "npm run test && npm run check-coverage"
+      "pre-push": "npm run test && npm run cover:check"
     },
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
     }
   },
-  "dependencies": {
-    "immutable": "^3.7.4"
-  },
   "release": {
     "debug": false
+  },
+  "dependencies": {
+    "redux-actions": "^2.0.1",
+    "redux-create-types": "0.0.1",
+    "reselect": "^3.0.0"
   }
 }

@@ -1,99 +1,115 @@
 import {
-  ROW,
-  COL,
-  NE,
-  SW,
-  NW,
-  SE,
-  JOIN_RIGHT_ARROW,
-  JOIN_UP_ARROW,
-  JOIN_LEFT_ARROW,
-  JOIN_DOWN_ARROW
-} from '../constants'
+  directions,
+  cardinals,
+  joinTypes
+} from '../reducers';
 
-import { Divider } from '../reducers'
-import { Map } from 'immutable'
+function getJoinDirection(
+  panesById,
+ { paneId, corner } = {},
+  child
+) {
+  if (!paneId && paneId !== 0) {
+    return null;
+  }
+  const cornerDownPane = panesById[paneId];
+  const parent = panesById[cornerDownPane.parentId];
+  if (!parent) {
+    return null;
+  }
+  const siblings = parent.childIds;
+  const direction = parent.direction;
+  const index = siblings.indexOf(paneId);
 
-function getJoinDirection({ subdivide, pane }) {
-  const { cornerDown } = subdivide
-  if (cornerDown === undefined) return false
-  const cornerDownId = subdivide.cornerDown.id
-  const cornerDownPane = subdivide.panes.get(cornerDownId)
-  const parent = subdivide.panes.get(cornerDownPane.parentId)
-  if (!parent) return false
-  const siblings = parent.childIds
-  const index = siblings.indexOf(cornerDownId)
-  const beforeId = index < 1 ? undefined : siblings.get(index - 1)
-  const afterId = siblings.get(index + 1)
-  const isBeforeGroup = beforeId !== undefined && subdivide.panes.get(beforeId).isGroup
-  const isAfterGroup = afterId !== undefined && subdivide.panes.get(afterId).isGroup
-  const canJoinBefore = beforeId === pane.id && !isBeforeGroup
-  const canJoinAfter = afterId === pane.id && !isAfterGroup
+  const beforeId = index < 1 ? null : siblings[index - 1];
+  const afterId = siblings[index + 1];
 
-  return (
-    cornerDown.corner === NE && (
-      (parent.direction === COL && canJoinBefore && JOIN_UP_ARROW) ||
-      (parent.direction === ROW && canJoinAfter && JOIN_RIGHT_ARROW)
-    )
-  ) || (
-    cornerDown.corner === SW && (
-      (parent.direction === COL && canJoinAfter && JOIN_DOWN_ARROW) ||
-      (parent.direction === ROW && canJoinBefore && JOIN_LEFT_ARROW)
-    )
-  ) || (
-    cornerDown.corner === NW && (
-      (parent.direction === COL && canJoinBefore && JOIN_UP_ARROW) ||
-      (parent.direction === ROW && canJoinBefore && JOIN_LEFT_ARROW)
-    )
-  ) || (
-    cornerDown.corner === SE && (
-      (parent.direction === COL && canJoinAfter && JOIN_DOWN_ARROW) ||
-      (parent.direction === ROW && canJoinAfter && JOIN_RIGHT_ARROW)
-    )
-  )
+  const isBeforeGroup = panesById[beforeId] ?
+    panesById[beforeId].isGroup :
+    null;
+  const isAfterGroup = panesById[afterId] ?
+    panesById[afterId].isGroup :
+    null;
+
+  const canJoinBefore = beforeId === child.id && !isBeforeGroup;
+  const canJoinAfter = afterId === child.id && !isAfterGroup;
+
+  if (corner === cardinals.ne) {
+    if (direction === directions.col && canJoinBefore) {
+      return joinTypes.up;
+    }
+    if (direction === directions.row && canJoinAfter ) {
+      return joinTypes.right;
+    }
+  }
+
+  if (corner === cardinals.sw) {
+    if (direction === directions.col && canJoinAfter) {
+      return joinTypes.down;
+    }
+    if (direction === directions.row && canJoinBefore) {
+      return joinTypes.left;
+    }
+  }
+
+  if (corner === cardinals.nw) {
+    if (direction === directions.col && canJoinBefore) {
+      return joinTypes.up;
+    }
+    if (direction === directions.row && canJoinBefore) {
+      return joinTypes.left;
+    }
+  }
+  if (corner === cardinals.se) {
+    if (direction === directions.col && canJoinAfter) {
+      return joinTypes.down;
+    }
+    if (direction === directions.row && canJoinAfter) {
+      return joinTypes.right;
+    }
+  }
+  return null;
 }
 
 export default function secondPass(state) {
-  let dividerMap = Map()
-
-  const { rootId, width, height } = state
-  const left = 0
-  const top = 0
-  let rootPane = state.panes.get(rootId)
-
-  const { cellSpacing, cornerDown } = state
-
-  rootPane = rootPane.merge({
+  const { rootId, width, height, cellSpacing, cornerDown } = state;
+  const panesById = { ...state.panesById };
+  let dividers = {};
+  const left = 0;
+  const top = 0;
+  const rootPane = {
+    ...panesById[rootId],
     width,
     height,
     top,
     left,
     canSplit: cornerDown && cornerDown.id === rootId
-  })
+  };
 
-  state = state.mergeIn([ 'panes', rootId ], rootPane)
 
-  let flattenChildren = (parent) => {
-    let x = parent.left
-    let y = parent.top
-    let spacingOffset
-    let hasDivider = false
-    let beforePaneId
-    let divider
-    let beforeRatio
+  function dimensionChildren(parent) {
+    let x = parent.left;
+    let y = parent.top;
+    let spacingOffset;
+    let hasDivider = false;
+    let beforePaneId;
+    let divider;
+    let beforeRatio;
 
     parent.childIds.forEach((childId, i) => {
-      let child = state.panes.get(childId)
-      let canSplit = cornerDown && cornerDown.id === childId
-      let joinDirection = getJoinDirection({ subdivide: state, pane: child })
+      const child = { ...panesById[childId] };
+      let canSplit = cornerDown && cornerDown.paneId === childId;
+      let joinDirection = getJoinDirection(panesById, cornerDown, child);
 
-      child = child.merge({ canSplit, joinDirection })
+      child.canSplit = canSplit;
+      child.joinDirection = joinDirection;
 
-      hasDivider = i !== 0
-      spacingOffset = 0
+      hasDivider = i !== 0;
+      spacingOffset = 0;
       if (hasDivider) {
-        spacingOffset = cellSpacing
+        spacingOffset = cellSpacing;
         divider = {
+          id: beforePaneId + 'n' + child.id,
           left: x,
           top: y,
           beforePaneId,
@@ -101,56 +117,56 @@ export default function secondPass(state) {
           beforeRatio,
           afterRatio: child.splitRatio,
           direction: parent.direction,
-          parentSize: parent.direction === ROW ? parent.width : parent.height,
-          id: beforePaneId + 'n' + child.id
-        }
+          parentSize: parent.direction === directions.row ?
+            parent.width :
+            parent.height
+        };
+        dividers[divider.id] = divider;
       }
+      let width, height, left, top;
 
-      if (parent.direction === ROW) {
+      if (parent.direction === directions.row) {
         if (hasDivider) {
-          divider.width = cellSpacing
-          divider.height = parent.height
-          dividerMap = dividerMap.set(divider.id, new Divider(divider))
-          // state = state.setIn(['dividers', divider.id],
-          //     new Divider(divider))
-          x += cellSpacing
+          divider.width = cellSpacing;
+          divider.height = parent.height;
+          x += cellSpacing;
         }
-        child = child.merge({
-          width: parent.width * child.splitRatio - spacingOffset,
-          height: parent.height,
-          left: x,
-          top: y
-        })
-        x += child.width
-      } else if (parent.direction === COL) {
+        width = parent.width * child.splitRatio - spacingOffset;
+        height = parent.height;
+        left = x;
+        top = y;
+        x += child.width;
+      } else if (parent.direction === directions.col) {
         if (hasDivider) {
-          divider.width = parent.width
-          divider.height = cellSpacing
-          dividerMap = dividerMap.set(divider.id, new Divider(divider))
-          // state = state.setIn(['dividers', divider.id],
-          //     new Divider(divider))
-          y += cellSpacing
+          divider.width = parent.width;
+          divider.height = cellSpacing;
+          y += cellSpacing;
         }
-        child = child.merge({
-          width: parent.width,
-          height: parent.height * child.splitRatio - spacingOffset,
-          left: x,
-          top: y
-        })
-        y += child.height
+        width = parent.width;
+        height = parent.height * child.splitRatio - spacingOffset;
+        left = x;
+        top = y;
+        y += child.height;
       }
+      child.width = width;
+      child.height = height;
+      child.left = left;
+      child.top = top;
 
-      beforePaneId = child.id
-      beforeRatio = child.splitRatio
-      state = state.mergeIn([ 'panes', childId ], child)
+      beforePaneId = child.id;
+      beforeRatio = child.splitRatio;
+      panesById[childId] = child;
       if (child.isGroup) {
-        flattenChildren(child)
+        dimensionChildren(child);
       }
-    })
+    });
   }
-  flattenChildren(rootPane)
-  state = state.set('dividers', dividerMap)
-  return state
+  dimensionChildren(rootPane);
+  return {
+    ...state,
+    panesById,
+    dividers
+  };
 }
 
 
