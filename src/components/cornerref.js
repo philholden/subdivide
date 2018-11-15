@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { forwardRef, useEffect, useRef } from "react";
 import {
   ROW,
   SW,
@@ -11,20 +11,23 @@ import {
   JOIN_DOWN_ARROW
 } from "../reducer/constants";
 
-export default class CornerOverlay extends Component {
-  componentDidMount() {
-    this.updateJoinOverlay();
-    this.updateDivideOverlay();
-  }
+export const CornerOverlay = forwardRef(({ pane, subdivide }, ref) => {
+  const canvasRef = useRef();
+  const canvas = canvasRef.current;
+  console.log(canvas);
+  useEffect(
+    () => {
+      updateJoinOverlay();
+      updateDivideOverlay();
+    },
+    [pane.width, pane.height]
+  );
 
-  componentWillUnmount() {}
-
-  updateDivideOverlay() {
-    const { pane, subdivide } = this.props;
+  function updateDivideOverlay() {
     if (!pane.canSplit || !subdivide.cornerDown) return;
     const { corner } = subdivide.cornerDown;
 
-    const canvas = this.refs.canvas;
+    //const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     let { width, height, top, left } = pane;
     height = Math.round(height + top - (top | 0));
@@ -86,10 +89,9 @@ export default class CornerOverlay extends Component {
     ctx.fill("evenodd");
   }
 
-  updateJoinOverlay() {
-    const { pane } = this.props;
+  function updateJoinOverlay() {
     if (!pane.joinDirection) return;
-    const canvas = this.refs.canvas;
+    //const canvas = this.refs.canvas;
     const ctx = canvas.getContext("2d");
     let { width, height, top, left, joinDirection } = pane;
     height = Math.round(height + top - (top | 0));
@@ -165,59 +167,44 @@ export default class CornerOverlay extends Component {
     ctx.fill();
   }
 
-  shouldComponentUpdate(nextProps) {
+  let { joinDirection, canSplit } = pane;
+  if (!(subdivide.cornerDown || subdivide.dividerDown)) return false;
+
+  if (!(joinDirection || canSplit)) {
+    const { dividerDown } = subdivide;
+    const cursor = !dividerDown
+      ? undefined
+      : dividerDown.direction === ROW
+      ? "col-resize"
+      : "row-resize";
     return (
-      this.props.width === nextProps.width &&
-      this.props.height === nextProps.height
-    );
-  }
-
-  componentDidUpdate() {
-    this.updateJoinOverlay();
-    this.updateDivideOverlay();
-  }
-
-  render() {
-    let { subdivide } = this.props;
-    let { joinDirection, canSplit } = this.props.pane;
-    if (!(subdivide.cornerDown || subdivide.dividerDown)) return false;
-
-    if (!(joinDirection || canSplit)) {
-      const { dividerDown } = subdivide;
-      const cursor = !dividerDown
-        ? undefined
-        : dividerDown.direction === ROW
-        ? "col-resize"
-        : "row-resize";
-      return (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            cursor,
-            top: 0
-          }}
-        />
-      );
-    }
-
-    let { width, height, top, left } = this.props.pane;
-    height = Math.round(height + top - (top | 0));
-    width = Math.round(width + left - (left | 0));
-    return (
-      <canvas
-        width={width}
-        height={height}
+      <div
         style={{
-          top: 0,
-          left: 0,
+          width: "100%",
+          height: "100%",
           position: "absolute",
-          background: "#fff",
-          opacity: 0.9
+          cursor,
+          top: 0
         }}
-        ref="canvas"
       />
     );
   }
-}
+
+  let { width, height, top, left } = pane;
+  height = Math.round(height + top - (top | 0));
+  width = Math.round(width + left - (left | 0));
+  return (
+    <canvas
+      ref={canvasRef}
+      width={width}
+      height={height}
+      style={{
+        top: 0,
+        left: 0,
+        position: "absolute",
+        background: "#fff",
+        opacity: 0.9
+      }}
+    />
+  );
+});

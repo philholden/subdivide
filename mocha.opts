@@ -1,4 +1,0 @@
---require babel-register
---require null-compiler
-@(src)/**/*-test.js
-
