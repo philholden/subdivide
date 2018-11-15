@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Subdivide, SubdivideProvider } from "./components";
-import Radium from "radium";
 import { render, createRoot } from "react-dom";
 
 const urls = [
@@ -47,11 +46,11 @@ const Color = ({ src }) => (
   </div>
 );
 
-const Link = Radium(({ onSelect, children }) => (
+const Link = ({ onSelect, children }) => (
   <div onClick={onSelect} style={styles.linkOuter}>
     <div>{children}</div>
   </div>
-));
+);
 
 const Menu = ({ urls, onSelect }) => (
   <div style={styles.menu}>
@@ -107,10 +106,7 @@ const styles = {
     backgroundColor: "#eee",
     cursor: "pointer",
     transition: "color .3s",
-    margin: 2,
-    ":hover": {
-      backgroundColor: "#f5f5f5"
-    }
+    margin: 2
   }
 };
 

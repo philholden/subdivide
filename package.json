@@ -1,23 +1,38 @@
 {
   "name": "subdivideimmer",
-  "version": "1.0.0",
+  "version": "1.1.0-immer-alpha-0",
   "description": "",
   "keywords": [],
-  "main": "src/index.js",
+  "main": "lib/main.js",
+  "files": [
+    "lib"
+  ],
   "dependencies": {
-    "immer": "1.7.4",
-    "immutable": "3.8.2",
-    "radium": "0.25.0",
-    "react": "16.7.0-alpha.0 - next",
-    "react-dom": "16.7.0-alpha.0 - next",
+    "immer": "1.7.4"
+  },
+  "peerDependencies": {
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.7.0-alpha.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "babel-preset-react-app": "^6.1.0",
+    "react": "^16.7.0-alpha.2",
+    "react-dom": "^16.7.0-alpha.2",
     "react-scripts": "2.0.3"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "NODE_ENV=production babel --plugins @babel/plugin-proposal-class-properties --presets babel-preset-react-app -d lib src",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
