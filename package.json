@@ -21,11 +21,13 @@
     "babel-preset-react-app": "^6.1.0",
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
-    "react-scripts": "2.0.3"
+    "react-scripts": "2.0.3",
+    "rimraf": "^2.6.2"
   },
   "scripts": {
+    "clean": "rimraf lib",
     "start": "react-scripts start",
-    "build": "NODE_ENV=production babel --plugins @babel/plugin-proposal-class-properties --presets babel-preset-react-app -d lib src",
+    "build": "npm run clean && NODE_ENV=production babel --plugins @babel/plugin-proposal-class-properties --presets babel-preset-react-app -d lib src",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
