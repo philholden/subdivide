@@ -9,7 +9,8 @@ import {
   SET_DIVIDER_DOWN,
   SET_STATE,
   SET_PANE_PROPS,
-  SET_CORNER_HOVER
+  SET_CORNER_HOVER,
+  SET_DIVIDER_STYLES
 } from "./constants";
 
 import {
@@ -21,11 +22,13 @@ import {
   setDividerDown,
   deserialize,
   setPaneProps,
-  setCornerHover
+  setCornerHover,
+  setDividerStyles
 } from "./subdivide";
 
 import { secondPass } from "./secondPass";
 import { createLayout } from "./createLayout";
+//import { setDividerStyles } from "./subdivideActionCreators";
 
 let firstPass = (state, action) => {
   //state = deserialize(state);
@@ -49,6 +52,8 @@ let firstPass = (state, action) => {
       return action.state;
     case SET_PANE_PROPS:
       return setPaneProps(state, action);
+    case SET_DIVIDER_STYLES:
+      return setDividerStyles(state, action);
     default:
       return state;
   }

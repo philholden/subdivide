@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { Triangle } from "./Triangle";
 import CornerOverlay from "./CornerOverlay";
+import { PaneProvider } from "./usePane";
 
 import { NE, SW, SE, NW } from "../reducer/constants";
 
@@ -40,45 +41,47 @@ export function Pane({ pane, subdivide, actions, DefaultComponent }) {
   const styles = getStyles(pane);
 
   return (
-    <div style={styles.pane} onMouseUp={onMouseUp}>
-      <DefaultComponent
-        subdividePane={pane}
-        subdivideActions={actions}
-        subdivide={subdivide}
-      />
-      <CornerOverlay pane={pane} subdivide={subdivide} />
-      <Triangle
-        corner={SW}
-        color="#dadadf"
-        size={42}
-        subdivide={subdivide}
-        pane={pane}
-        actions={actions}
-      />
-      <Triangle
-        corner={NE}
-        color="#dadadf"
-        size={42}
-        subdivide={subdivide}
-        pane={pane}
-        actions={actions}
-      />
-      <Triangle
-        corner={NW}
-        color="#dadadf"
-        size={42}
-        subdivide={subdivide}
-        pane={pane}
-        actions={actions}
-      />
-      <Triangle
-        corner={SE}
-        color="#dadadf"
-        size={42}
-        subdivide={subdivide}
-        pane={pane}
-        actions={actions}
-      />
-    </div>
+    <PaneProvider value={pane}>
+      <div style={styles.pane} onMouseUp={onMouseUp}>
+        <DefaultComponent
+          subdividePane={pane}
+          subdivideActions={actions}
+          subdivide={subdivide}
+        />
+        <CornerOverlay pane={pane} subdivide={subdivide} />
+        <Triangle
+          corner={SW}
+          color="#dadadf"
+          size={42}
+          subdivide={subdivide}
+          pane={pane}
+          actions={actions}
+        />
+        <Triangle
+          corner={NE}
+          color="#dadadf"
+          size={42}
+          subdivide={subdivide}
+          pane={pane}
+          actions={actions}
+        />
+        <Triangle
+          corner={NW}
+          color="#dadadf"
+          size={42}
+          subdivide={subdivide}
+          pane={pane}
+          actions={actions}
+        />
+        <Triangle
+          corner={SE}
+          color="#dadadf"
+          size={42}
+          subdivide={subdivide}
+          pane={pane}
+          actions={actions}
+        />
+      </div>
+    </PaneProvider>
   );
 }

@@ -10,6 +10,7 @@ import {
   JOIN_LEFT_ARROW,
   JOIN_DOWN_ARROW
 } from "../reducer/constants";
+import { replaceSubstitutionTransformer } from "common-tags";
 
 export default class CornerOverlay extends Component {
   componentDidMount() {
@@ -19,12 +20,17 @@ export default class CornerOverlay extends Component {
 
   componentWillUnmount() {}
 
+  getRef = el => {
+    if (el === null) return;
+    this.canvas = el;
+  };
+
   updateDivideOverlay() {
     const { pane, subdivide } = this.props;
     if (!pane.canSplit || !subdivide.cornerDown) return;
     const { corner } = subdivide.cornerDown;
 
-    const canvas = this.refs.canvas;
+    const canvas = this.canvas;
     const ctx = canvas.getContext("2d");
     let { width, height, top, left } = pane;
     height = Math.round(height + top - (top | 0));
@@ -89,7 +95,7 @@ export default class CornerOverlay extends Component {
   updateJoinOverlay() {
     const { pane } = this.props;
     if (!pane.joinDirection) return;
-    const canvas = this.refs.canvas;
+    const canvas = this.canvas;
     const ctx = canvas.getContext("2d");
     let { width, height, top, left, joinDirection } = pane;
     height = Math.round(height + top - (top | 0));
@@ -216,7 +222,7 @@ export default class CornerOverlay extends Component {
           background: "#fff",
           opacity: 0.9
         }}
-        ref="canvas"
+        ref={this.getRef}
       />
     );
   }

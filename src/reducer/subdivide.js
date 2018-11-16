@@ -36,6 +36,18 @@ export function setSplitRatio(state, { splitRatio, id }) {
   return state;
 }
 
+export function setDividerStyles(
+  state,
+  { borderColor, cellSpaceColor, borderSize, cellSpacing, touchMargin }
+) {
+  if (borderColor !== undefined) state.borderColor = borderColor;
+  if (cellSpaceColor !== undefined) state.cellSpaceColor = cellSpaceColor;
+  if (borderSize !== undefined) state.borderSize = borderSize;
+  if (cellSpacing !== undefined) state.cellSpacing = cellSpacing;
+  if (touchMargin !== undefined) state.touchMargin = touchMargin;
+  return state;
+}
+
 export function setSize(state, { width, height }) {
   state.width = width;
   state.height = height;

@@ -6,6 +6,8 @@ export const createLayout = props => ({
   borderSize: 1,
   cellSpacing: 3,
   touchMargin: 2,
+  borderColor: "#c0c0d0",
+  cellSpaceColor: "#e0e0e0",
   mode: undefined,
   dividerDown: undefined,
   cornerDown: undefined,

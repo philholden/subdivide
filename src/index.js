@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { Subdivide, SubdivideProvider } from "./components";
+import {
+  Subdivide,
+  SubdivideProvider,
+  usePane,
+  useSubdivide
+} from "./components";
 import { render, createRoot } from "react-dom";
 
 const urls = [
@@ -34,17 +39,37 @@ const Iframe = ({ src }) => (
   />
 );
 
-const Color = ({ src }) => (
-  <div
-    style={{
-      width: "100%",
-      height: "100%",
-      backgroundColor: src
-    }}
-  >
-    color: {src}
-  </div>
-);
+const Color = ({ src }) => {
+  const pane = usePane();
+  const { state, actions } = useSubdivide();
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        backgroundColor: src
+      }}
+    >
+      color: {src}
+      {pane.id}
+      <button
+        onClick={() =>
+          actions.setDividerStyles({
+            borderSize: 1,
+            cellSpacing: 7,
+            touchMargin: 2,
+            borderColor: "#c0c0d0",
+            cellSpaceColor: "#e0e0e0"
+          })
+        }
+      >
+        divider styles
+      </button>
+      {JSON.stringify(Object.keys(actions), null, 2)}
+      <pre>{JSON.stringify(state, null, 2)}</pre>
+    </div>
+  );
+};
 
 const Link = ({ onSelect, children }) => (
   <div onClick={onSelect} style={styles.linkOuter}>

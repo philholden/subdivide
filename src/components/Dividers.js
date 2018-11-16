@@ -1,6 +1,7 @@
 import React from "react";
 import { COL } from "../reducer/constants";
 import { DividerTouch } from "./DividerTouch";
+import { useSubdivide } from "./useSubdivide";
 
 function Rect(props) {
   let { style } = props;
@@ -17,6 +18,9 @@ function Rect(props) {
 }
 
 export function Dividers(props) {
+  const {
+    state: { borderColor, cellSpaceColor }
+  } = useSubdivide();
   const { dividers, subdivide, actions } = props;
   const { borderSize } = subdivide;
   //let touch = dividers.map(touch).toSeq()
@@ -27,7 +31,7 @@ export function Dividers(props) {
       height,
       top,
       left,
-      backgroundColor: "#c0c0d0"
+      backgroundColor: borderColor
     };
 
     return <Rect style={style} key={"r" + id} />;
@@ -42,7 +46,7 @@ export function Dividers(props) {
         height: height - borderSize * 2,
         top: top + borderSize,
         left: left - borderSize,
-        backgroundColor: "#e0e0f0"
+        backgroundColor: cellSpaceColor
       };
     } else {
       style = {
@@ -50,7 +54,7 @@ export function Dividers(props) {
         height: height + borderSize * 2,
         top: top - borderSize,
         left: left + borderSize,
-        backgroundColor: "#e0e0f0"
+        backgroundColor: cellSpaceColor
       };
     }
 

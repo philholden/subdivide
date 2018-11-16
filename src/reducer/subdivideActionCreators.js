@@ -8,7 +8,8 @@ import {
   SET_DIVIDER_DOWN,
   SET_STATE,
   SET_PANE_PROPS,
-  SET_CORNER_HOVER
+  SET_CORNER_HOVER,
+  SET_DIVIDER_STYLES
 } from "./constants";
 
 export function setState(state) {
@@ -85,5 +86,22 @@ export function setDividerDown(divider) {
   return {
     type: SET_DIVIDER_DOWN,
     divider
+  };
+}
+
+export function setDividerStyles({
+  borderColor,
+  cellSpaceColor,
+  borderSize,
+  cellSpacing,
+  touchMargin
+}) {
+  return {
+    type: SET_DIVIDER_STYLES,
+    borderColor,
+    cellSpaceColor,
+    borderSize,
+    cellSpacing,
+    touchMargin
   };
 }
