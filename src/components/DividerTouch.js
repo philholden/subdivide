@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { COL } from "../reducer/constants";
 
 export function DividerTouch(props) {
-  const { actions, divider } = props;
+  const { actions, divider, resizeEl } = props;
 
   function onMouseUp() {
     actions.setDividerDown(undefined);
@@ -14,10 +14,11 @@ export function DividerTouch(props) {
   }
 
   function onMouseDown({ clientX, clientY }) {
+    const rect = resizeEl.current.getBoundingClientRect();
     actions.setDividerDown({
       ...divider,
-      startX: clientX,
-      startY: clientY
+      startX: clientX - rect.x,
+      startY: clientY - rect.y
     });
     document.addEventListener("mouseup", onMouseUp);
   }

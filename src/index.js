@@ -115,9 +115,23 @@ const App = () => (
       height: "100vh",
       padding: 50,
       display: "flex",
+      flexDirection: "column",
       boxSizing: "border-box"
     }}
   >
+    <SubdivideProvider>
+      <Subdivide
+        DefaultComponent={Chooser}
+        style={{
+          width: "auto",
+          height: "auto",
+          flex: "1",
+          position: "relative"
+        }}
+      />
+    </SubdivideProvider>
+    <div style={{ height: 100 }} />
+
     <SubdivideProvider>
       <Subdivide
         DefaultComponent={Chooser}

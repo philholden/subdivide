@@ -18,13 +18,10 @@ import ResizeObserver from "resize-observer-polyfill";
 export const Layout = forwardRef((props, ref) => {
   const propsRef = useRef();
   const resizeEl = useRef();
-  const offset = useRef({ x: 0, y: 0 });
   propsRef.current = props;
 
   const onResize = useCallback(
     entries => {
-      const { x, y } = entries[0].target.getBoundingClientRect();
-      offset.current = { x, y };
       const { width, height } = entries[0].contentRect;
       props.actions.setSize(width, height);
     },
@@ -54,10 +51,11 @@ export const Layout = forwardRef((props, ref) => {
 
     // const { setSize } = props.actions;
     const onMouseMove = animationFrame.throttle(e => {
+      const rect = resizeEl.current.getBoundingClientRect();
       const { actions, store: subdivide } = props;
       // const { clientX, clientY } = e;
-      const clientX = e.clientX - offset.current.x;
-      const clientY = e.clientY - offset.current.y;
+      const clientX = e.clientX - rect.x;
+      const clientY = e.clientY - rect.y;
 
       if (subdivide.dividerDown) {
         e.preventDefault();
@@ -187,6 +185,7 @@ export const Layout = forwardRef((props, ref) => {
     <div ref={resizeEl} style={style}>
       {panes}
       <Dividers
+        resizeEl={resizeEl}
         dividers={subdivide.dividers}
         subdivide={subdivide}
         actions={actions}

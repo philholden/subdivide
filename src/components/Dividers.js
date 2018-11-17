@@ -21,7 +21,7 @@ export function Dividers(props) {
   const {
     state: { borderColor, cellSpaceColor }
   } = useSubdivide();
-  const { dividers, subdivide, actions } = props;
+  const { dividers, subdivide, actions, resizeEl } = props;
   const { borderSize } = subdivide;
   //let touch = dividers.map(touch).toSeq()
   function toBorder(divider) {
@@ -75,6 +75,7 @@ export function Dividers(props) {
   function toTouch(divider) {
     return (
       <DividerTouch
+        resizeEl={resizeEl}
         divider={divider}
         subdivide={subdivide}
         actions={actions}
