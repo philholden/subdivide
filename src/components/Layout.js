@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, forwardRef, useCallback } from "react";
 import { Pane } from "./Pane";
 import { Dividers } from "./Dividers";
 import AnimationFrame from "./AnimationFrame";
@@ -13,22 +13,51 @@ import {
   SE,
   NW
 } from "../reducer/constants";
+import ResizeObserver from "resize-observer-polyfill";
 
-Layout.defaultProps = {
-  iframeSafe: true
-};
-
-export function Layout(props) {
+export const Layout = forwardRef((props, ref) => {
   const propsRef = useRef();
+  const resizeEl = useRef();
+  const offset = useRef({ x: 0, y: 0 });
   propsRef.current = props;
+
+  const onResize = useCallback(
+    entries => {
+      const { x, y } = entries[0].target.getBoundingClientRect();
+      offset.current = { x, y };
+      const { width, height } = entries[0].contentRect;
+      props.actions.setSize(width, height);
+    },
+    [resizeEl.current]
+  );
+
+  useEffect(
+    () => {
+      if (!resizeEl.current) {
+        return;
+      }
+      // if (typeof ref === "function") {
+      //   ref(resizeEl.current);
+      // }
+      const resizeObserver = new ResizeObserver(onResize);
+      resizeObserver.observe(resizeEl.current);
+      return () => {
+        resizeObserver.unobserve(resizeEl.current);
+      };
+    },
+    [resizeEl.current]
+  );
+
   useEffect(() => {
     const props = propsRef.current;
     const animationFrame = new AnimationFrame();
 
-    const { setSize } = props.actions;
+    // const { setSize } = props.actions;
     const onMouseMove = animationFrame.throttle(e => {
       const { actions, store: subdivide } = props;
-      const { clientX, clientY } = e;
+      // const { clientX, clientY } = e;
+      const clientX = e.clientX - offset.current.x;
+      const clientY = e.clientY - offset.current.y;
 
       if (subdivide.dividerDown) {
         e.preventDefault();
@@ -111,14 +140,14 @@ export function Layout(props) {
       }, 10);
     }
 
-    window.addEventListener("resize", () => {
-      setSize(window.innerWidth, window.innerHeight);
-    });
+    // window.addEventListener("resize", () => {
+    //   setSize(window.innerWidth, window.innerHeight);
+    // });
 
     document.addEventListener("mouseup", onMouseUp);
     document.addEventListener("mousemove", onMouseMove);
 
-    setSize(window.innerWidth, window.innerHeight);
+    //setSize(window.innerWidth, window.innerHeight);
     return animationFrame.stop;
   }, []);
 
@@ -153,8 +182,9 @@ export function Layout(props) {
       });
   }
 
+  const { style = { width: "100vw", height: "100vh" } } = props;
   return (
-    <div>
+    <div ref={resizeEl} style={style}>
       {panes}
       <Dividers
         dividers={subdivide.dividers}
@@ -163,4 +193,8 @@ export function Layout(props) {
       />
     </div>
   );
-}
+});
+
+Layout.defaultProps = {
+  iframeSafe: true
+};

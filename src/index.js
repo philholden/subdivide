@@ -109,9 +109,27 @@ class Chooser extends Component {
 }
 
 const App = () => (
-  <SubdivideProvider>
-    <Subdivide DefaultComponent={Chooser} />
-  </SubdivideProvider>
+  <div
+    style={{
+      width: "100vw",
+      height: "100vh",
+      padding: 50,
+      display: "flex",
+      boxSizing: "border-box"
+    }}
+  >
+    <SubdivideProvider>
+      <Subdivide
+        DefaultComponent={Chooser}
+        style={{
+          width: "auto",
+          height: "auto",
+          flex: "1",
+          position: "relative"
+        }}
+      />
+    </SubdivideProvider>
+  </div>
 );
 
 const styles = {
