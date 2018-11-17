@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useRef } from "react";
 import { Pane } from "./Pane";
 import { Dividers } from "./Dividers";
 import AnimationFrame from "./AnimationFrame";
@@ -14,19 +14,20 @@ import {
   NW
 } from "../reducer/constants";
 
-export class Layout extends Component {
-  static defaultProps = {
-    iframeSafe: true
-  };
+Layout.defaultProps = {
+  iframeSafe: true
+};
 
-  constructor(props, context) {
-    super(props, context);
-    this.animationFrame = new AnimationFrame();
+export function Layout(props) {
+  const propsRef = useRef();
+  propsRef.current = props;
+  useEffect(() => {
+    const props = propsRef.current;
+    const animationFrame = new AnimationFrame();
 
     const { setSize } = props.actions;
-
-    this.onMouseMove = this.animationFrame.throttle(e => {
-      const { actions, store: subdivide } = this.props;
+    const onMouseMove = animationFrame.throttle(e => {
+      const { actions, store: subdivide } = props;
       const { clientX, clientY } = e;
 
       if (subdivide.dividerDown) {
@@ -95,10 +96,10 @@ export class Layout extends Component {
           }
         }
       }
-    });
+    }, []);
 
-    this.onMouseUp = () => {
-      const { actions, store: subdivide } = this.props;
+    function onMouseUp() {
+      const { actions, store: subdivide } = props;
       if (subdivide.dividerDown) {
         actions.setDividerDown(undefined);
       }
@@ -108,68 +109,58 @@ export class Layout extends Component {
           actions.setCornerDown(undefined);
         }
       }, 10);
-    };
+    }
 
     window.addEventListener("resize", () => {
       setSize(window.innerWidth, window.innerHeight);
     });
 
-    document.addEventListener("mouseup", this.onMouseUp);
-    document.addEventListener("mousemove", this.onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+    document.addEventListener("mousemove", onMouseMove);
 
     setSize(window.innerWidth, window.innerHeight);
-  }
+    return animationFrame.stop;
+  }, []);
 
-  componentWillUnmount() {
-    this.animationFrame.stop();
-  }
-
-  render() {
-    const {
-      store: subdivide,
-      actions,
-      DefaultComponent,
-      iframeSafe
-    } = this.props;
-    let panes;
-    if (iframeSafe) {
-      panes = subdivide.allPanesIdsEver.map(id => {
-        const pane = subdivide.panes[id];
+  const { store: subdivide, actions, DefaultComponent, iframeSafe } = props;
+  let panes;
+  if (iframeSafe) {
+    panes = subdivide.allPanesIdsEver.map(id => {
+      const pane = subdivide.panes[id];
+      return (
+        <Pane
+          subdivide={subdivide}
+          pane={pane}
+          actions={actions}
+          key={"pane" + id}
+          DefaultComponent={DefaultComponent}
+        />
+      );
+    });
+  } else {
+    panes = subdivide.panes
+      .filter(pane => !pane.isGroup)
+      .map(pane => {
         return (
           <Pane
             subdivide={subdivide}
             pane={pane}
             actions={actions}
-            key={"pane" + id}
+            key={pane.id}
             DefaultComponent={DefaultComponent}
           />
         );
       });
-    } else {
-      panes = subdivide.panes
-        .filter(pane => !pane.isGroup)
-        .map(pane => {
-          return (
-            <Pane
-              subdivide={subdivide}
-              pane={pane}
-              actions={actions}
-              key={pane.id}
-              DefaultComponent={DefaultComponent}
-            />
-          );
-        });
-    }
-
-    return (
-      <div>
-        {panes}
-        <Dividers
-          dividers={subdivide.dividers}
-          subdivide={subdivide}
-          actions={actions}
-        />
-      </div>
-    );
   }
+
+  return (
+    <div>
+      {panes}
+      <Dividers
+        dividers={subdivide.dividers}
+        subdivide={subdivide}
+        actions={actions}
+      />
+    </div>
+  );
 }

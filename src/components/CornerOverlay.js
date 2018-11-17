@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   ROW,
   SW,
@@ -10,27 +10,26 @@ import {
   JOIN_LEFT_ARROW,
   JOIN_DOWN_ARROW
 } from "../reducer/constants";
-import { replaceSubstitutionTransformer } from "common-tags";
+//import { replaceSubstitutionTransformer } from "common-tags";
 
-export default class CornerOverlay extends Component {
-  componentDidMount() {
-    this.updateJoinOverlay();
-    this.updateDivideOverlay();
-  }
+export default function CornerOverlay(props) {
+  const canvasRef = useRef();
+  //const propsRef = useRef({});
+  // const shouldUpdate =
+  //   propsRef.current.width === props.width &&
+  //   propsRef.current.height === props.height;
 
-  componentWillUnmount() {}
+  useEffect(() => {
+    updateJoinOverlay();
+    updateDivideOverlay();
+  });
 
-  getRef = el => {
-    if (el === null) return;
-    this.canvas = el;
-  };
-
-  updateDivideOverlay() {
-    const { pane, subdivide } = this.props;
+  function updateDivideOverlay() {
+    const { pane, subdivide } = props;
     if (!pane.canSplit || !subdivide.cornerDown) return;
     const { corner } = subdivide.cornerDown;
 
-    const canvas = this.canvas;
+    const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     let { width, height, top, left } = pane;
     height = Math.round(height + top - (top | 0));
@@ -92,10 +91,10 @@ export default class CornerOverlay extends Component {
     ctx.fill("evenodd");
   }
 
-  updateJoinOverlay() {
-    const { pane } = this.props;
+  function updateJoinOverlay() {
+    const { pane } = props;
     if (!pane.joinDirection) return;
-    const canvas = this.canvas;
+    const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     let { width, height, top, left, joinDirection } = pane;
     height = Math.round(height + top - (top | 0));
@@ -171,59 +170,52 @@ export default class CornerOverlay extends Component {
     ctx.fill();
   }
 
-  shouldComponentUpdate(nextProps) {
+  // shouldComponentUpdate(nextProps) {
+  //   return (
+  //     this.props.width === nextProps.width &&
+  //     this.props.height === nextProps.height
+  //   );
+  // }
+
+  let { subdivide } = props;
+  let { joinDirection, canSplit } = props.pane;
+  if (!(subdivide.cornerDown || subdivide.dividerDown)) return false;
+
+  if (!(joinDirection || canSplit)) {
+    const { dividerDown } = subdivide;
+    const cursor = !dividerDown
+      ? undefined
+      : dividerDown.direction === ROW
+      ? "col-resize"
+      : "row-resize";
     return (
-      this.props.width === nextProps.width &&
-      this.props.height === nextProps.height
-    );
-  }
-
-  componentDidUpdate() {
-    this.updateJoinOverlay();
-    this.updateDivideOverlay();
-  }
-
-  render() {
-    let { subdivide } = this.props;
-    let { joinDirection, canSplit } = this.props.pane;
-    if (!(subdivide.cornerDown || subdivide.dividerDown)) return false;
-
-    if (!(joinDirection || canSplit)) {
-      const { dividerDown } = subdivide;
-      const cursor = !dividerDown
-        ? undefined
-        : dividerDown.direction === ROW
-        ? "col-resize"
-        : "row-resize";
-      return (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "absolute",
-            cursor,
-            top: 0
-          }}
-        />
-      );
-    }
-
-    let { width, height, top, left } = this.props.pane;
-    height = Math.round(height + top - (top | 0));
-    width = Math.round(width + left - (left | 0));
-    return (
-      <canvas
-        width={width}
-        height={height}
+      <div
         style={{
-          top: 0,
-          left: 0,
+          width: "100%",
+          height: "100%",
           position: "absolute",
-          background: "#fff",
-          opacity: 0.9
+          cursor,
+          top: 0
         }}
-        ref={this.getRef}
       />
     );
   }
+
+  let { width, height, top, left } = props.pane;
+  height = Math.round(height + top - (top | 0));
+  width = Math.round(width + left - (left | 0));
+  return (
+    <canvas
+      width={width}
+      height={height}
+      style={{
+        top: 0,
+        left: 0,
+        position: "absolute",
+        background: "#fff",
+        opacity: 0.9
+      }}
+      ref={canvasRef}
+    />
+  );
 }

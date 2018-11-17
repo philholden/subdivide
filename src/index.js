@@ -135,5 +135,16 @@ const styles = {
   }
 };
 
-const rootElement = document.getElementById("root");
-render(<App />, rootElement);
+//const rootElement = document.getElementById("root");
+createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+// render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>,
+//   document.getElementById("root")
+// );
