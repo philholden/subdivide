@@ -6,7 +6,9 @@ export function Triangle(props) {
   function onMouseDown(e) {
     e.preventDefault();
     const { actions, corner, pane } = props;
-    actions.setCornerDown({ ...pane, corner });
+    if (pane.cornerDown === undefined) {
+      actions.setCornerDown({ ...pane, corner });
+    }
   }
 
   function onMouseEnter() {

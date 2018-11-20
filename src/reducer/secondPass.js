@@ -64,6 +64,10 @@ export function secondPass(state) {
 
   panes.rootId = rootPane;
 
+  function round(n, i) {
+    return n === 0.5 ? (i % 2 === 0 ? n - 0.5 : n + 0.5) : Math.round(n);
+  }
+
   let flattenChildren = parent => {
     let x = parent.left;
     let y = parent.top;
@@ -72,6 +76,8 @@ export function secondPass(state) {
     let beforePaneId;
     let divider;
     let beforeRatio;
+    let xOffcuts = 0;
+    let yOffcuts = 0;
 
     parent.childIds.forEach((childId, i) => {
       const child = panes[childId];
@@ -104,8 +110,11 @@ export function secondPass(state) {
           dividers[divider.id] = divider;
           x += cellSpacing;
         }
+        const pos = parent.width * child.splitRatio - spacingOffset + xOffcuts;
+        xOffcuts = pos % 1;
         Object.assign(child, {
-          width: parent.width * child.splitRatio - spacingOffset,
+          width: i === parent.childIds.length - 1 ? Math.round(pos) : pos | 0,
+          // width: parent.width * child.splitRatio - spacingOffset,
           height: parent.height,
           left: x,
           top: y
@@ -118,9 +127,12 @@ export function secondPass(state) {
           dividers[divider.id] = divider;
           y += cellSpacing;
         }
+        const pos = parent.height * child.splitRatio - spacingOffset + yOffcuts;
+        yOffcuts = pos % 1;
         Object.assign(child, {
           width: parent.width,
-          height: parent.height * child.splitRatio - spacingOffset,
+          height: i === parent.childIds.length - 1 ? Math.round(pos) : pos | 0,
+          // height: parent.height * child.splitRatio - spacingOffset,
           left: x,
           top: y
         });

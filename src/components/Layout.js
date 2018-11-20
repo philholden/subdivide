@@ -146,7 +146,11 @@ export const Layout = forwardRef((props, ref) => {
     document.addEventListener("mousemove", onMouseMove);
 
     //setSize(window.innerWidth, window.innerHeight);
-    return animationFrame.stop;
+    return () => {
+      animationFrame.stop();
+      document.removeEventListener("mouseup", onMouseUp);
+      document.removeEventListener("mousemove", onMouseMove);
+    };
   }, []);
 
   const { store: subdivide, actions, DefaultComponent, iframeSafe } = props;
@@ -182,7 +186,7 @@ export const Layout = forwardRef((props, ref) => {
 
   const { style = { width: "100vw", height: "100vh" } } = props;
   return (
-    <div ref={resizeEl} style={style}>
+    <div ref={resizeEl} style={{ ...style, position: "relative" }}>
       {panes}
       <Dividers
         resizeEl={resizeEl}

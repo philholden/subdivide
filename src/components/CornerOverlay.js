@@ -211,6 +211,7 @@ export default function CornerOverlay(props) {
       style={{
         top: 0,
         left: 0,
+        //  pointerEvents: "none",
         position: "absolute",
         background: "#fff",
         opacity: 0.9
