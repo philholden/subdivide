@@ -127,6 +127,7 @@ function removePane(state, id) {
 }
 
 export function split(state, { id, splitType, startX, startY }) {
+  if (state.cornerDown === undefined) return;
   const { panes, rootId } = state;
   const pane = panes[id];
   const oldPane = pane;
@@ -173,7 +174,6 @@ export function split(state, { id, splitType, startX, startY }) {
   state.allPanesIdsEver.push(newPane.id);
   panes[parent.id] = parent;
   panes[newPane.id] = newPane;
-
   state.cornerDown = undefined;
   secondPass(state);
   state.dividerDown = {

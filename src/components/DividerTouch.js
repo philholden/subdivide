@@ -1,40 +1,52 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo, useRef } from "react";
 import { COL } from "../reducer/constants";
 
-export function DividerTouch(props) {
-  const { actions, divider, resizeEl } = props;
+export const DividerTouch = memo(
+  props => {
+    const renders = useRef(0);
+    renders.current++;
+    const { actions, divider, resizeEl } = props;
 
-  function onMouseUp() {
-    actions.setDividerDown(undefined);
-    removeListeners();
-  }
+    function onMouseUp() {
+      actions.setDividerDown(undefined);
+      removeListeners();
+    }
 
-  function removeListeners() {
-    document.removeEventListener("mouseup", onMouseUp);
-  }
+    function removeListeners() {
+      document.removeEventListener("mouseup", onMouseUp);
+    }
 
-  function onMouseDown({ clientX, clientY }) {
-    const rect = resizeEl.current.getBoundingClientRect();
-    actions.setDividerDown({
-      ...divider,
-      startX: clientX - rect.x,
-      startY: clientY - rect.y
-    });
-    document.addEventListener("mouseup", onMouseUp);
-  }
+    function onMouseDown({ clientX, clientY }) {
+      const rect = resizeEl.current.getBoundingClientRect();
+      actions.setDividerDown({
+        ...divider,
+        startX: clientX - rect.x,
+        startY: clientY - rect.y
+      });
+      document.addEventListener("mouseup", onMouseUp);
+    }
 
-  useEffect(() => removeListeners, ["once"]);
+    useEffect(() => removeListeners, ["once"]);
 
-  const styles = dividerStyle(props);
+    const styles = dividerStyle(props);
 
-  return (
-    <div style={styles.touch} onMouseDown={onMouseDown} className="divider">
-      <div style={styles.border}>
-        <div style={styles.inner} />
+    return (
+      <div style={styles.touch} onMouseDown={onMouseDown} className="divider">
+        <div style={styles.border}>
+          {renders.current && false}
+          <div style={styles.inner} />
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  },
+  (old, props) =>
+    old.divider.width === props.divider.width &&
+    old.divider.height === props.divider.height &&
+    old.divider.top === props.divider.top &&
+    old.divider.direction === props.divider.direction &&
+    old.divider.left === props.divider.left &&
+    old.subdivide.touchMargin === props.subdivide.touchMargin
+);
 
 function dividerStyle(props) {
   const { width, height, top, left, direction } = props.divider;

@@ -33,9 +33,6 @@ export const Layout = forwardRef((props, ref) => {
       if (!resizeEl.current) {
         return;
       }
-      // if (typeof ref === "function") {
-      //   ref(resizeEl.current);
-      // }
       const resizeObserver = new ResizeObserver(onResize);
       resizeObserver.observe(resizeEl.current);
       return () => {
@@ -48,12 +45,9 @@ export const Layout = forwardRef((props, ref) => {
   useEffect(() => {
     const props = propsRef.current;
     const animationFrame = new AnimationFrame();
-
-    // const { setSize } = props.actions;
     const onMouseMove = animationFrame.throttle(e => {
       const rect = resizeEl.current.getBoundingClientRect();
       const { actions, store: subdivide } = props;
-      // const { clientX, clientY } = e;
       const clientX = e.clientX - rect.x;
       const clientY = e.clientY - rect.y;
 
@@ -79,7 +73,7 @@ export const Layout = forwardRef((props, ref) => {
         }
       }
 
-      if (subdivide.cornerDown) {
+      if (subdivide.cornerDown && !subdivide.dividerDown) {
         const pane = subdivide.cornerDown;
         const { split } = actions;
         const { width, height, left, top, id, corner } = pane;
